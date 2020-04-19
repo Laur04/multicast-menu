@@ -3,3 +3,5 @@ gunicorn
 django-heroku
 Pillow
 django-background-tasks
+requests
+ipwhois
