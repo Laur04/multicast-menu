@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .button {
+            width:40%;
+            padding:10px;
+            margin:5px;
+            font-size:120%;
+        }
+        .main {
+            background-color: #dee3e2;
+            text-align: center;
+            padding: 10px;
+        }
+        #load {
+            text-align: center;
+        }
+        .source {
+            padding: 10px;
+        }
+    </style>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'home:index' %}",
+                success: function(response) {
+                    document.getElementById("load").remove();
+                    var streams = response.streams
+                    streams.forEach(display_screen)
+                }
+            });
+            setTimeout(async_update, 300000)
+        });
+        function async_update() {
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'home:index' %}",
+                success: function(response) {
+                    document.getElementById("stream_list").innerHTML = '';
+                    var streams = response.streams
+                    streams.forEach(display_screen)
+                }
+            });
+            setTimeout(async_update, 180000)
+         }
+        function display_screen(item, index) {
+            var para = document.createElement("a");
+            para.classList.add('col-lg-3', 'col-md-4', 'col-sm-4', 'col-xs-12', 'source');
+            para.innerHTML = item[0];
+            para.setAttribute("id", item[1] + '_' + item[2]);
+            para.setAttribute("onclick", "openVLC(this.id)");
+
+            var element = document.getElementById;
+            document.getElementById("stream_list").appendChild(para);
+        }
+        function openVLC(id) {
+            temp_window = window.open("{% url 'home:vlc' 1234 %}".replace(/1234/, id.toString()));
+        }
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class='col-lg-1 col-md-1 col-sm-1'></div>
+        <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
+            <div class="intro">
+                <h4>Available content is listed below.</h4>
+                <h7>Make sure you have VLC 4.0 or later installed <a href="">here.</a></h7>
+            </div>
+            <hr>
+            <div id='stream_list' class='row'>
+                <div id='load' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+                    <h6>Loading...this could take a minute.</h6>
+                </div>
+            </div>
+        </div>
+        <div class='col-lg-1 col-md-1 col-sm-1'></div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+{% endblock %}
