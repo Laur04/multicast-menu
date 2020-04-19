@@ -25,24 +25,34 @@
     </style>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
+        window.onload = function exampleFunction() {
+            var devices = {{ device_list|safe }};
+            async_update(devices, 0)
+        }
         function async_manager() {
             setTimeout(120000, reload_page)
         }
         function reload_page() {
             reload(true)
         }
-        function async_update(item) {
-            $.ajax({
-                type: 'GET',
-                url: "{% url 'home:index' %}",
-                data: {
-                    'device':item
-                },
-                success: function(response)  {
-                    var streams = response.streams
-                    streams.forEach(display_screen)
-                }
-            });
+        function async_update(item_list, index) {
+            if (item_list[index]) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{% url 'home:index' %}",
+                    data: {
+                        'device':item_list[index]
+                    },
+                    success: function(response)  {
+                        var streams = response.streams
+                        streams.forEach(display_screen)
+                        async_update(item_list, index + 1)
+                    }
+                });
+            }
+            else {
+                async_manager()
+            }
          }
         function display_screen(item, index) {
             var para = document.createElement("a");
@@ -64,12 +74,6 @@
     <div class="row">
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
         <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
-            {% for device in device_list %}
-                <script>
-                    async_update("{{ device }}")
-                </script>
-            {% endfor %}
-            <script>async_manager()</script>
             <div class="intro">
                 <h4>Available content is listed below.</h4>
                 <h7>Make sure you have <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed.</h7>

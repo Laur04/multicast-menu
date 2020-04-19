@@ -86,4 +86,5 @@ def index(request):
     devices = list()
     for d in M_Source.objects.all():
         devices.append(d.ip)
-    return render(request, 'home/index.html', context={'device_list':devices})
+    json_devices = json.dumps(devices)
+    return render(request, 'home/index.html', context={'device_list':json_devices})
