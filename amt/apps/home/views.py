@@ -27,7 +27,7 @@ def vlc(request, target):
     elif system == 'Linux':
         command = 'vlc amt://' + source + '@' + group
     else:
-        return HttpResponse("can't detect system")
+        return HttpResponse("Error: can't detect system operating system.")
     os.system(command)
     return render(request, 'home/play.html', context={'source':source, 'group':group})
 
