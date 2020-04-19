@@ -47,43 +47,43 @@ def add(request):
 def index(request):
     if request.is_ajax():
         BASE_URL = 'https://routerproxy.grnoc.iu.edu/internet2/'
-        devices = list()
-        for d in M_Source.objects.all():
-            devices.append(d.ip)
 
+        device = request.GET.get('device', None)
         output = set()
-        for device in devices:
-            r = requests.get(BASE_URL + '?method=submit&device=' + device + '&command=show multicast&menu=0&arguments=route detail')
-            new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
-            s_new_text = new_text.split('\n')
-            fields = dict()
-            for i in range(1, len(s_new_text) - 1):
-                s_line = s_new_text[i].split(':', 1)
-                if s_line[0] == '':
-                    if 'Group' in fields:
-                        source = str(fields['Source']).split('/')[0]
-                        group = str(fields['Group'])
-                        st = fields['Statistics'].split(',')
-                        pps = int(re.sub(r'[^0-9]', '', st[2]))
-                        whois = ipwhois.IPWhois(source.split('/')[0])
-                        info = whois.lookup_rdap()
-                        asn_desc = info['asn_description']
-                        desc = None
-                        if info['network']['remarks'] is not None:
-                            desc = info['network']['remarks'][0]['description']
-                        if asn_desc is not None:
-                            who_is = asn_desc
-                        else:
-                            who_is = desc
+        r = requests.get(BASE_URL + '?method=submit&device=' + device + '&command=show multicast&menu=0&arguments=route detail')
+        new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
+        s_new_text = new_text.split('\n')
+        fields = dict()
+        for i in range(1, len(s_new_text) - 1):
+            s_line = s_new_text[i].split(':', 1)
+            if s_line[0] == '':
+                if 'Group' in fields:
+                    source = str(fields['Source']).split('/')[0]
+                    group = str(fields['Group'])
+                    st = fields['Statistics'].split(',')
+                    pps = int(re.sub(r'[^0-9]', '', st[2]))
+                    whois = ipwhois.IPWhois(source.split('/')[0])
+                    info = whois.lookup_rdap()
+                    asn_desc = info['asn_description']
+                    desc = None
+                    if info['network']['remarks'] is not None:
+                        desc = info['network']['remarks'][0]['description']
+                    if asn_desc is not None:
+                        who_is = asn_desc
+                    else:
+                        who_is = desc
 
-                        if source != '193.17.9.3':  # filter out satellite data
-                            if pps > 100:
-                                output.add((who_is, source, group))
-                    fields = dict()
-                else:
-                    fields[s_line[0]] = ''.join(s_line[1:])
-            time.sleep(2)
+                    if source != '193.17.9.3':  # filter out satellite data
+                        if pps > 100:
+                            output.add((who_is, source, group))
+                fields = dict()
+            else:
+                fields[s_line[0]] = ''.join(s_line[1:])
         output = list(output)
         
         return JsonResponse({'streams':output})
-    return render(request, 'home/index.html')
+
+    devices = list()
+    for d in M_Source.objects.all():
+        devices.append(d.ip)
+    return render(request, 'home/index.html', context={'device_list':devices})

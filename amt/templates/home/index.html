@@ -25,29 +25,24 @@
     </style>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
-        $(document).ready(function() {
+        function async_manager() {
+            setTimeout(120000, reload_page)
+        }
+        function reload_page() {
+            reload(true)
+        }
+        function async_update(item) {
             $.ajax({
                 type: 'GET',
                 url: "{% url 'home:index' %}",
-                success: function(response) {
-                    document.getElementById("load").remove();
+                data: {
+                    'device':item
+                },
+                success: function(response)  {
                     var streams = response.streams
                     streams.forEach(display_screen)
                 }
             });
-            setTimeout(async_update, 300000)
-        });
-        function async_update() {
-            $.ajax({
-                type: 'GET',
-                url: "{% url 'home:index' %}",
-                success: function(response) {
-                    document.getElementById("stream_list").innerHTML = '';
-                    var streams = response.streams
-                    streams.forEach(display_screen)
-                }
-            });
-            setTimeout(async_update, 180000)
          }
         function display_screen(item, index) {
             var para = document.createElement("a");
@@ -69,15 +64,18 @@
     <div class="row">
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
         <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
+            {% for device in device_list %}
+                <script>
+                    async_update("{{ device }}")
+                </script>
+            {% endfor %}
+            <script>async_manager()</script>
             <div class="intro">
                 <h4>Available content is listed below.</h4>
-                <h7>Make sure you have VLC 4.0 or later installed <a href="">here.</a></h7>
+                <h7>Make sure you have <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed.</h7>
             </div>
             <hr>
             <div id='stream_list' class='row'>
-                <div id='load' class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                    <h6>Loading...this could take a minute.</h6>
-                </div>
             </div>
         </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
