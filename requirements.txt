@@ -5,5 +5,3 @@ Pillow
 django-background-tasks
 requests
 ipwhois
-platform
-os

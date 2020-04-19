@@ -29,7 +29,7 @@ def vlc(request, target):
     else:
         return HttpResponse("Error: can't detect system operating system.")
     os.system(command)
-    return render(request, 'home/play.html', context={'source':source, 'group':group})
+    return render(request, 'home/play.html', context={'source':source, 'group':group, 'command':command})
 
 def add(request):
     if request.method == 'POST':
