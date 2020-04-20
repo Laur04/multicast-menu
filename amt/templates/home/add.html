@@ -26,6 +26,9 @@
             <form action='' method='post'>
                 {% csrf_token %}
                 <p>Source IP:  {{ form.ip }}</p>
+                {% if error %}
+                    <p>That source is already in the list.</p>
+                {% endif %}
                 <div style="text-align:center;">
                     <input class='button' type='submit' name='Submit' value='Submit'/>
                 </div>

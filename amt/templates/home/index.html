@@ -33,7 +33,7 @@
             async_update(devices, 0)
         }
         function async_manager() {
-            setTimeout(240000, reload_page())
+            setTimeout(reload_page, 240000)
         }
         function reload_page() {
             location.reload(true)
@@ -54,7 +54,6 @@
                     }
                 });
             } else {
-                console.log('reached')
                 async_manager()
             }
          }

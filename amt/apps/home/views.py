@@ -31,7 +31,7 @@ def vlc(request, target, os):
         # make a .command file
         response = HttpResponse()
         response['Content-Disposition'] = 'attachment; filename="play_vlc.command"'
-        response.write('/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://' + source + '@' + group + '--amt-relay 162.250.136.101')
+        response.write('/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://' + source + '@' + group + ' --amt-relay 162.250.136.101')
     if response:
         return response
     
@@ -48,10 +48,16 @@ def add(request):
     if request.method == 'POST':
         form = AddForm(request.POST)
         if form.is_valid():
-            new_source = M_Source(ip=form.cleaned_data['ip'])
-            new_source.save()
-            return HttpResponseRedirect(reverse('home:index'))
-        return render(request, 'home/add.html', context={'form':form})
+            repeat = False
+            source_list = M_Source.objects.all()
+            for s in source_list:
+                if s.ip == form.cleaned_data['ip']:
+                    repeat = True
+            if not repeat:
+                new_source = M_Source(ip=form.cleaned_data['ip'])
+                new_source.save()
+                return HttpResponseRedirect(reverse('home:index'))
+        return render(request, 'home/add.html', context={'form':form, 'error':True})
     else:
         form = AddForm()
         return render(request, 'home/add.html', context={'form':form})
