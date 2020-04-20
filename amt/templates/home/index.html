@@ -22,6 +22,9 @@
         .source {
             padding: 10px;
         }
+        .source:hover {
+            color: #949492;
+        }
     </style>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
@@ -56,7 +59,7 @@
             }
          }
         function display_screen(item, index) {
-            var para = document.createElement("a");
+            var para = document.createElement("p");
             para.classList.add('col-lg-3', 'col-md-4', 'col-sm-4', 'col-xs-12', 'source');
             para.innerHTML = item[0];
             para.setAttribute("id", item[1] + '_' + item[2]);
