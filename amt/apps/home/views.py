@@ -11,14 +11,38 @@ import requests
 import re
 import time
 import ipwhois
-import os
 
-def vlc(request, target):
+def vlc(request, target, os):
     target = target.split('_')
     source = target[0]
     group = target[1]
     new_source = source.split('/')[0]
-    return render(request, 'home/play.html', context={'source':source, 'group':group})
+    if os == 'linux':
+        # make a .sh file
+        response = HttpResponse()
+        response['Content-Disposition'] = 'attachment; filename="play_vlc.sh"'
+        response.write('vlc amt://' + source + '@' + group)
+    elif os == 'windows':
+        # make a .bat file
+        response = HttpResponse()
+        response['Content-Disposition'] = 'attachment; filename="play_vlc.bat"'
+        response.write('"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe" amt://' + source + '@' + group)
+    elif os == 'mac':
+        # make a .command file
+        response = HttpResponse()
+        response['Content-Disposition'] = 'attachment; filename="play_vlc.command"'
+        response.write('Desktop/VLC.app/Contents/MacOS/VLC -vvv amt://' + source + '@' + group + '--amt-relay 162.250.136.101')
+    if response:
+        return response
+    
+    return render(request, 'home/play.html', context={'source':source, 'group':group, 'error':True})
+
+def show_video(request, target):
+    target = target.split('_')
+    source = target[0]
+    group = target[1]
+    new_source = source.split('/')[0]
+    return render(request, 'home/play.html', context={'source':source, 'group':group, 'error':False})
 
 def add(request):
     if request.method == 'POST':

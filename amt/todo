@@ -1,3 +1,3 @@
 make sure sources are valid, not repeated and are actually video
 filter out repeated streams
-open content in vlc
+make links look like links

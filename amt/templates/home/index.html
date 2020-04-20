@@ -30,7 +30,7 @@
             async_update(devices, 0)
         }
         function async_manager() {
-            setTimeout(120000, reload_page())
+            setTimeout(240000, reload_page())
         }
         function reload_page() {
             location.reload(true)
@@ -66,7 +66,8 @@
             document.getElementById("stream_list").appendChild(para);
         }
         function openVLC(id) {
-            temp_window = window.open("{% url 'home:vlc' 1234 %}".replace(/1234/, id.toString()));
+            var to_open = "{% url 'home:show_video' 1234 %}".replace(/1234/, id.toString());
+            window.open(to_open);
         }
     </script>
 {% endblock %}
