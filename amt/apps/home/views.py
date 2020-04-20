@@ -12,24 +12,13 @@ import re
 import time
 import ipwhois
 import os
-import platform
 
 def vlc(request, target):
     target = target.split('_')
     source = target[0]
     group = target[1]
     new_source = source.split('/')[0]
-    system = platform.system()
-    if system == 'Windows':
-        command = '"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe" amt://' + source + '@' + group
-    elif system == 'Darwin':  # Mac OS:
-        command = 'Desktop/VLC.app/Contents/MacOS/VLC -vvv amt://' + source + '@' + group + '--amt-relay 162.250.136.101'
-    elif system == 'Linux':
-        command = 'vlc amt://' + source + '@' + group
-    else:
-        return HttpResponse("Error: can't detect system operating system.")
-    os.system(command)
-    return render(request, 'home/play.html', context={'source':source, 'group':group, 'command':command})
+    return render(request, 'home/play.html', context={'source':source, 'group':group})
 
 def add(request):
     if request.method == 'POST':

@@ -30,13 +30,14 @@
             async_update(devices, 0)
         }
         function async_manager() {
-            setTimeout(120000, reload_page)
+            setTimeout(120000, reload_page())
         }
         function reload_page() {
-            reload(true)
+            location.reload(true)
         }
         function async_update(item_list, index) {
-            if (item_list[index]) {
+            var len = item_list.length
+            if (index < len) {
                 $.ajax({
                     type: 'GET',
                     url: "{% url 'home:index' %}",
@@ -49,8 +50,8 @@
                         async_update(item_list, index + 1)
                     }
                 });
-            }
-            else {
+            } else {
+                console.log('reached')
                 async_manager()
             }
          }
