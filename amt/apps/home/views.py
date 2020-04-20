@@ -31,7 +31,7 @@ def vlc(request, target, os):
         # make a .command file
         response = HttpResponse()
         response['Content-Disposition'] = 'attachment; filename="play_vlc.command"'
-        response.write('Desktop/VLC.app/Contents/MacOS/VLC -vvv amt://' + source + '@' + group + '--amt-relay 162.250.136.101')
+        response.write('/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://' + source + '@' + group + '--amt-relay 162.250.136.101')
     if response:
         return response
     
