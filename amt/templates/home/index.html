@@ -19,18 +19,22 @@
         #load {
             text-align: center;
         }
-        .source {
-            padding: 10px;
-        }
         .source:hover {
-            color: #949492;
+            background-color: #949492;
+        }
+        .info {
+            text-align: center;
+            font-size: 15px;
+        }
+        .whois {
+            font-weight: bold;
         }
     </style>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
         window.onload = function exampleFunction() {
             var devices = {{ device_list|safe }};
-            async_update(devices, 0)
+            async_update(devices, 0);7
         }
         function async_manager() {
             setTimeout(reload_page, 240000)
@@ -58,14 +62,32 @@
             }
          }
         function display_screen(item, index) {
-            var para = document.createElement("p");
-            para.classList.add('col-lg-3', 'col-md-4', 'col-sm-4', 'col-xs-12', 'source');
-            para.innerHTML = item[0];
-            para.setAttribute("id", item[1] + '_' + item[2]);
-            para.setAttribute("onclick", "openVLC(this.id)");
+            var div = document.createElement('div');
+            div.setAttribute("id", item[1] + '_' + item[2]);
+            div.setAttribute("onclick", "openVLC(this.id)");
+            div.classList.add("source", "col-lg-3", "col-md-4", "col-sm-4", "col-xs-12");
 
-            var element = document.getElementById;
-            document.getElementById("stream_list").appendChild(para);
+            var name = document.createElement('p');
+            name.innerHTML = item[0];
+            name.setAttribute("class", "whois");
+
+            var info_s = document.createElement('p');
+            info_s.innerHTML = 'Source: ' + item[1];
+            info_s.setAttribute("class", "info");
+
+            var info_g = document.createElement('p');
+            info_g.innerHTML = 'Group: ' + item[2];
+            info_g.setAttribute("class", "info");
+
+            var info_p = document.createElement('p');
+            info_p.innerHTML = 'PPS: ' + item[3].toLocaleString();
+            info_p.setAttribute("class", "info");
+
+            document.getElementById('stream_list').appendChild(div);
+            div.appendChild(name);
+            div.appendChild(info_s);
+            div.appendChild(info_g);
+            div.appendChild(info_p);
         }
         function openVLC(id) {
             var to_open = "{% url 'home:show_video' 1234 %}".replace(/1234/, id.toString());
@@ -84,6 +106,7 @@
             </div>
             <hr>
             <div id='stream_list' class='row'>
+
             </div>
         </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>

@@ -91,9 +91,9 @@ def index(request):
                     else:
                         who_is = desc
 
-                    if source != '193.17.9.3':  # filter out satellite data
+                    if re.match("^[0-9.]+$", source) and source != '193.17.9.3':  # filter out IPv6, Eumsat
                         if pps > 100:
-                            output.add((who_is, source, group))
+                            output.add((who_is, source, group, pps))
                 fields = dict()
             else:
                 fields[s_line[0]] = ''.join(s_line[1:])

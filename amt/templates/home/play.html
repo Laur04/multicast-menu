@@ -21,15 +21,33 @@
         }
     </style>
     <script>
+        window.onload = function() {
+            var para = document.getElementById('manual')
+            para.innerHTML = "You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url or via the command line with ";
+            os = find_os()
+            if (os == 'windows') {
+                para.innerHTML += '"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe" amt://{{ source }}@{{ group }}';
+            } else if (os == 'linux') {
+                para.innerHTML += 'vlc amt://{{ source }}@{{ group }}';
+            } else if (os == 'mac') {
+                para.innerHTML += '/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://{{ source }}@{{ group }} --amt-relay 162.250.136.101';
+            } else {
+                para.innerHTML = "You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url or via the command line.";
+            }
+        }
         function open_vlc(id) {
+            var os = find_os();
+            var to_open = "{% url 'home:vlc' 1234 5678 %}".replace(/1234/, id.toString());
+            to_open = to_open.replace(/5678/, os);
+            window.open(to_open);
+        }
+        function find_os() {
             var OSName="Unknown OS";
             if (navigator.appVersion.indexOf("Win")!=-1) OSName="windows";
             if (navigator.appVersion.indexOf("Mac")!=-1) OSName="mac";
             if (navigator.appVersion.indexOf("X11")!=-1) OSName="linux";
             if (navigator.appVersion.indexOf("Linux")!=-1) OSName="linux";
-            var to_open = "{% url 'home:vlc' 1234 5678 %}".replace(/1234/, id.toString());
-            to_open = to_open.replace(/5678/, OSName);
-            window.open(to_open);
+            return OSName
         }
     </script>
 {% endblock %}
@@ -44,7 +62,9 @@
                 <a onclick="open_vlc('{{ source }}' + '_' + '{{ group }}')"><button class='button'>Open stream in VLC</button></a>
             {% endif %}
             <hr>
-            <p>You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url.</p>
+            <p id='manual'>
+
+            </p>
             <hr>
             <div style="text-align: left;">
                 <p>Possible errors you might encounter:</p>
