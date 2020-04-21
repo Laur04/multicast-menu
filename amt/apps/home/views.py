@@ -4,13 +4,8 @@ from django.urls import reverse
 
 import json
 
-from .models import M_Source
+from .models import M_Source, Stream
 from .forms import AddForm
-
-import requests
-import re
-import time
-import ipwhois
 
 def vlc(request, target, os):
     target = target.split('_')
@@ -63,46 +58,5 @@ def add(request):
         return render(request, 'home/add.html', context={'form':form})
 
 def index(request):
-    if request.is_ajax():
-        BASE_URL = 'https://routerproxy.grnoc.iu.edu/internet2/'
-
-        device = request.GET.get('device', None)
-        output = set()
-        r = requests.get(BASE_URL + '?method=submit&device=' + device + '&command=show multicast&menu=0&arguments=route detail')
-        new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
-        s_new_text = new_text.split('\n')
-        fields = dict()
-        for i in range(1, len(s_new_text) - 1):
-            s_line = s_new_text[i].split(':', 1)
-            if s_line[0] == '':
-                if 'Group' in fields:
-                    source = str(fields['Source']).split('/')[0]
-                    group = str(fields['Group'])
-                    st = fields['Statistics'].split(',')
-                    pps = int(re.sub(r'[^0-9]', '', st[2]))
-                    whois = ipwhois.IPWhois(source.split('/')[0])
-                    info = whois.lookup_rdap()
-                    asn_desc = info['asn_description']
-                    desc = None
-                    if info['network']['remarks'] is not None:
-                        desc = info['network']['remarks'][0]['description']
-                    if asn_desc is not None:
-                        who_is = asn_desc
-                    else:
-                        who_is = desc
-
-                    if re.match("^[0-9.]+$", source) and source != '193.17.9.3':  # filter out IPv6, Eumsat
-                        if pps > 100:
-                            output.add((who_is, source, group, pps))
-                fields = dict()
-            else:
-                fields[s_line[0]] = ''.join(s_line[1:])
-        output = list(output)
-        
-        return JsonResponse({'streams':output})
-
-    devices = list()
-    for d in M_Source.objects.all():
-        devices.append(d.ip)
-    json_devices = json.dumps(devices)
-    return render(request, 'home/index.html', context={'device_list':json_devices})
+    active_streams = Stream.objects.filter(active=True)
+    return render(request, 'home/index.html', context={'stream_list':active_streams})

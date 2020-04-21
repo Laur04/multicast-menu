@@ -30,70 +30,13 @@
             font-weight: bold;
         }
     </style>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
-        window.onload = function exampleFunction() {
-            var devices = {{ device_list|safe }};
-            async_update(devices, 0);7
-        }
-        function async_manager() {
-            setTimeout(reload_page, 240000)
-        }
-        function reload_page() {
-            location.reload(true)
-        }
-        function async_update(item_list, index) {
-            var len = item_list.length
-            if (index < len) {
-                $.ajax({
-                    type: 'GET',
-                    url: "{% url 'home:index' %}",
-                    data: {
-                        'device':item_list[index]
-                    },
-                    success: function(response)  {
-                        var streams = response.streams
-                        streams.forEach(display_screen)
-                        async_update(item_list, index + 1)
-                    }
-                });
-            } else {
-                async_manager()
-            }
-         }
-        function display_screen(item, index) {
-            var div = document.createElement('div');
-            div.setAttribute("id", item[1] + '_' + item[2]);
-            div.setAttribute("onclick", "openVLC(this.id)");
-            div.classList.add("source", "col-lg-3", "col-md-4", "col-sm-4", "col-xs-12");
-
-            var name = document.createElement('p');
-            name.innerHTML = item[0];
-            name.setAttribute("class", "whois");
-
-            var info_s = document.createElement('p');
-            info_s.innerHTML = 'Source: ' + item[1];
-            info_s.setAttribute("class", "info");
-
-            var info_g = document.createElement('p');
-            info_g.innerHTML = 'Group: ' + item[2];
-            info_g.setAttribute("class", "info");
-
-            var info_p = document.createElement('p');
-            info_p.innerHTML = 'PPS: ' + item[3].toLocaleString();
-            info_p.setAttribute("class", "info");
-
-            document.getElementById('stream_list').appendChild(div);
-            div.appendChild(name);
-            div.appendChild(info_s);
-            div.appendChild(info_g);
-            div.appendChild(info_p);
-        }
         function openVLC(id) {
             var to_open = "{% url 'home:show_video' 1234 %}".replace(/1234/, id.toString());
             window.open(to_open);
         }
     </script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 {% endblock %}
 
 {% block main %}
@@ -106,7 +49,14 @@
             </div>
             <hr>
             <div id='stream_list' class='row'>
-
+                {% for stream in stream_list %}
+                    <div onclick="openVLC(this.id)" id="{{ stream.source }}_{{ stream.group }}" class='col-lg-3 col-md-4 col-sm-4 col-xs-4 source'>
+                        <p class='whois'>{{ stream.whois }}</p>
+                        <p class='info'>Source: {{ stream.source }}</p>
+                        <p class='info'>Group: {{ stream.group }}</p>
+                        <p class='info'>PPS: {{ stream.pps }}</p>
+                    </div>
+                {% endfor %}
             </div>
         </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
@@ -117,3 +67,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 {% endblock %}
+ 

@@ -1,3 +1,5 @@
 make sure sources are valid and are actually video
 filter out repeated streams
 find better in browser implementation
+crowdsourced descriptions
+periodic stream gathering
