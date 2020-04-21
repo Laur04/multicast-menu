@@ -1,4 +1,5 @@
 import django
+import logging
 django.setup()
 
 from .models import Stream, M_Source
