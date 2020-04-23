@@ -3,147 +3,166 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://use.fontawesome.com/5af5efc5b7.js"></script>    <style>
-        .button {
-            width:95%;
-            margin: 0px;
-            font-size:120%;
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://use.fontawesome.com/5af5efc5b7.js"></script>
+<style>
+    .button {
+        width: 95%;
+        margin: 0px;
+        font-size: 120%;
+    }
+
+    .main {
+        background-color: #dee3e2;
+        text-align: center;
+        padding: 10px;
+    }
+
+    html {
+        height: 100%;
+        padding-left: 5px;
+    }
+
+    #id_ans {
+        height: 40px;
+        width: 95%;
+        font-size: 15px;
+    }
+
+    .content {
+        font-size: 20px;
+    }
+
+    .contain {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+</style>
+<script>
+    window.onload = function () {
+        var para = document.getElementById('manual')
+        para.innerHTML = "You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url or via the command line with ";
+        os = find_os()
+        if (os == 'windows') {
+            para.innerHTML += '"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe" amt://{{ source }}@{{ group }}';
+        } else if (os == 'linux') {
+            para.innerHTML += 'vlc amt://{{ source }}@{{ group }}';
+        } else if (os == 'mac') {
+            para.innerHTML += '/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://{{ source }}@{{ group }} --amt-relay 162.250.136.101';
+        } else {
+            para.innerHTML = "You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url or via the command line.";
         }
-        .main {
-            background-color: #dee3e2;
-            text-align: center;
-            padding: 10px;
-        }
-        html {
-            height: 100%;
-            padding-left:5px;
-        }
-        #id_ans {
-            height: 40px;
-            width: 95%;
-            font-size:15px;
-        }
-        .content {
-            font-size:20px;
-        }
-        .contain {
-            padding-top:10px;
-            padding-bottom:10px;
-        }
-    </style>
-    <script>
-        window.onload = function() {
-            var para = document.getElementById('manual')
-            para.innerHTML = "You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url or via the command line with ";
-            os = find_os()
-            if (os == 'windows') {
-                para.innerHTML += '"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe" amt://{{ source }}@{{ group }}';
-            } else if (os == 'linux') {
-                para.innerHTML += 'vlc amt://{{ source }}@{{ group }}';
-            } else if (os == 'mac') {
-                para.innerHTML += '/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://{{ source }}@{{ group }} --amt-relay 162.250.136.101';
-            } else {
-                para.innerHTML = "You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url or via the command line.";
-            }
-        }
-        function open_vlc(id) {
-            var os = find_os();
-            var to_open = "{% url 'home:vlc' 1234 5678 %}".replace(/1234/, id.toString());
-            to_open = to_open.replace(/5678/, os);
-            window.open(to_open);
-        }
-        function find_os() {
-            var OSName="Unknown OS";
-            if (navigator.appVersion.indexOf("Win")!=-1) OSName="windows";
-            if (navigator.appVersion.indexOf("Mac")!=-1) OSName="mac";
-            if (navigator.appVersion.indexOf("X11")!=-1) OSName="linux";
-            if (navigator.appVersion.indexOf("Linux")!=-1) OSName="linux";
-            return OSName
-        }
-        function upvote(id, descript) {
-            $.ajax({
-                type: "GET",
-                url: "{% url 'home:show_video' 1234 %}".replace(/1234/, id),
-                data: {
-                    'description':descript.id
-                },
-                success: function () {
-                    var d = descript.id
-                    document.getElementById(d).innerHTML = parseInt(document.getElementById(d).innerHTML) + 1;
-                },
-            });
-        }
-    </script>
+    }
+    function open_vlc(id) {
+        var os = find_os();
+        var to_open = "{% url 'home:vlc' 1234 5678 %}".replace(/1234/, id.toString());
+        to_open = to_open.replace(/5678/, os);
+        window.open(to_open);
+    }
+    function find_os() {
+        var OSName = "Unknown OS";
+        if (navigator.appVersion.indexOf("Win") != -1) OSName = "windows";
+        if (navigator.appVersion.indexOf("Mac") != -1) OSName = "mac";
+        if (navigator.appVersion.indexOf("X11") != -1) OSName = "linux";
+        if (navigator.appVersion.indexOf("Linux") != -1) OSName = "linux";
+        return OSName
+    }
+    function upvote(id, descript) {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'home:show_video' 1234 %}".replace(/1234/, id),
+            data: {
+                'description': descript.id
+            },
+            success: function () {
+                var d = descript.id
+                document.getElementById(d).innerHTML = parseInt(document.getElementById(d).innerHTML) + 1;
+            },
+        });
+    }
+</script>
 {% endblock %}
 
 {% block main %}
-    <div class="row">
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
-        <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
-            <h3>{{ whois }}</h3>
-            <hr>
-            <div class='row'>
-                <div class='contain col-lg-6 col-md-6 col-sm-6 col-xs-12'>
-                    <p style='text-align: left;font-size: 20px;padding-left:10px;'>What kind of content is this stream?</p>
-                    <form action='' method='post'>
-                        {% csrf_token %}
-                        <div class='row'>
-                            <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9'>{{ form.ans }}</div>
-                            <div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'><input style="height:40px;font-size:15px;" class='button' type='submit' value='Go'/></div>
-                        </div>
-                    </form>
-                </div>
-                <div class='contain col-lg-6 col-md-6 col-sm-6 col-xs-12'>
-                    <div class='content'>
-                        {% if descriptions|length == 0 %}
-                            <div class='row'>
-                                <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                                    <p>No descriptions submitted yet.</p>
-                                </div>
-                            </div>
-                        {% else %}
-                            {% for d in descriptions %}
-                                <div class='row'>
-                                    <div style="text-align:left;padding-left:15px;" class='col-lg-9 col-md-9 col-sm-9 col-xs-12'>
-                                        <p style="display: inline-block;">{{ d.1 }}</p>
-                                    </div>
-                                    <div style="text-align:right;" class='col-lg-3 col-md-3 col-sm-3 col-xs-12'>
-                                        <a style="display: inline-block;" onclick="upvote('{{ source }}' + '_' + '{{ group }}', {{ d.1 }})"><i style="color:blue;" class="fa fas fa-thumbs-up"></i></a>
-                                        <p style="display: inline-block;" id='{{ d.1 }}'>{{ d.0 }}</p>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
+<div class="row">
+    <div class='col-lg-1 col-md-1 col-sm-1'></div>
+    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
+        <h3>{{ whois }}</h3>
+        <hr>
+        <div class='row'>
+            <div class='contain col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                <p style='text-align: left;font-size: 20px;padding-left:10px;'>What kind of content is this stream?</p>
+                <form action='' method='post'>
+                    {% csrf_token %}
+                    <div class='row'>
+                        <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9'>{{ form.ans }}</div>
+                        <div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'><input style="height:40px;font-size:15px;"
+                                class='button' type='submit' value='Go' /></div>
                     </div>
-                </div>
+                </form>
             </div>
-            <hr>
-            <div class='row'>
-                <div class='contain col-lg-3 col-md-3 col-sm-3 col-xs-12'>
-                    <a onclick="open_vlc('{{ source }}' + '_' + '{{ group }}')"><button class='button'>Open in VLC</button></a>
+            <div class='contain col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                <div class='content'>
+                    {% if descriptions|length == 0 %}
+                    <div class='row'>
+                        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+                            <p>No descriptions submitted yet.</p>
+                        </div>
+                    </div>
+                    {% else %}
+                    {% for d in descriptions %}
+                    <div class='row'>
+                        <div style="text-align:left;padding-left:15px;" class='col-lg-9 col-md-9 col-sm-9 col-xs-12'>
+                            <p style="display: inline-block;">{{ d.1 }}</p>
+                        </div>
+                        <div style="text-align:right;" class='col-lg-3 col-md-3 col-sm-3 col-xs-12'>
+                            <a style="display: inline-block;"
+                                onclick="upvote('{{ source }}_{{ group }}', '{{ d.1 }}')"><i style="color:blue;"
+                                    class="fa fas fa-thumbs-up"></i></a>
+                            <p style="display: inline-block;" id='{{ d.1 }}'>{{ d.0 }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-                <div class='contain col-lg-9 col-md-9 col-sm-9 col-xs-12'>
-                    <p id='manual'>
-
-                    </p>
-                </div>
-            </div>
-            <hr>
-            <div class='contain' style="text-align: left;">
-                <p>Possible errors you might encounter:</p>
-                <ul>
-                    <li>You don't <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed (this is a dev version).</li>
-                    <li>The video stream you've chosen isn't actually video; try another.</li>
-                    <li>You can't run the downloaded file. Try running as administrator (Windows) or chmod (Mac, Linux) or view manually.</li>
-                </ul>
             </div>
         </div>
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
+        <hr>
+        <div class='row'>
+            <div class='contain col-lg-3 col-md-3 col-sm-3 col-xs-12'>
+                <a onclick="open_vlc('{{ source }}' + '_' + '{{ group }}')"><button class='button'>Open in
+                        VLC</button></a>
+            </div>
+            <div class='contain col-lg-9 col-md-9 col-sm-9 col-xs-12'>
+                <p id='manual'>
+
+                </p>
+            </div>
+        </div>
+        <hr>
+        <div class='contain' style="text-align: left;">
+            <p>Possible errors you might encounter:</p>
+            <ul>
+                <li>You don't <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed (this is a dev
+                    version).</li>
+                <li>The video stream you've chosen isn't actually video; try another.</li>
+                <li>You can't run the downloaded file. Try running as administrator (Windows) or chmod (Mac, Linux) or
+                    view manually.</li>
+            </ul>
+        </div>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <div class='col-lg-1 col-md-1 col-sm-1'></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 {% endblock %}
