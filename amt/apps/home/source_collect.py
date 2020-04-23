@@ -53,8 +53,10 @@ for s in Stream.objects.all():
     current_stream_name.append(s.get_s_g())
 
 for o in output:
+    print(o)
     if o[1] + '_' + o[2] in current_stream_name:
         stream = Stream.objects.filter(source=o[1]).get(group=o[2])
+        stream.pps = o[3]
         stream.active = True
         stream.save()
     else:
