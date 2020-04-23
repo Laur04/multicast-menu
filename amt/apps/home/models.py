@@ -21,4 +21,12 @@ class Stream(models.Model):
 
 class Description(models.Model):
     stream = models.ForeignKey(Stream, on_delete=models.CASCADE) 
+    description = models.CharField(max_length=10000)
     votes = models.IntegerField(default=0)
+
+    def upvote(self):
+        self.votes += 1
+        self.save()
+
+    def __str__(self):
+        return self.description
