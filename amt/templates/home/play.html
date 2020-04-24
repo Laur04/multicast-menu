@@ -49,7 +49,7 @@
         } else if (os == 'linux') {
             para.innerHTML += 'vlc amt://{{ source }}@{{ group }}';
         } else if (os == 'mac') {
-            para.innerHTML += '/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://{{ source }}@{{ group }} --amt-relay 162.250.136.101';
+            para.innerHTML += '/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://{{ source }}@{{ group }}';
         } else {
             para.innerHTML = "You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url or via the command line.";
         }

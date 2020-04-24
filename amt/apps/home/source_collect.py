@@ -26,7 +26,7 @@ for device in M_Source.objects.all():
                 source = str(fields['Source']).split('/')[0]
                 group = str(fields['Group'])
                 st = fields['Statistics'].split(',')
-                pps = int(re.sub(r'[^0-9]', '', st[2]))
+                pps = int(re.sub(r'[^0-9]', '', st[1]))
                 whois = ipwhois.IPWhois(source.split('/')[0])
                 info = whois.lookup_rdap()
                 asn_desc = info['asn_description']

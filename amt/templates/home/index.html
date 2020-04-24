@@ -22,12 +22,23 @@
         .source:hover {
             background-color: #949492;
         }
+        .source {
+            padding-top:20px;
+            padding-bottom:20px;
+        }
         .info {
             text-align: center;
-            font-size: 15px;
+            font-size: 13px;
+            margin-top: 1px;
+        }
+        .descript {
+            font-size: 17px;
+            margin-top: 10px;
         }
         .whois {
             font-weight: bold;
+            margin-bottom: 1px;
+            font-size: 20px;
         }
     </style>
     <script>
@@ -50,11 +61,10 @@
             <hr>
             <div id='stream_list' class='row'>
                 {% for stream in stream_list %}
-                    <div onclick="openVLC(this.id)" id="{{ stream.source }}_{{ stream.group }}" class='col-lg-3 col-md-4 col-sm-4 col-xs-4 source'>
-                        <p class='whois'>{{ stream.whois }}</p>
-                        <p class='info'>Source: {{ stream.source }}</p>
-                        <p class='info'>Group: {{ stream.group }}</p>
-                        <p class='info'>PPS: {{ stream.pps }}</p>
+                    <div onclick="openVLC(this.id)" id="{{ stream.0.source }}_{{ stream.0.group }}" class='col-lg-4 col-md-4 col-sm-6 col-xs-12 source'>
+                        <p class='whois'>{{ stream.0.whois }}</p>
+                        <p class='info'>Source: {{ stream.0.source }}      Group: {{ stream.0.group }}      PPS: {{ stream.0.pps }}</p>
+                        <p class='descript'>{{ stream.1 }}</p>
                     </div>
                 {% endfor %}
             </div>

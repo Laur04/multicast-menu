@@ -82,5 +82,16 @@ def add(request):
         return render(request, 'home/add.html', context={'form':form})
 
 def index(request):
-    active_streams = Stream.objects.filter(active=True)
+    active_streams = list()
+    for s in Stream.objects.filter(active=True):
+        description_list = list()
+        for d in Description.objects.filter(stream=s):
+            description_list.append((d.votes, d.description))
+        to_show = None
+        if description_list:
+            ordered_list = sorted(description_list, key=lambda a: a[0], reverse=True)
+            to_show = ordered_list[0]
+        else:
+            to_show = "No description available"
+        active_streams.append((s, to_show))
     return render(request, 'home/index.html', context={'stream_list':active_streams})
