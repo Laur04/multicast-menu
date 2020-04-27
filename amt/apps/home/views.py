@@ -11,25 +11,10 @@ def vlc(request, target, os):
     target = target.split('_')
     source = target[0]
     group = target[1]
-    if os == 'linux':
-        # make a .sh file
-        response = HttpResponse()
-        response['Content-Disposition'] = 'attachment; filename="play_vlc.sh"'
-        response.write('vlc amt://' + source + '@' + group)
-    elif os == 'windows':
-        # make a .bat file
-        response = HttpResponse()
-        response['Content-Disposition'] = 'attachment; filename="play_vlc.bat"'
-        response.write('"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe" amt://' + source + '@' + group)
-    elif os == 'mac':
-        # make a .command file
-        response = HttpResponse()
-        response['Content-Disposition'] = 'attachment; filename="play_vlc.command"'
-        response.write('/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://' + source + '@' + group + ' --amt-relay 162.250.136.101')
-    if response:
-        return response
-    
-    return HttpResponseRedirect(reverse('home:show_video', kwargs={'target':target}))
+    response = HttpResponse()
+    response['Content-Disposition'] = 'attachment; filename="playlist.m3u"'
+    response.write('amt://' + source + '@' + group)
+    return response
 
 def show_video(request, target):
     target_1 = target.split('_')
