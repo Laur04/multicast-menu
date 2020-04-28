@@ -5,3 +5,6 @@ Pillow
 django-background-tasks
 requests
 ipwhois
+python-dotenv
+dj-database-url
+whitenoise
