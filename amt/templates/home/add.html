@@ -9,12 +9,19 @@
             width:35%;
             padding:10px;
             margin:5px;
-            font-size:120%;
+            margin: 0px;
+            border: none;
+            font-size: 120%;
+            text-decoration: none;
+            background-color:#8fc9a8;
         }
         .main {
             background-color: #dee3e2;
             text-align: center;
             padding: 10px;
+        }
+        #id_description {
+            height: 75px;
         }
     </style>
 {% endblock %}
@@ -25,9 +32,11 @@
         <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
             <form action='' method='post'>
                 {% csrf_token %}
-                <p>Source IP:  {{ form.ip }}</p>
+                <p>Source:  {{ form.source }}</p>
+                <p>Group:  {{ form.group }}</p>
+                <p> Description:  {{ form.description }}</p>
                 {% if error %}
-                    <p>That source is already in the list.</p>
+                    <p style="color:#c23d30">Invalid input for source IP</p>
                 {% endif %}
                 <div style="text-align:center;">
                     <input class='button' type='submit' name='Submit' value='Submit'/>

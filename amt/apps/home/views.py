@@ -3,6 +3,8 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 
 import json
+import datetime
+import ipwhois
 
 from .models import M_Source, Stream, Description
 from .forms import AddForm, DescriptionForm
@@ -33,7 +35,12 @@ def show_video(request, target):
                 new_description.save()
             return HttpResponseRedirect(reverse('home:show_video', kwargs={'target':target}))
     elif request.is_ajax():
-        d = request.GET.get('description', None)
+        a = request.GET.get('description', None)
+        a = a.split('_')
+        d = a[0]
+        source = a[1]
+        group = a[2]
+        stream = Stream.objects.filter(source=source).get(group=group)
         descript = Description.objects.filter(stream=stream).get(description=d)
         descript.upvote()
         data = {}
@@ -52,16 +59,40 @@ def add(request):
     if request.method == 'POST':
         form = AddForm(request.POST)
         if form.is_valid():
-            repeat = False
-            source_list = M_Source.objects.all()
-            for s in source_list:
-                if s.ip == form.cleaned_data['ip']:
-                    repeat = True
-            if not repeat:
-                new_source = M_Source(ip=form.cleaned_data['ip'])
-                new_source.save()
+            source = form.cleaned_data['source']
+            group = form.cleaned_data['group']
+            description = form.cleaned_data['description']
+            try:
+                stream = Stream.objects.filter(source=source).get(group=group)
+                stream.active = True
+                stream.last_found = datetime.datetime.now()
+                stream.save()
+                try:
+                    descript = Description.objects.filter(stream=stream).get(description=description)
+                    descript.upvote()
+                except:
+                    new_description = Description(stream=stream, description=description, votes=0)
+                    new_description.save()
                 return HttpResponseRedirect(reverse('home:index'))
-        return render(request, 'home/add.html', context={'form':form, 'error':True})
+            except:
+                try:
+                    whois = ipwhois.IPWhois(source)
+                    info = whois.lookup_rdap()
+                    asn_desc = info['asn_description']
+                    desc = None
+                    if info['network']['remarks'] is not None:
+                        desc = info['network']['remarks'][0]['description']
+                    if asn_desc is not None:
+                        who_is = asn_desc
+                    else:
+                        who_is = desc
+                    new_stream = Stream(whois=who_is, source=source, group=group, active=True)
+                    new_stream.save()
+                    new_description = Description(stream=new_stream, description=description, votes=0)
+                    new_description.save()
+                    return HttpResponseRedirect(reverse('home:index'))
+                except:
+                    return render(request, 'home/add.html', context={'form':form, 'error':True})
     else:
         form = AddForm()
         return render(request, 'home/add.html', context={'form':form})
@@ -76,7 +107,8 @@ def index(request):
         if description_list:
             ordered_list = sorted(description_list, key=lambda a: a[0], reverse=True)
             to_show = ordered_list[0]
+            active_streams.append((s, to_show))
         else:
             to_show = "No description available"
-        active_streams.append((s, to_show))
+            active_streams.append((s, (0, to_show)))
     return render(request, 'home/index.html', context={'stream_list':active_streams})

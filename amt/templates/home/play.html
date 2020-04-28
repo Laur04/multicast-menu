@@ -10,7 +10,10 @@
     .button {
         width: 95%;
         margin: 0px;
+        border: none;
         font-size: 120%;
+        text-decoration: none;
+        background-color:#8fc9a8;
     }
 
     .main {
@@ -73,10 +76,10 @@
             type: "GET",
             url: "{% url 'home:show_video' 1234 %}".replace(/1234/, id),
             data: {
-                'description': descript.id
+                'description': descript + '_' + id
             },
             success: function () {
-                var d = descript.id
+                var d = descript
                 document.getElementById(d).innerHTML = parseInt(document.getElementById(d).innerHTML) + 1;
             },
         });
@@ -90,6 +93,16 @@
     <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
         <h3>{{ whois }}</h3>
         <hr>
+        <div class='contain'>
+            <a onclick="open_vlc('{{ source }}' + '_' + '{{ group }}')"><button class='button' style="width:45%;font-size:25px;padding:20px;">Open in VLC</button></a>
+        </div>
+        <br>
+        <div>
+            <p id='manual'>
+
+            </p>
+        </div>
+        <hr>
         <div class='row'>
             <div class='contain col-lg-6 col-md-6 col-sm-6 col-xs-12'>
                 <p style='text-align: left;font-size: 20px;padding-left:10px;'>What kind of content is this stream?</p>
@@ -97,8 +110,9 @@
                     {% csrf_token %}
                     <div class='row'>
                         <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9'>{{ form.ans }}</div>
-                        <div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'><input style="height:40px;font-size:15px;"
-                                class='button' type='submit' value='Go' /></div>
+                        <div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'>
+                            <input style="height:40px;font-size:15px;" class='button' type='submit' value='Go' />
+                        </div>
                     </div>
                 </form>
             </div>
@@ -107,37 +121,24 @@
                     {% if descriptions|length == 0 %}
                     <div class='row'>
                         <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                            <p>No descriptions submitted yet.</p>
+                            <p style="font-size:18px;">No descriptions submitted yet.</p>
                         </div>
                     </div>
                     {% else %}
                     {% for d in descriptions %}
                     <div class='row'>
-                        <div style="text-align:left;padding-left:15px;" class='col-lg-9 col-md-9 col-sm-9 col-xs-12'>
+                        <div style="text-align:left;padding-left:18px;font-size:18px;" class='col-lg-9 col-md-9 col-sm-9 col-xs-12'>
                             <p style="display: inline-block;">{{ d.1 }}</p>
                         </div>
-                        <div style="text-align:right;" class='col-lg-3 col-md-3 col-sm-3 col-xs-12'>
+                        <div style="text-align:right;padding-right:25px;" class='col-lg-3 col-md-3 col-sm-3 col-xs-12'>
                             <a style="display: inline-block;"
-                                onclick="upvote('{{ source }}_{{ group }}', '{{ d.1 }}')"><i style="color:blue;"
-                                    class="fa fas fa-thumbs-up"></i></a>
+                                onclick="upvote('{{ source }}_{{ group }}', '{{ d.1 }}')"><i style="color:#8fc9a8;" class="fa fas fa-thumbs-up"></i></a>
                             <p style="display: inline-block;" id='{{ d.1 }}'>{{ d.0 }}</p>
                         </div>
                     </div>
                     {% endfor %}
                     {% endif %}
                 </div>
-            </div>
-        </div>
-        <hr>
-        <div class='row'>
-            <div class='contain col-lg-3 col-md-3 col-sm-3 col-xs-12'>
-                <a onclick="open_vlc('{{ source }}' + '_' + '{{ group }}')"><button class='button'>Open in
-                        VLC</button></a>
-            </div>
-            <div class='contain col-lg-9 col-md-9 col-sm-9 col-xs-12'>
-                <p id='manual'>
-
-                </p>
             </div>
         </div>
         <hr>
