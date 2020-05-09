@@ -20,7 +20,7 @@
             text-align: center;
             padding: 10px;
         }
-        #id_description {
+        #id_message {
             height: 75px;
         }
     </style>
@@ -32,15 +32,14 @@
         <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
             <form action='' method='post'>
                 {% csrf_token %}
-                <p>Source:  {{ form.source }}</p>
-                <p>Group:  {{ form.group }}</p>
-                <p>Description:  {{ form.description }}</p>
-                <p>Contact Email:  {{ form.email }}</p>
+                <p>Your Email:  {{ form.sender }}</p>
+                <p>Message:  {{ form.message }}</p>
+                <p>{{ form.captcha }}</p>
                 {% if error %}
-                    <p style="color:#c23d30">Invalid input for source IP address.</p>
+                    <p style="color:#c23d30">Invalid CAPTCHA.</p>
                 {% endif %}
                 <div style="text-align:center;">
-                    <input class='button' type='submit' name='Submit' value='Submit'/>
+                    <input class='button' type='submit' name='Send' value='Send'/>
                 </div>
             </form>
         </div>

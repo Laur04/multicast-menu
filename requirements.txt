@@ -8,3 +8,4 @@ ipwhois
 python-dotenv
 dj-database-url
 whitenoise
+django-simple-captcha

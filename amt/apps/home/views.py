@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
+from django.core.mail import send_mail
 
 import json
 import datetime
 import ipwhois
 
 from .models import M_Source, Stream, Description
-from .forms import AddForm, DescriptionForm
+from .forms import AddForm, DescriptionForm, EmailForm
 
 def vlc(request, target, os):
     target = target.split('_')
@@ -18,11 +19,31 @@ def vlc(request, target, os):
     response.write('amt://' + source + '@' + group)
     return response
 
+def contact(request, target):
+    target_1 = target.split('_')
+    source = target_1[0]
+    group = target_1[1]
+    stream = Stream.objects.filter(source=source).get(group=group)
+    if request.method == "POST":
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            send_mail('Question from ' + form.cleaned_data['sender'], 
+                'IMPORTANT: Please respond to ' + form.cleaned_data['sender'] + ' NOT to this email.\n\n' + form.cleaned_data['message'], 
+                form.cleaned_data['sender'], 
+                [stream.email],
+                fail_silently=False)
+            return HttpResponseRedirect((reverse('home:show_video', kwargs={'target':target})))
+        return render(request, 'home/contact.html', context={'form':form, 'error':True})
+    else:
+        form = EmailForm()
+        return render(request, 'home/contact.html', context={'form':form})
+
 def show_video(request, target):
     target_1 = target.split('_')
     source = target_1[0]
     group = target_1[1]
     stream = Stream.objects.filter(source=source).get(group=group)
+    email = stream.email
     whois = stream.whois
     if request.method == 'POST':
         form = DescriptionForm(request.POST)
@@ -53,7 +74,7 @@ def show_video(request, target):
     ordered_list = sorted(description_list, key=lambda a: a[0], reverse=True)
     if len(ordered_list) > 3:
         ordered_list = [ordered_list[0], ordered_list[1], ordered_list[2]]
-    return render(request, 'home/play.html', context={'source':source, 'group':group, 'whois':whois, 'form':form, 'descriptions':ordered_list})
+    return render(request, 'home/play.html', context={'source':source, 'group':group, 'target':target, 'whois':whois, 'form':form, 'descriptions':ordered_list, 'email':email})
 
 def add(request):
     if request.method == 'POST':
@@ -87,9 +108,13 @@ def add(request):
                     else:
                         who_is = desc
                     new_stream = Stream(whois=who_is, source=source, group=group, active=True)
+                    email = form.cleaned_data['email']
+                    if email:
+                        new_stream.email = email
                     new_stream.save()
-                    new_description = Description(stream=new_stream, description=description, votes=0)
-                    new_description.save()
+                    if description:
+                        new_description = Description(stream=new_stream, description=description, votes=0)
+                        new_description.save()
                     return HttpResponseRedirect(reverse('home:index'))
                 except:
                     return render(request, 'home/add.html', context={'form':form, 'error':True})

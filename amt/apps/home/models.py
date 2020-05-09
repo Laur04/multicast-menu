@@ -16,7 +16,7 @@ class Stream(models.Model):
     pps = models.IntegerField(blank=True, null=True)
     active = models.BooleanField(default=True)
     last_found = models.DateTimeField(auto_now_add=True)
-
+    email = models.EmailField(blank=True, null=True)
 
     def __str__(self):
         return 'amt://' + self.source + '@' + self.group
