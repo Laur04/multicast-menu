@@ -60,15 +60,3 @@ for o in output:
         new_stream = Stream(whois=o[0], source=o[1], group=o[2], pps=o[3], active=True)
         new_stream.save()
         print('Create new stream')
-
-for s in Stream.objects.all():
-    print(s)
-    if s.active:
-        if s.older_than_seven():
-            s.active = False
-            s.save()
-            print('Deactived')
-        else:
-            print('Stay Active')
-    else:
-        print('Not Active')
