@@ -66,7 +66,9 @@ devices = [
 BASE_URL = 'https://routerproxy.grnoc.iu.edu/internet2/'
 for device in devices:
     ip = device
+    time.sleep(2)
     r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show multicast&menu=0&arguments=route detail')
+    time.sleep(2)
     new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
     s_new_text = new_text.split('\n')
     outfile.write("\n\n//////////////////////////////\n")
@@ -81,11 +83,15 @@ for device in devices:
                 group = str(fields['Group'])
                 upstream = str(fields['Upstreaminterface'])
 
-                time.sleep(2)
-                r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + upstream)
-                new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
-                up_name = new_text[new_text.index('Description') + 12:new_text.index('Flags')]
-                time.sleep(2)
+                try:
+                    time.sleep(2)
+                    r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + upstream)
+                    new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
+                    up_name = new_text[new_text.index('Description') + 12:new_text.index('Flags')]
+                    time.sleep(2)
+                except:
+                    up_name = "Undefined"
+                    pass
 
                 downstream = "None"
                 if 'Downstreaminterfacelist' in fields.keys():
@@ -114,6 +120,5 @@ for device in devices:
             fields = dict()
         else:
             fields[s_line[0]] = ''.join(s_line[1:])
-    time.sleep(2)
 
 outfile.close()
