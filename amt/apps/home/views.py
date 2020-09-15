@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.core.mail import send_mail
+from django.conf import settings
 
 import json
 import datetime
@@ -18,6 +19,22 @@ def vlc(request, target, os):
     response['Content-Disposition'] = 'attachment; filename="playlist.m3u"'
     response.write('amt://' + source + '@' + group)
     return response
+
+def downvote(request, target):
+    target_1 = target.split('_')
+    source = target_1[0]
+    group = target_1[1]
+    stream = Stream.objects.filter(source=source).get(group=group)
+    stream.downvote += 1
+    stream.save()
+    if stream.downvote > 7:
+        send_mail('Broken Stream Warning',
+            'The stream amt://{}@{} has been reported broken by {} users. Please investigate.'.format(source, group, stream.downvote),
+            settings.EMAIL_HOST_USER,
+            ['pmd7211@gmail.com'],
+            fail_silently=False
+        )
+    return HttpResponseRedirect((reverse('home:show_video', kwargs={'target':target}))) 
 
 def contact(request, target):
     target_1 = target.split('_')

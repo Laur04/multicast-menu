@@ -81,8 +81,8 @@ for device in devices:
             if 'Group' in fields:
                 source = str(fields['Source']).split('/')[0]
                 group = str(fields['Group'])
-                upstream = str(fields['Upstreaminterface'])
 
+                upstream = str(fields['Upstreaminterface'])
                 try:
                     time.sleep(2)
                     r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + upstream)
@@ -96,6 +96,25 @@ for device in devices:
                 downstream = "None"
                 if 'Downstreaminterfacelist' in fields.keys():
                     downstream = list(fields)[list(fields).index('Downstreaminterfacelist') + 1]
+                    down_list = []
+                    names_list = []
+                    if downstream.count('.') > 1:
+                        down_list.append(downstream[:8])
+                        down_list.append(downstream[8:])
+                    else:
+                        down_list.append(downstream)
+                    for d in down_list:
+                        try:
+                            time.sleep(2)
+                            r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + d)
+                            new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
+                            up_name = new_text[new_text.index('Description') + 12:new_text.index('Flags')]
+                            names_list.append(up_name)
+                            time.sleep(2)
+                        except:
+                            names_list.append("Undefined")
+                down_string = ''.join(['{} ({})'.format(names_list[i], down_list[i]) for i in range(len(down_list))])
+
                 st = fields['Statistics'].split(',')
                 pps = int(re.sub(r'[^0-9]', '', st[1]))
                 whois = ipwhois.IPWhois(source.split('/')[0])
@@ -109,7 +128,7 @@ for device in devices:
                 else:
                     who_is = desc
                 
-                outfile.write("\n*****************\nDiscovered Stream: {}, Source: {}, Group: {}, PPS: {}, IIF: {} ({}), OIL: {}\n".format(who_is, source, group, pps, up_name, upstream, downstream))
+                outfile.write("\n*****************\nDiscovered Stream: {}, Source: {}, Group: {}, PPS: {}, IIF: {} ({}), OIL: {}\n".format(who_is, source, group, pps, up_name, upstream, down_string))
                 if re.match("^[0-9.]+$", source) and source != '193.17.9.3':  # filter out IPv6, Eumsat
                     if pps > 100:
                         outfile.write("Stream kept for display on site.")

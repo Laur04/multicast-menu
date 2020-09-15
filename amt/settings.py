@@ -29,7 +29,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -121,7 +121,7 @@ EMAIL_HOST = "smtp.gmail.com"
 
 EMAIL_PORT = 587
 
-EMAIL_HOST_USER = 'multicastmenu'
+EMAIL_HOST_USER = 'multicastmenu1'
 
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
 
