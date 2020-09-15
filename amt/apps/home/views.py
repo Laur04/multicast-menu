@@ -31,7 +31,7 @@ def downvote(request, target):
         send_mail('Broken Stream Warning',
             'The stream amt://{}@{} has been reported broken by {} users. Please investigate.'.format(source, group, stream.downvote),
             settings.EMAIL_HOST_USER,
-            ['pmd7211@gmail.com'],
+            ['pmd7211@gmail.com', 'lenny@juniper.net'],
             fail_silently=False
         )
     return HttpResponseRedirect((reverse('home:show_video', kwargs={'target':target}))) 
