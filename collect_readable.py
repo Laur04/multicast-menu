@@ -1,11 +1,3 @@
-import django
-import os
-import logging
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "amt.settings")
-django.setup()
-
-from .models import Stream, M_Source
-
 import requests
 import re
 import time
