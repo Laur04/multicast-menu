@@ -12,6 +12,7 @@ class M_Source(models.Model):
 class Stream(models.Model):
     whois = models.CharField(max_length=100)
     source = models.CharField(max_length=50)
+    udp_port = models.CharField(max_length=50, blank=True, null=True)
     group = models.CharField(max_length=50)
     pps = models.IntegerField(blank=True, null=True)
     active = models.BooleanField(default=True)

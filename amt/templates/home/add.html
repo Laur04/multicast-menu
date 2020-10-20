@@ -34,6 +34,7 @@
                 {% csrf_token %}
                 <p>Source:  {{ form.source }}</p>
                 <p>Group:  {{ form.group }}</p>
+                <p>UDP Port: {{ form.udp }}</p>
                 <p>Description:  {{ form.description }}</p>
                 <p>Contact Email:  {{ form.email }}</p>
                 {% if error %}

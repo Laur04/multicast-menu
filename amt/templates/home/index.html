@@ -63,12 +63,10 @@
                 {% for stream in stream_list %}
                     <div onclick="openVLC(this.id)" id="{{ stream.0.source }}_{{ stream.0.group }}" class='col-lg-4 col-md-4 col-sm-6 col-xs-12 source'>
                         <p class='whois'>{{ stream.0.whois }}</p>
-                        {% if stream.0.pps %}
-                            <p class='info'>Source: {{ stream.0.source }},      Group: {{ stream.0.group }},      PPS: {{ stream.0.pps }}</p>
-                        {% else %}
-                            <p class='info'>Source: {{ stream.0.source }},      Group: {{ stream.0.group }}</p>
-                        {% endif %}
-                            <p class='descript'>{{ stream.1.1 }}</p>
+                        <p class='info'>
+                            Source: {{ stream.0.source }},      Group: {{ stream.0.group }}{% if stream.0.pps %},      PPS: {{ stream.0.pps }}{% endif %}{% if stream.0.udp_port %},      UDP: {{ stream.0.udp_port }}{% endif %}
+                        </p>
+                        <p class='descript'>{{ stream.1.1 }}</p>
                     </div>
                 {% endfor %}
             </div>
