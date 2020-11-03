@@ -15,9 +15,13 @@ def vlc(request, target, os):
     target = target.split('_')
     source = target[0]
     group = target[1]
+    stream = Stream.objects.filter(source=source).get(group=group)
     response = HttpResponse()
     response['Content-Disposition'] = 'attachment; filename="playlist.m3u"'
-    response.write('amt://' + source + '@' + group)
+    if stream.udp_port:
+        response.write('amt://' + source + '@' + group + ':' + stream.udp_port)
+    else:
+        response.write('amt://' + source + '@' + group)
     return response
 
 def downvote(request, target):
@@ -91,7 +95,7 @@ def show_video(request, target):
     ordered_list = sorted(description_list, key=lambda a: a[0], reverse=True)
     if len(ordered_list) > 3:
         ordered_list = [ordered_list[0], ordered_list[1], ordered_list[2]]
-    return render(request, 'home/play.html', context={'source':source, 'group':group, 'target':target, 'whois':whois, 'form':form, 'descriptions':ordered_list, 'email':email})
+    return render(request, 'home/play.html', context={'source':source, 'group':group, 'udp':stream.udp_port, 'target':target, 'whois':whois, 'form':form, 'descriptions':ordered_list, 'email':email})
 
 def add(request):
     if request.method == 'POST':

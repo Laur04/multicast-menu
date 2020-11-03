@@ -45,16 +45,17 @@
 <script>
     window.onload = function () {
         var para = document.getElementById('manual')
-        para.innerHTML = "You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url or via the command line with ";
+        var link = 'amt://{{ source }}@{{ group }}{% if udp %}:{{ udp }}{% endif %}'
+        para.innerHTML = "You can also view this video manually in VLC by entering " + link + " as the network url or via the command line with ";
         os = find_os()
         if (os == 'windows') {
-            para.innerHTML += '"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe" amt://{{ source }}@{{ group }}';
+            para.innerHTML += '"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe" ' + link;
         } else if (os == 'linux') {
-            para.innerHTML += 'vlc amt://{{ source }}@{{ group }}';
+            para.innerHTML += 'vlc ' + link;
         } else if (os == 'mac') {
-            para.innerHTML += '/Applications/VLC.app/Contents/MacOS/VLC -vvv amt://{{ source }}@{{ group }}';
+            para.innerHTML += '/Applications/VLC.app/Contents/MacOS/VLC -vvv ' + link;
         } else {
-            para.innerHTML = "You can also view this video manually in VLC by entering amt://{{ source }}@{{ group }} as the network url or via the command line.";
+            para.innerHTML = "You can also view this video manually in VLC by entering " + link + " as the network url or via the command line.";
         }
     }
     function open_vlc(id) {
