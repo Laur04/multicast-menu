@@ -9,7 +9,7 @@ import datetime
 import ipwhois
 
 from .models import M_Source, Stream, Description
-from .forms import AddForm, DescriptionForm, EmailForm
+from .forms import AddForm, DescriptionForm
 
 def vlc(request, target, os):
     target = target.split('_')
@@ -36,28 +36,9 @@ def downvote(request, target):
             'The stream amt://{}@{} has been reported broken by {} users. Please investigate.'.format(source, group, stream.downvote),
             settings.EMAIL_HOST_USER,
             ['pmd7211@gmail.com', 'lenny@juniper.net'],
-            fail_silently=False
+            fail_silently=True
         )
     return HttpResponseRedirect((reverse('home:show_video', kwargs={'target':target}))) 
-
-def contact(request, target):
-    target_1 = target.split('_')
-    source = target_1[0]
-    group = target_1[1]
-    stream = Stream.objects.filter(source=source).get(group=group)
-    if request.method == "POST":
-        form = EmailForm(request.POST)
-        if form.is_valid():
-            send_mail('Question from ' + form.cleaned_data['sender'], 
-                'IMPORTANT: Please respond to ' + form.cleaned_data['sender'] + ' NOT to this email.\n\n' + form.cleaned_data['message'], 
-                form.cleaned_data['sender'], 
-                [stream.email],
-                fail_silently=False)
-            return HttpResponseRedirect((reverse('home:show_video', kwargs={'target':target})))
-        return render(request, 'home/contact.html', context={'form':form, 'error':True})
-    else:
-        form = EmailForm()
-        return render(request, 'home/contact.html', context={'form':form})
 
 def show_video(request, target):
     target_1 = target.split('_')
@@ -95,7 +76,7 @@ def show_video(request, target):
     ordered_list = sorted(description_list, key=lambda a: a[0], reverse=True)
     if len(ordered_list) > 3:
         ordered_list = [ordered_list[0], ordered_list[1], ordered_list[2]]
-    return render(request, 'home/play.html', context={'source':source, 'group':group, 'udp':stream.udp_port, 'target':target, 'whois':whois, 'form':form, 'descriptions':ordered_list, 'email':email})
+    return render(request, 'home/play.html', context={'source':source, 'group':group, 'udp':stream.udp_port, 'stream': stream, 'target':target, 'whois':whois, 'form':form, 'descriptions':ordered_list, 'email':email})
 
 def add(request):
     if request.method == 'POST':

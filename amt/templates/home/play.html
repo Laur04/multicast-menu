@@ -106,7 +106,7 @@
         {% if email %}
             <hr>
             <div class='contain'>
-                <a href="{% url 'home:contact' target %}"><p>Contact Stream Owner</p></a>
+                <a href="mailto:{{ stream.email }}"><p>Contact Stream Owner</p></a>
             </div>
         {% endif %}
         <hr>
