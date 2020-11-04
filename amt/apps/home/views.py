@@ -136,6 +136,6 @@ def index(request):
             to_show = ordered_list[0]
             active_streams.append((s, to_show))
         else:
-            to_show = "No description available"
+            to_show = "No title available"
             active_streams.append((s, (0, to_show)))
     return render(request, 'home/index.html', context={'stream_list':active_streams})
