@@ -4,11 +4,11 @@ html {
 }
 
 .main {
-    min-height: calc(100vh - 65px);
+    min-height: calc(100vh - 85px);
     margin-top: 65px;
     background-color: #dee3e2;
     text-align: center;
-    padding: 10px;
+    padding-top: 10px;
 }
 
 .centered-div {
@@ -101,8 +101,7 @@ html {
 }
 
 .source {
-    padding: 20px;
-    margin: 5px;
+    padding: 10px;
 }
 
 .source:hover {
@@ -147,4 +146,12 @@ html {
 
 .add-form {
     padding: 10px;
+}
+
+.descript-form-field {
+    min-width:32vw
+}
+
+.descript-form-btn {
+    max-width: 5vw;
 }

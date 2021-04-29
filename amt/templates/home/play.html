@@ -68,7 +68,7 @@
         {% if stream.email %}
             <a href="mailto:{{ stream.email }}"><p class="link inline-ele">Contact Stream Owner</p></a>
         {% endif %}
-        <a href="{% url 'home:downvote' target %}"><p class="link inline-ele">Stream Doesn't Work?</p></a>
+        <a onclick="alert('Thank you for reporting this. Your input has been tallied.')" href="{% url 'home:downvote' target %}"><p class="link inline-ele">Stream Doesn't Work?</p></a>
     </div>
     <hr>
     <div class='row'>
@@ -76,8 +76,8 @@
             <p>What kind of content is this stream?</p>
             <form action='' method='post'>
                 {% csrf_token %}
-                <p style="min-width:32vw" class="inline-ele">{{ form.ans }}</p>
-                <input style="max-width:5vw;" class='inline-ele button' type='submit' value='Go' />
+                <p class="inline-ele descript-form-field">{{ form.ans }}</p>
+                <input class='inline-ele button descript-form-btn' type='submit' value='Go' />
             </form>
         </div>
         <div class='contain col-lg-6 col-md-6 col-sm-6 col-xs-12'>
@@ -110,7 +110,7 @@
         <ul>
             <li>You don't <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed (this is a dev
                 version).</li>
-            <li>The video stream you've chosen isn't actually video, so VLC is unable to play it. Try another stream, we are working on filtering.</li>
+            <li>The video stream you've chosen isn't actually video, so VLC is unable to play it. Try another stream; we are working on filtering.</li>
             <li>The file that is downloaded isn't opening in VLC. Make sure that VLC is the default app for opening .m3u files in your settings.</li>
         </ul>
     </div>

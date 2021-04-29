@@ -29,7 +29,23 @@ def downvote(request, target):
     stream.downvote += 1
     stream.save()
 
+    if stream.downvote > 7:
+        stream.active = False
+        stream.save()
+
     return redirect(reverse('home:show_video', kwargs={'target': target}))
+
+
+def invalid_streams(request):
+    active_streams = list()
+    for s in Stream.objects.filter(active=False).order_by("-downvote"):
+        streams = Description.objects.filter(stream=s)
+        if streams.exists():
+            active_streams.append((s, streams.order_by("-votes")[0].description))
+        else:
+            active_streams.append((s, "No title available"))
+    
+    return render(request, 'home/invalid.html', context={'stream_list': active_streams})
 
 
 def show_video(request, target):
@@ -78,10 +94,11 @@ def add(request):
 
 def index(request):
     active_streams = list()
-    for s in Stream.objects.filter(active=True):
-        description_list = sorted([(d.votes, d.description) for d in Description.objects.filter(stream=s)], key=lambda a: a[0], reverse=True)
-        if not description_list:
-            description_list.append((0, "No title available"))
-        active_streams.append((s, description_list[0]))
+    for s in Stream.objects.filter(active=True).order_by("downvote"):
+        streams = Description.objects.filter(stream=s)
+        if streams.exists():
+            active_streams.append((s, streams.order_by("-votes")[0].description))
+        else:
+            active_streams.append((s, "No title available"))
     
     return render(request, 'home/index.html', context={'stream_list': active_streams})
