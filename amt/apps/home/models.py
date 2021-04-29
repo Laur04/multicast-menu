@@ -24,7 +24,7 @@ class Stream(models.Model):
     downvote = models.IntegerField(default=0)
 
     def __str__(self):
-        title = self.description_set.order_by("-votes")[0] if self.description_set else "No title available"
+        title = self.description_set.order_by("-votes")[0] if len(self.description_set.all()) > 0 else "No title available"
         return "{} (Source: {}, Group: {})".format(title, self.source, self.group)
 
     def get_s_g(self):
