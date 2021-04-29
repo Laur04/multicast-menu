@@ -3,80 +3,29 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        .button {
-            width:40%;
-            padding:10px;
-            margin:5px;
-            font-size:120%;
-        }
-        .main {
-            background-color: #dee3e2;
-            text-align: center;
-            padding: 10px;
-        }
-        #load {
-            text-align: center;
-        }
-        .source:hover {
-            background-color: #949492;
-        }
-        .source {
-            padding-top:20px;
-            padding-bottom:20px;
-        }
-        .info {
-            text-align: center;
-            font-size: 13px;
-            margin-top: 1px;
-        }
-        .descript {
-            font-size: 17px;
-            margin-top: 10px;
-        }
-        .whois {
-            font-weight: bold;
-            margin-bottom: 1px;
-            font-size: 20px;
-        }
-    </style>
     <script>
         function openVLC(id) {
             var to_open = "{% url 'home:show_video' 1234 %}".replace(/1234/, id.toString());
-            window.open(to_open);
+            window.open(to_open, "_self");
         }
     </script>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 {% endblock %}
 
 {% block main %}
-    <div class="row">
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
-        <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
-            <div class="intro">
-                <h4>Available content is listed below.</h4>
-                <h7>Make sure you have <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed.</h7>
-            </div>
-            <hr>
-            <div id='stream_list' class='row'>
-                {% for stream in stream_list %}
-                    <div onclick="openVLC(this.id)" id="{{ stream.0.source }}_{{ stream.0.group }}" class='col-lg-4 col-md-4 col-sm-6 col-xs-12 source'>
-                        <p class='whois'>{{ stream.1.1 }}</p>
-                        <p class='info'>
-                            Source: {{ stream.0.source }},      Group: {{ stream.0.group }}{% if stream.0.pps %},      PPS: {{ stream.0.pps }}{% endif %}{% if stream.0.udp_port %},      UDP: {{ stream.0.udp_port }}{% endif %}
-                        </p>
-                        <p class='descript'>{{ stream.0.whois }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
+    <div class="intro">
+        <h4>Available content is listed below.</h4>
+        <h7>Make sure you have <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed.</h7>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <hr>
+    <div id='stream_list' class='row'>
+        {% for stream in stream_list %}
+            <div onclick="openVLC(this.id)" id="{{ stream.0.source }}_{{ stream.0.group }}" class='col-lg-4 col-md-4 col-sm-6 col-xs-12 source'>
+                <p class='whois'>{{ stream.1.1 }}</p>
+                <p class='info'>
+                    Source: {{ stream.0.source }},      Group: {{ stream.0.group }}{% if stream.0.pps %},      PPS: {{ stream.0.pps }}{% endif %}{% if stream.0.udp_port %},      UDP: {{ stream.0.udp_port }}{% endif %}
+                </p>
+                <p class='descript'>{{ stream.0.whois }}</p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
- 

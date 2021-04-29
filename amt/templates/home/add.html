@@ -2,53 +2,41 @@
 
 {% load static %}
 
-{% block head %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        .button {
-            width:35%;
-            padding:10px;
-            margin:5px;
-            margin: 0px;
-            border: none;
-            font-size: 120%;
-            text-decoration: none;
-            background-color:#8fc9a8;
-        }
-        .main {
-            background-color: #dee3e2;
-            text-align: center;
-            padding: 10px;
-        }
-        #id_description {
-            height: 75px;
-        }
-    </style>
-{% endblock %}
-
 {% block main %}
-    <div class="row">
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
-        <div class='col-lg-10 col-md-10 col-sm-10 col-xs-12 main'>
-            <form action='' method='post'>
-                {% csrf_token %}
-                <p>Source:  {{ form.source }}</p>
-                <p>Group:  {{ form.group }}</p>
-                <p>UDP Port: {{ form.udp }}</p>
-                <p>Description:  {{ form.description }}</p>
-                <p>Contact Email:  {{ form.email }}</p>
-                {% if error %}
-                    <p style="color:#c23d30">Invalid input for source IP address.</p>
-                {% endif %}
-                <div style="text-align:center;">
-                    <input class='button' type='submit' name='Submit' value='Submit'/>
-                </div>
-            </form>
-        </div>
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
-    </div>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <form action='' method='post' class='add-form'>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <p>
+            <label for="{{ form.source.id_for_label }}">{{ form.source.label }}:</label>
+            {{ form.source }}
+            {{ form.source.errors }}
+        </p>
+
+        <p>
+            <label for="{{ form.group.id_for_label }}">{{ form.group.label }}:</label>
+            {{ form.group }}
+            {{ form.group.errors }}
+        </p>
+        
+        <p>
+            <label for="{{ form.udp_port.id_for_label }}">{{ form.udp_port.label }}:</label>
+            {{ form.udp_port }}
+            {{ form.udp_port.errors }}
+        </p>
+        
+        <p>
+            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </p>
+
+        <p>
+            <label for="{{ form.description.id_for_label }}">{{ form.description.label }}:</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </p>
+
+        <input class='button' type='submit' name='Add' value='Add'/>
+    </form>    
 {% endblock %}

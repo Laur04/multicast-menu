@@ -1,13 +1,16 @@
+import datetime
+import ipwhois
+import pytz
+
 from django.db import models
 
-import datetime
-import pytz
 
 class M_Source(models.Model):
     ip = models.CharField(max_length=100)
 
     def __str__(self):
         return self.ip
+
 
 class Stream(models.Model):
     whois = models.CharField(max_length=100)
@@ -26,13 +29,14 @@ class Stream(models.Model):
     def get_s_g(self):
         return self.source + '_' + self.group
 
-    def older_than_seven(self):
-        utc = pytz.UTC
-        diff = datetime.datetime.today() - datetime.timedelta(days=7)
-        diff = utc.localize(diff)
-        if self.last_found < diff:
-            return True
-        return False
+    def save(self, *args, **kwargs):
+        info = ipwhois.IPWhois(self.source).lookup_rdap()
+        asn_desc = info['asn_description']
+        desc = info['network']['remarks'][0]['description'] if info['network']['remarks'] is not None else None
+        who_is = asn_desc if asn_desc is not None else desc
+                
+        super(Stream, self).save(*args, **kwargs)
+
 
 class Description(models.Model):
     stream = models.ForeignKey(Stream, on_delete=models.CASCADE) 

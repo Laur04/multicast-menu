@@ -1,16 +1,17 @@
+import datetime
 import django
-import os
+import ipwhois
 import logging
+import os
+import re
+import requests
+import time
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "amt.settings")
 django.setup()
 
 from .models import Stream, M_Source
 
-import requests
-import re
-import time
-import ipwhois
-import datetime
 
 output = set()
 BASE_URL = 'https://routerproxy.grnoc.iu.edu/internet2/'
