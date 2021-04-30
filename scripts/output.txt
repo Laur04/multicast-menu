@@ -1,0 +1,375 @@
+##############
+Device: 64.57.28.241 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Group:224.2.127.254, Source:193.1.186.55/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, xe-7/0/1.20, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,806655packets, Next-hopID:1049172, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.56/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, xe-7/0/1.20, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,806629packets, Next-hopID:1049172, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.57/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, xe-7/0/1.20, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,806620packets, Next-hopID:1049172, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.58/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, xe-7/0/1.20, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,806695packets, Next-hopID:1049172, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.59/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, xe-7/0/1.20, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,806602packets, Next-hopID:1049172, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.60/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, xe-7/0/1.20, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,806578packets, Next-hopID:1049172, Upstreamprotocol:PIM, , Group:232.223.222.1, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:25kBps,50pps,37913720packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.6, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,40731938packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.8, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,7730095packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.9, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:3kBps,3pps,3181797packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.12, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:108kBps,89pps,40783884packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.18, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:551kBps,457pps,199470979packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.19, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:38kBps,32pps,114102373packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.20, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:638kBps,508pps,97374439packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.23, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:84kBps,70pps,76783739packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.24, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:142kBps,116pps,215736187packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.33, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:92kBps,76pps,117389137packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.36, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,118237054packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.46, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:8kBps,7pps,77041400packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:232.223.222.64, Source:193.17.9.3/32, Upstreaminterface:ae6.4079, Downstreaminterfacelist:, et-11/0/5.2250, Sessiondescription:Sourcespecificmulticast, Statistics:67kBps,56pps,19247270packets, Next-hopID:1049052, Upstreamprotocol:PIM, , Group:233.44.15.9, Source:129.174.131.51/32, Upstreaminterface:ae1.4070, Downstreaminterfacelist:, ae3.4079, Sessiondescription:GLOPBlock, Statistics:1531kBps,1139pps,958207381packets, Next-hopID:1049058, Upstreamprotocol:PIM, , Instance:masterFamily:INET6, 
+
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.55, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UofMemphisR&E|I2-S11741~AS14048 (xe-7/0/1.20)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.56, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UofMemphisR&E|I2-S11741~AS14048 (xe-7/0/1.20)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.57, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UofMemphisR&E|I2-S11741~AS14048 (xe-7/0/1.20)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.58, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UofMemphisR&E|I2-S11741~AS14048 (xe-7/0/1.20)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.59, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UofMemphisR&E|I2-S11741~AS14048 (xe-7/0/1.20)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.60, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UofMemphisR&E|I2-S11741~AS14048 (xe-7/0/1.20)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.1, PPS: 50, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.6, PPS: 0, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.8, PPS: 0, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.9, PPS: 3, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.12, PPS: 89, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.18, PPS: 457, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.19, PPS: 32, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.20, PPS: 508, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.23, PPS: 70, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.24, PPS: 116, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.33, PPS: 76, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.36, PPS: 0, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.46, PPS: 7, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.64, PPS: 56, IIF: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079), OIL: [RE]UniversityofWisconsin-MadisonR&E|I2-S11967~AS59 (et-11/0/5.2250)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: GEORGE-MASON-UNIV, US, Source: 129.174.131.51, Group: 233.44.15.9, PPS: 1139, IIF: BACKBONE:CHIC-EQCHR&EVLANviaAL2S|I2-CHIC-EQCH-VLAN-56076 (ae1.4070), OIL: BACKBONE:CHIC-KANS|I2-CHIC-KANS-VLAN-184514 (ae3.4079)
+Stream kept for display on site.
+
+
+##############
+Device: 64.57.28.242 (I2)
+Raw Output: .......................showmulticastroutedetail, Instance:masterFamily:INET, , Instance:masterFamily:INET6, 
+
+
+
+##############
+Device: 64.57.28.243 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Group:224.2.127.254, Source:193.1.186.55/32, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-3/3/0.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,839850packets, Next-hopID:1049025, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.56/32, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-3/3/0.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,839806packets, Next-hopID:1049025, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.57/32, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-3/3/0.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,839766packets, Next-hopID:1049025, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.58/32, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-3/3/0.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,839851packets, Next-hopID:1049025, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.59/32, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-3/3/0.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,839781packets, Next-hopID:1049025, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.60/32, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-3/3/0.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,839714packets, Next-hopID:1049025, Upstreamprotocol:PIM, , Instance:masterFamily:INET6, 
+
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.55, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ATLA-WASH|I2-ATLA-WASH-VLAN-185230 (ae1.4079), OIL: BACKBONE:ATLA-JACK|I2-ATLA-JACK-VLAN-70246 (et-3/3/0.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.56, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ATLA-WASH|I2-ATLA-WASH-VLAN-185230 (ae1.4079), OIL: BACKBONE:ATLA-JACK|I2-ATLA-JACK-VLAN-70246 (et-3/3/0.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.57, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ATLA-WASH|I2-ATLA-WASH-VLAN-185230 (ae1.4079), OIL: BACKBONE:ATLA-JACK|I2-ATLA-JACK-VLAN-70246 (et-3/3/0.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.58, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ATLA-WASH|I2-ATLA-WASH-VLAN-185230 (ae1.4079), OIL: BACKBONE:ATLA-JACK|I2-ATLA-JACK-VLAN-70246 (et-3/3/0.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.59, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ATLA-WASH|I2-ATLA-WASH-VLAN-185230 (ae1.4079), OIL: BACKBONE:ATLA-JACK|I2-ATLA-JACK-VLAN-70246 (et-3/3/0.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.60, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ATLA-WASH|I2-ATLA-WASH-VLAN-185230 (ae1.4079), OIL: BACKBONE:ATLA-JACK|I2-ATLA-JACK-VLAN-70246 (et-3/3/0.4079)
+Stream filtered out because PPS is less than or equal to 100.
+
+
+##############
+Device: 64.57.28.244 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Instance:masterFamily:INET6, 
+
+
+
+##############
+Device: 64.57.28.245 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Group:233.44.15.9, Source:129.174.131.51/32, Upstreaminterface:ae3.4079, Downstreaminterfacelist:, et-8/3/0.11, Sessiondescription:GLOPBlock, Statistics:1532kBps,1140pps,4126400583packets, Next-hopID:1048746, Upstreamprotocol:PIM, , Instance:masterFamily:INET6, 
+
+*************
+Discovered Stream: GEORGE-MASON-UNIV, US, Source: 129.174.131.51, Group: 233.44.15.9, PPS: 1140, IIF: BACKBONE:CHIC-KANS|I2-CHIC-KANS-VLAN-184514 (ae3.4079), OIL: [RE]KanRENviaGPN|I2-S12869~AS2495 (et-8/3/0.11)
+Stream kept for display on site.
+
+
+##############
+Device: 64.57.28.246 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Instance:masterFamily:INET6, 
+
+
+
+##############
+Device: 64.57.28.247 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Group:224.2.127.254, Source:193.1.186.55/32, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-10/0/0.706, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,840572packets, Next-hopID:1049120, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.57/32, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-10/0/0.706, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,840534packets, Next-hopID:1049120, Upstreamprotocol:PIM, , Instance:masterFamily:INET6, 
+
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.55, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:MINN-SEAT|I2-MINN-SEAT-VLAN-191179 (ae1.4079), OIL: [RE]PacificWaveSeattleLocal(9KMTU)|I2-S12103 (et-10/0/0.706)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.57, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:MINN-SEAT|I2-MINN-SEAT-VLAN-191179 (ae1.4079), OIL: [RE]PacificWaveSeattleLocal(9KMTU)|I2-S12103 (et-10/0/0.706)
+Stream filtered out because PPS is less than or equal to 100.
+
+
+##############
+Device: 64.57.28.248 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Instance:masterFamily:INET6, 
+
+
+
+##############
+Device: 64.57.28.249 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Group:224.2.127.254, Source:193.1.186.55/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079ae4.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,840619packets, Next-hopID:1049158, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.56/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079ae4.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,807139packets, Next-hopID:1049158, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.57/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079ae4.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,840581packets, Next-hopID:1049158, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.58/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079ae4.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,807205packets, Next-hopID:1049158, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.59/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079ae4.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,807111packets, Next-hopID:1049158, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.60/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079ae4.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,807087packets, Next-hopID:1049158, Upstreamprotocol:PIM, , Group:232.2.3.2, Source:83.212.2.46/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,181933packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:62.217.95.34/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,111575packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:62.217.95.52/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,3pps,109310packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:83.212.2.46/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,110436packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:83.212.2.62/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,109663packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.162.250.138, Source:162.250.138.201/32, Upstreaminterface:et-7/0/5.114, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:397kBps,296pps,295046740packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.1, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:27kBps,54pps,37938532packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.6, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,40731938packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.8, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,7730856packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.9, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:1kBps,2pps,3184918packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.12, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:4kBps,4pps,40833121packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.18, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:550kBps,459pps,199704103packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.19, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:454kBps,364pps,114145750packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.20, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:1075kBps,856pps,97591307packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.23, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:53kBps,44pps,76835407packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.24, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:234kBps,191pps,215852616packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.33, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:238kBps,196pps,117474097packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.36, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:249kBps,202pps,118250892packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.46, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:271kBps,221pps,77098772packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:232.223.222.64, Source:193.17.9.3/32, Upstreaminterface:ae6.3000, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,19253617packets, Next-hopID:1048991, Upstreamprotocol:PIM, , Group:233.44.15.9, Source:129.174.131.51/32, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, et-1/1/0.4079, Sessiondescription:GLOPBlock, Statistics:1531kBps,1139pps,958818321packets, Next-hopID:1048791, Upstreamprotocol:PIM, , Instance:masterFamily:INET6, , Group:ff3e::beef, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, ae6.3000, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,265882packets, Next-hopID:1048803, Upstreamprotocol:PIM, , Group:ff3e::caeb, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, ae6.3000, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,10186packets, Next-hopID:1048803, Upstreamprotocol:PIM, , Group:ff7e:140:2001:620:0:fe:0:caeb, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, ae6.3000, Sessiondescription:Unknown, Statistics:0kBps,3pps,1667535packets, Next-hopID:1048803, Upstreamprotocol:PIM, , Group:ff7e:340:2001:648:2fff:ff:dead:beef, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, ae6.3000, Sessiondescription:Unknown, Statistics:0kBps,2pps,1674775packets, Next-hopID:1048803, Upstreamprotocol:PIM, 
+
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.55, Group: 224.2.127.254, PPS: 1, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: Undefined (ae2.4079ae4.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.56, Group: 224.2.127.254, PPS: 1, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: Undefined (ae2.4079ae4.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.57, Group: 224.2.127.254, PPS: 1, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: Undefined (ae2.4079ae4.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.58, Group: 224.2.127.254, PPS: 1, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: Undefined (ae2.4079ae4.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.59, Group: 224.2.127.254, PPS: 1, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: Undefined (ae2.4079ae4.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.60, Group: 224.2.127.254, PPS: 1, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: Undefined (ae2.4079ae4.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 83.212.2.46, Group: 232.2.3.2, PPS: 2, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 62.217.95.34, Group: 232.21.32.32, PPS: 2, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 62.217.95.52, Group: 232.21.32.32, PPS: 3, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 83.212.2.46, Group: 232.21.32.32, PPS: 2, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 83.212.2.62, Group: 232.21.32.32, PPS: 2, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: CAAREN, US, Source: 162.250.138.201, Group: 232.162.250.138, PPS: 296, IIF: [RE]CAARENv4viaAL2S/WASH|I2-S11808~AS4901 (et-7/0/5.114), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream kept for display on site.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.1, PPS: 54, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.6, PPS: 0, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.8, PPS: 0, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.9, PPS: 2, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.12, PPS: 4, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.18, PPS: 459, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.19, PPS: 364, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.20, PPS: 856, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.23, PPS: 44, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.24, PPS: 191, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.33, PPS: 196, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.36, PPS: 202, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.46, PPS: 221, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.64, PPS: 0, IIF: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000), OIL: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: GEORGE-MASON-UNIV, US, Source: 129.174.131.51, Group: 233.44.15.9, PPS: 1139, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079), OIL: BACKBONE:PHIL-WASH|I2-PHIL-WASH-VLAN-70590 (et-1/1/0.4079)
+Stream kept for display on site.
+*************
+Discovered Stream: NDIN, US, Source: 2001:4930:95:0:2989:f518:d5d3:55c6, Group: ff3e::beef, PPS: 2, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079), OIL: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: NDIN, US, Source: 2001:4930:95:0:2989:f518:d5d3:55c6, Group: ff3e::caeb, PPS: 2, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079), OIL: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: NDIN, US, Source: 2001:4930:95:0:2989:f518:d5d3:55c6, Group: ff7e:140:2001:620:0:fe:0:caeb, PPS: 3, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae2.4079), OIL: [RE]GEANT(AMS)ANA100GviaWIX/WASH|~AS20965 (ae6.3000)
+Stream filtered out because it is either Eumsat or IPv6.
+
+
+##############
+Device: 64.57.28.250 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Group:224.2.127.254, Source:193.1.186.55/32, Upstreaminterface:ae20.4079, Downstreaminterfacelist:, ae1.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,841056packets, Next-hopID:1048591, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.57/32, Upstreaminterface:ae20.4079, Downstreaminterfacelist:, ae1.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,841018packets, Next-hopID:1048591, Upstreamprotocol:PIM, , Group:232.2.3.2, Source:83.212.2.46/32, Upstreaminterface:ae20.4079, Downstreaminterfacelist:, ae1.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,183226packets, Next-hopID:1048591, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:62.217.95.34/32, Upstreaminterface:ae20.4079, Downstreaminterfacelist:, ae1.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,112452packets, Next-hopID:1048591, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:62.217.95.52/32, Upstreaminterface:ae20.4079, Downstreaminterfacelist:, ae1.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,110138packets, Next-hopID:1048591, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:83.212.2.46/32, Upstreaminterface:ae20.4079, Downstreaminterfacelist:, ae1.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,111230packets, Next-hopID:1048591, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:83.212.2.62/32, Upstreaminterface:ae20.4079, Downstreaminterfacelist:, ae1.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,110474packets, Next-hopID:1048591, Upstreamprotocol:PIM, , Group:233.44.15.9, Source:129.174.131.51/32, Upstreaminterface:et-7/1/0.4079, Downstreaminterfacelist:, ae1.4079, Sessiondescription:GLOPBlock, Statistics:1531kBps,1139pps,2127526590packets, Next-hopID:1048591, Upstreamprotocol:PIM, , Instance:masterFamily:INET6, , Group:ff3e::beef, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-7/1/0.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,1pps,266670packets, Next-hopID:1048692, Upstreamprotocol:PIM, , Group:ff3e::caeb, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-7/1/0.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,11054packets, Next-hopID:1048692, Upstreamprotocol:PIM, , Group:ff7e:140:2001:620:0:fe:0:caeb, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-7/1/0.4079, Sessiondescription:Unknown, Statistics:0kBps,2pps,1668482packets, Next-hopID:1048692, Upstreamprotocol:PIM, , Group:ff7e:340:2001:648:2fff:ff:dead:beef, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae1.4079, Downstreaminterfacelist:, et-7/1/0.4079, Sessiondescription:Unknown, Statistics:0kBps,2pps,1675784packets, Next-hopID:1048692, Upstreamprotocol:PIM, 
+
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.55, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-CLEV|I2-ASHB-CLEV-VLAN-189664 (ae20.4079), OIL: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.57, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-CLEV|I2-ASHB-CLEV-VLAN-189664 (ae20.4079), OIL: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 83.212.2.46, Group: 232.2.3.2, PPS: 2, IIF: Undefined (ae20.4079), OIL: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 62.217.95.34, Group: 232.21.32.32, PPS: 2, IIF: BACKBONE:ASHB-CLEV|I2-ASHB-CLEV-VLAN-189664 (ae20.4079), OIL: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 62.217.95.52, Group: 232.21.32.32, PPS: 2, IIF: BACKBONE:ASHB-CLEV|I2-ASHB-CLEV-VLAN-189664 (ae20.4079), OIL: Undefined (ae1.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 83.212.2.46, Group: 232.21.32.32, PPS: 2, IIF: BACKBONE:ASHB-CLEV|I2-ASHB-CLEV-VLAN-189664 (ae20.4079), OIL: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 83.212.2.62, Group: 232.21.32.32, PPS: 2, IIF: BACKBONE:ASHB-CLEV|I2-ASHB-CLEV-VLAN-189664 (ae20.4079), OIL: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GEORGE-MASON-UNIV, US, Source: 129.174.131.51, Group: 233.44.15.9, PPS: 1139, IIF: BACKBONE:CLEV-PITT|I2-CLEV-PITT-VLAN-70331 (et-7/1/0.4079), OIL: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079)
+Stream kept for display on site.
+*************
+Discovered Stream: NDIN, US, Source: 2001:4930:95:0:2989:f518:d5d3:55c6, Group: ff3e::beef, PPS: 1, IIF: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079), OIL: BACKBONE:CLEV-PITT|I2-CLEV-PITT-VLAN-70331 (et-7/1/0.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: NDIN, US, Source: 2001:4930:95:0:2989:f518:d5d3:55c6, Group: ff3e::caeb, PPS: 2, IIF: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079), OIL: BACKBONE:CLEV-PITT|I2-CLEV-PITT-VLAN-70331 (et-7/1/0.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: NDIN, US, Source: 2001:4930:95:0:2989:f518:d5d3:55c6, Group: ff7e:140:2001:620:0:fe:0:caeb, PPS: 2, IIF: BACKBONE:CLEV-EQCH|I2-CLEV-EQCH-VLAN-184958 (ae1.4079), OIL: BACKBONE:CLEV-PITT|I2-CLEV-PITT-VLAN-70331 (et-7/1/0.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+
+
+##############
+Device: 64.57.28.252 (I2)
+Raw Output: ..................showmulticastroutedetail, Instance:masterFamily:INET, , Instance:masterFamily:INET6, 
+
+
+
+##############
+Device: 64.57.28.253 (I2)
+Raw Output: ...................showmulticastroutedetail, Instance:masterFamily:INET, , Group:224.2.127.254, Source:193.1.186.55/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae2.4079ae6.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,841229packets, Next-hopID:1048611, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.56/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,807748packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.57/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae2.4079ae6.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,841191packets, Next-hopID:1048611, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.58/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,807815packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.59/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,807721packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:224.2.127.254, Source:193.1.186.60/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:SAPv1Announcements, Statistics:0kBps,1pps,807697packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.2.3.2, Source:83.212.2.46/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,183784packets, Next-hopID:1049160, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:62.217.95.34/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,1pps,112672packets, Next-hopID:1049160, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:62.217.95.52/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,110411packets, Next-hopID:1049160, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:83.212.2.46/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,111521packets, Next-hopID:1049160, Upstreamprotocol:PIM, , Group:232.21.32.32, Source:83.212.2.62/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,2pps,110794packets, Next-hopID:1049160, Upstreamprotocol:PIM, , Group:232.162.250.138, Source:162.250.138.201/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae2.4079, Sessiondescription:Sourcespecificmulticast, Statistics:375kBps,279pps,295261504packets, Next-hopID:1049160, Upstreamprotocol:PIM, , Group:232.223.222.1, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:11kBps,32pps,37968195packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.6, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,40731938packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.8, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,7731644packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.9, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,3186728packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.12, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,40899871packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.18, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:553kBps,445pps,199981955packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.19, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:35kBps,29pps,114272311packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.20, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,97694181packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.23, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:8kBps,7pps,76870703packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.24, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,0pps,215986338packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.33, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:262kBps,217pps,117602419packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.36, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:332kBps,268pps,118383017packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.46, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:291kBps,234pps,77135894packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:232.223.222.64, Source:193.17.9.3/32, Upstreaminterface:ae0.4079, Downstreaminterfacelist:, ae6.4079, Sessiondescription:Sourcespecificmulticast, Statistics:87kBps,73pps,19280918packets, Next-hopID:1049090, Upstreamprotocol:PIM, , Group:233.44.15.9, Source:129.174.131.51/32, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, ae0.4079, Sessiondescription:GLOPBlock, Statistics:1531kBps,1139pps,959518206packets, Next-hopID:1048687, Upstreamprotocol:PIM, , Instance:masterFamily:INET6, , Group:ff3e::beef, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, ae0.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,3pps,267020packets, Next-hopID:1048663, Upstreamprotocol:PIM, , Group:ff3e::caeb, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, ae0.4079, Sessiondescription:Sourcespecificmulticast, Statistics:0kBps,1pps,11304packets, Next-hopID:1048663, Upstreamprotocol:PIM, , Group:ff7e:140:2001:620:0:fe:0:caeb, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, ae0.4079, Sessiondescription:Unknown, Statistics:0kBps,3pps,1668743packets, Next-hopID:1048663, Upstreamprotocol:PIM, , Group:ff7e:340:2001:648:2fff:ff:dead:beef, Source:2001:4930:95:0:2989:f518:d5d3:55c6/128, Upstreaminterface:ae2.4079, Downstreaminterfacelist:, ae0.4079, Sessiondescription:Unknown, Statistics:0kBps,3pps,1676165packets, Next-hopID:1048663, Upstreamprotocol:PIM, 
+
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.55, Group: 224.2.127.254, PPS: 1, IIF: Undefined (ae0.4079), OIL: Undefined (ae2.4079ae6.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.56, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.57, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: Undefined (ae2.4079ae6.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.58, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.59, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: HEANET, IE, Source: 193.1.186.60, Group: 224.2.127.254, PPS: 1, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 83.212.2.46, Group: 232.2.3.2, PPS: 2, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-ASHB|I2-ASHB-ASHB-VLAN-185525 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 62.217.95.34, Group: 232.21.32.32, PPS: 1, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-ASHB|I2-ASHB-ASHB-VLAN-185525 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 62.217.95.52, Group: 232.21.32.32, PPS: 2, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-ASHB|I2-ASHB-ASHB-VLAN-185525 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 83.212.2.46, Group: 232.21.32.32, PPS: 2, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-ASHB|I2-ASHB-ASHB-VLAN-185525 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: GR-NET http://www.grnet.gr, GR, Source: 83.212.2.62, Group: 232.21.32.32, PPS: 2, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-ASHB|I2-ASHB-ASHB-VLAN-185525 (ae2.4079)
+Stream filtered out because PPS is less than or equal to 100.
+*************
+Discovered Stream: CAAREN, US, Source: 162.250.138.201, Group: 232.162.250.138, PPS: 279, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-ASHB|I2-ASHB-ASHB-VLAN-185525 (ae2.4079)
+Stream kept for display on site.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.1, PPS: 32, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.6, PPS: 0, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.8, PPS: 0, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.9, PPS: 0, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.12, PPS: 0, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.18, PPS: 445, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.19, PPS: 29, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.20, PPS: 0, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.23, PPS: 7, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.24, PPS: 0, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.33, PPS: 217, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.36, PPS: 268, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.46, PPS: 234, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: BACKBONE:ASHB-CHIC|I2-ASHB-CHIC-VLAN-70336 (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: EUMETSAT-OPS, DE, Source: 193.17.9.3, Group: 232.223.222.64, PPS: 73, IIF: BACKBONE:ASHB-WASH|I2-ASHB-WASH-VLAN-184120 (ae0.4079), OIL: Undefined (ae6.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: GEORGE-MASON-UNIV, US, Source: 129.174.131.51, Group: 233.44.15.9, PPS: 1139, IIF: Undefined (ae2.4079), OIL: Undefined (ae0.4079)
+Stream kept for display on site.
+*************
+Discovered Stream: NDIN, US, Source: 2001:4930:95:0:2989:f518:d5d3:55c6, Group: ff3e::beef, PPS: 3, IIF: Undefined (ae2.4079), OIL: Undefined (ae0.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: NDIN, US, Source: 2001:4930:95:0:2989:f518:d5d3:55c6, Group: ff3e::caeb, PPS: 1, IIF: Undefined (ae2.4079), OIL: Undefined (ae0.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+*************
+Discovered Stream: NDIN, US, Source: 2001:4930:95:0:2989:f518:d5d3:55c6, Group: ff7e:140:2001:620:0:fe:0:caeb, PPS: 3, IIF: Undefined (ae2.4079), OIL: Undefined (ae0.4079)
+Stream filtered out because it is either Eumsat or IPv6.
+
+
