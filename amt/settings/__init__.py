@@ -60,6 +60,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'amt.wsgi.application'
 
+SILENCED_SYSTEM_CHECKS = [
+    "models.W042"
+]
+
 
 # Database
 DATABASES = {}

@@ -31,7 +31,9 @@ def run(devices):
                     # Pull out stream statistics
                     st = fields['Statistics'].split(',')
                     pps = int(re.sub(r'[^0-9]', '', st[1]))
+                    time.sleep(2)
                     info = ipwhois.IPWhois(source.split('/')[0]).lookup_rdap()
+                    time.sleep(2)
                     asn_desc = info['asn_description']
                     desc = info['network']['remarks'][0]['description'] if info['network']['remarks'] is not None else None
                     who_is = asn_desc if asn_desc is not None else desc
