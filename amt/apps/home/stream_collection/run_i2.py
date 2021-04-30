@@ -11,9 +11,9 @@ def run(devices):
         print(ip)
         
         # Make a request to the looking glass, surrounded by pauses to avoid rate limits.
-        time.sleep(2)
+        time.sleep(5)
         r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show multicast&menu=0&arguments=route detail')
-        time.sleep(2)
+        time.sleep(5)
 
         # Format the raw response text and split it into an array
         new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text).split('\n')

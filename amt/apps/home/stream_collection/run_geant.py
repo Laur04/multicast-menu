@@ -11,12 +11,12 @@ def run(devices):
     to_return = set()
     for ip in devices:
         print(ip)
-        
+
         # Make a request to the looking glass, surrounded by pauses to avoid rate limits.
-        time.sleep(2)
+        time.sleep(5)
         data = {"selectedRouters":[{"name":ip}],"selectedCommand":{"value":"show multicast route extensive inet\""}}
         r = requests.post(BASE_URL, data=json.dumps(data), headers=headers)
-        time.sleep(2)
+        time.sleep(5)
 
         # Format the raw response text and split it into an array
         response = json.loads(r.text)["output"][ip]["commandResult"]
