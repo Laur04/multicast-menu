@@ -11,9 +11,9 @@ def run(devices):
         print(ip)
         
         # Make a request to the looking glass, surrounded by pauses to avoid rate limits.
-        time.sleep(5)
+        time.sleep(2)
         r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show multicast&menu=0&arguments=route detail')
-        time.sleep(5)
+        time.sleep(2)
 
         # Format the raw response text and split it into an array
         new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text).split('\n')
@@ -31,9 +31,7 @@ def run(devices):
                     # Pull out stream statistics
                     st = fields['Statistics'].split(',')
                     pps = int(re.sub(r'[^0-9]', '', st[1]))
-                    time.sleep(2)
-                    info = ipwhois.IPWhois(source.split('/')[0]).lookup_rdap()
-                    time.sleep(2)
+                    info = ipwhois.IPWhois(source.split('/')[0].strip()).lookup_rdap(retry_count=5, rate_limit_timeout=30)
                     asn_desc = info['asn_description']
                     desc = info['network']['remarks'][0]['description'] if info['network']['remarks'] is not None else None
                     who_is = asn_desc if asn_desc is not None else desc

@@ -9,9 +9,9 @@ def run(outfile):
     devices = [d.strip() for d in open("devices_i2.txt", "r").readlines()]
     for ip in devices:
         # Make a request to the looking glass, surrounded by pauses to avoid rate limits.
-        time.sleep(5)
+        time.sleep(2)
         r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show multicast&menu=0&arguments=route detail')
-        time.sleep(5)
+        time.sleep(2)
 
         # Format the raw response text and split it into an array
         new_text = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text).split('\n')
@@ -32,9 +32,9 @@ def run(outfile):
                     # Attempt to discover the upstream interface
                     upstream_interface = str(fields['Upstreaminterface'])
                     try:
-                        time.sleep(5)
+                        time.sleep(2)
                         r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + upstream_interface)
-                        time.sleep(5)
+                        time.sleep(2)
                         
                         response = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
                         upstream_interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
@@ -50,9 +50,9 @@ def run(outfile):
                         interface_names = []
                         for interface in downstream_interfaces_list:
                             try:
-                                time.sleep(5)
+                                time.sleep(2)
                                 r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + interface)
-                                time.sleep(5)
+                                time.sleep(2)
 
                                 response = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
                                 interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
