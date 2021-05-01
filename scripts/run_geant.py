@@ -11,10 +11,10 @@ def run(outfile):
     devices = [d.strip() for d in open("devices_geant.txt", "r").readlines()]
     for ip in devices:
         # Make a request to the looking glass, surrounded by pauses to avoid rate limits.
-        time.sleep(5)
+        time.sleep(2)
         data = {"selectedRouters":[{"name":ip}],"selectedCommand":{"value":"show multicast route extensive inet\""}}
         r = requests.post(BASE_URL, data=json.dumps(data), headers=headers)
-        time.sleep(5)
+        time.sleep(2)
 
         # Format the raw response text and split it into an array
         response = json.loads(r.text)["output"][ip]["commandResult"]
@@ -36,10 +36,10 @@ def run(outfile):
                     # Attempt to discover the upstream interface
                     upstream_interface = str(fields['Upstream interface'])
                     try:
-                        time.sleep(5)
+                        time.sleep(2)
                         data = {"selectedRouters":[{"name":ip}],"selectedCommand":{"value":"show interface " + upstream_interface}}
                         r = requests.post(BASE_URL, data=json.dumps(data), headers=headers)
-                        time.sleep(5)
+                        time.sleep(2)
 
                         response = json.loads(r.text)["output"][ip]["commandResult"]
                         upstream_interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
@@ -55,10 +55,10 @@ def run(outfile):
                         interface_names = []
                         for interface in downstream_interfaces_list:
                             try:
-                                time.sleep(5)
+                                time.sleep(2)
                                 data = {"selectedRouters":[{"name":ip}],"selectedCommand":{"value":"show interface " + interface}}
                                 r = requests.post(BASE_URL, data=json.dumps(data), headers=headers)
-                                time.sleep(5)
+                                time.sleep(2)
 
                                 response = json.loads(r.text)["output"][ip]["commandResult"]
                                 interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
