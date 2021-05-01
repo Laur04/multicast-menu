@@ -17,6 +17,7 @@ class Command(BaseCommand):
 
         for s in streams:  # s = (source, group, whois, pps)
             if re.match("^[0-9.]+$", s[0]) and s[0] != '193.17.9.3' and s[3] > 100:  # filter out IPv6, Eumsat, low PPS
-                Stream.objects.update_or_create(source=s[0], group=s[1], defaults={"whois": s[2], "pps": s[3]})
+                s = Stream.objects.update_or_create(source=s[0], group=s[1], defaults={"whois": s[2], "pps": s[3]})[0]
+                print(s)
 
         print("Finished")
