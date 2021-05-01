@@ -3,7 +3,6 @@ import json
 import re
 import requests
 import time
-import whois
 
 
 def run(devices):
