@@ -7,6 +7,7 @@ import time
 def run(devices):
     BASE_URL = 'https://routerproxy.grnoc.iu.edu/internet2/'
     to_return = set()
+    sources = dict()
     for ip in devices:
         print(ip)
         
@@ -31,10 +32,15 @@ def run(devices):
                     # Pull out stream statistics
                     st = fields['Statistics'].split(',')
                     pps = int(re.sub(r'[^0-9]', '', st[1]))
-                    info = ipwhois.IPWhois(source.split('/')[0].strip()).lookup_rdap(retry_count=100, rate_limit_timeout=1)
-                    asn_desc = info['asn_description']
-                    desc = info['network']['remarks'][0]['description'] if info['network']['remarks'] is not None else None
-                    who_is = asn_desc if asn_desc is not None else desc
+
+                    # Gather whois data
+                    who_is = "Undefined"
+                    formatted_source = source.split('/')[0].strip()
+                    if formatted_source in sources.keys():
+                        who_is = sources[formatted_source]
+                    else:
+                        who_is = ipwhois.IPWhois(formatted_source).lookup_whois()['asn_description']
+                        sources[formatted_source] = who_is
 
                     # Add information to to_return
                     to_return.add((source, group, who_is, pps))
