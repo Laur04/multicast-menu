@@ -77,7 +77,7 @@ def run(outfile):
 
                     # Decide how the site will treat this stream
                     site_decision = ""
-                    if re.match("^[0-9.]+$", source):  # filter out IPv6
+                    if re.match("^[0-9.]+$", source) and source != '193.17.9.7':  # filter out IPv6, Eumsat
                         site_decision = "Stream kept for display on site." if pps > 100 else "Stream filtered out because PPS is less than or equal to 100."
                     else:
                        site_decision = "Stream filtered out because it is IPv6."
