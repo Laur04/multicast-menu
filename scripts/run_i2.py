@@ -7,6 +7,7 @@ import time
 def run(outfile):
     BASE_URL = 'https://routerproxy.grnoc.iu.edu/internet2/'
     devices = [d.strip() for d in open("devices_i2.txt", "r").readlines()]
+    sources = dict()
     for ip in devices:
         # Make a request to the looking glass, surrounded by pauses to avoid rate limits.
         time.sleep(2)
@@ -32,12 +33,13 @@ def run(outfile):
                     # Attempt to discover the upstream interface
                     upstream_interface = str(fields['Upstreaminterface'])
                     try:
-                        time.sleep(2)
-                        r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + upstream_interface)
-                        time.sleep(2)
-                        
-                        response = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
-                        upstream_interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
+                        if upstream_interface in sources.keys():
+                            upstream_interface_name = sources[upstream_interface]
+                        else:
+                            r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + upstream_interface)
+                            response = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
+                            upstream_interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
+                            sources[upstream_interface] = upstream_interface_name 
                     except:
                         upstream_interface_name = "Undefined"
                         pass
@@ -50,12 +52,13 @@ def run(outfile):
                         interface_names = []
                         for interface in downstream_interfaces_list:
                             try:
-                                time.sleep(2)
-                                r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + interface)
-                                time.sleep(2)
-
-                                response = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
-                                interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
+                                if interface in sources.keys():
+                                    interface_name = sources[interface]
+                                else:
+                                    r = requests.get(BASE_URL + '?method=submit&device=' + ip + '&command=show interfaces&menu=0&arguments=' + interface)
+                                    response = re.sub(r'&[^\s]{2,4};|[\r]', '', r.text)
+                                    interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
+                                    sources[interface] = interface_name
                                 interface_names.append(interface_name)
                             except:
                                 interface_names.append("Undefined")
@@ -64,10 +67,15 @@ def run(outfile):
                     # Pull out stream statistics
                     st = fields['Statistics'].split(',')
                     pps = int(re.sub(r'[^0-9]', '', st[1]))
-                    info = ipwhois.IPWhois(source.split('/')[0]).lookup_rdap()
-                    asn_desc = info['asn_description']
-                    desc = info['network']['remarks'][0]['description'] if info['network']['remarks'] is not None else None
-                    who_is = asn_desc if asn_desc is not None else desc
+
+                    # Gather whois data
+                    who_is = "Undefined"
+                    formatted_source = source.split('/')[0].strip()
+                    if formatted_source in sources.keys():
+                        who_is = sources[formatted_source]
+                    else:
+                        who_is = ipwhois.IPWhois(formatted_source).lookup_whois()['asn_description']
+                        sources[formatted_source] = who_is
 
                     # Decide how the site will treat this stream
                     site_decision = ""

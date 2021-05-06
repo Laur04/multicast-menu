@@ -9,6 +9,7 @@ def run(outfile):
     BASE_URL = 'https://lg.geant.org/rest/submit'
     headers = {"accept": "application/json", "content-type": "application/json"}
     devices = [d.strip() for d in open("devices_geant.txt", "r").readlines()]
+    sources = dict()
     for ip in devices:
         # Make a request to the looking glass, surrounded by pauses to avoid rate limits.
         time.sleep(2)
@@ -36,13 +37,14 @@ def run(outfile):
                     # Attempt to discover the upstream interface
                     upstream_interface = str(fields['Upstream interface'])
                     try:
-                        time.sleep(2)
-                        data = {"selectedRouters":[{"name":ip}],"selectedCommand":{"value":"show interface " + upstream_interface}}
-                        r = requests.post(BASE_URL, data=json.dumps(data), headers=headers)
-                        time.sleep(2)
-
-                        response = json.loads(r.text)["output"][ip]["commandResult"]
-                        upstream_interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
+                        if upstream_interface in sources.keys():
+                            upstream_interface_name = sources[upstream_interface]
+                        else:
+                            data = {"selectedRouters":[{"name":ip}],"selectedCommand":{"value":"show interface " + upstream_interface}} 
+                            r = requests.post(BASE_URL, data=json.dumps(data), headers=headers)
+                            response = json.loads(r.text)["output"][ip]["commandResult"]
+                            upstream_interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
+                            sources[upstream_interface] = upstream_interface_name
                     except:
                         upstream_interface_name = "Undefined"
                         pass
@@ -55,13 +57,14 @@ def run(outfile):
                         interface_names = []
                         for interface in downstream_interfaces_list:
                             try:
-                                time.sleep(2)
-                                data = {"selectedRouters":[{"name":ip}],"selectedCommand":{"value":"show interface " + interface}}
-                                r = requests.post(BASE_URL, data=json.dumps(data), headers=headers)
-                                time.sleep(2)
-
-                                response = json.loads(r.text)["output"][ip]["commandResult"]
-                                interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
+                                if interface in sources.keys():
+                                    interface_name = sources[interface]
+                                else:
+                                    data = {"selectedRouters":[{"name":ip}],"selectedCommand":{"value":"show interface " + interface}}
+                                    r = requests.post(BASE_URL, data=json.dumps(data), headers=headers)
+                                    response = json.loads(r.text)["output"][ip]["commandResult"]
+                                    interface_name = response[response.index('Description') + 12:response.index('Flags')].strip()
+                                    sources[interface] = interface_name
                                 interface_names.append(interface_name)
                             except:
                                 interface_names.append("Undefined")
@@ -70,10 +73,15 @@ def run(outfile):
                     # Pull out stream statistics
                     st = fields['Statistics'].split(',')
                     pps = int(re.sub(r'[^0-9]', '', st[1]))
-                    info = ipwhois.IPWhois(source.split('/')[0].strip()).lookup_rdap()
-                    asn_desc = info['asn_description']
-                    desc = info['network']['remarks'][0]['description'] if info['network']['remarks'] is not None else None
-                    who_is = asn_desc if asn_desc is not None else desc
+                    
+                    # Gather whois data
+                    who_is = "Undefined"
+                    formatted_source = source.split('/')[0].strip()
+                    if formatted_source in sources.keys():
+                        who_is = sources[formatted_source]
+                    else:
+                        who_is = ipwhois.IPWhois(formatted_source).lookup_whois()['asn_description']
+                        sources[formatted_source] = who_is
 
                     # Decide how the site will treat this stream
                     site_decision = ""
