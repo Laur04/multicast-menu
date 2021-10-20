@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+    <script>
+        function openVLC(id) {
+            var to_open = "{% url 'view:show_video' 1234 %}".replace(/1234/, id.toString());
+            window.open(to_open, "_self");
+        }
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="intro">
+        <h4>Inactive Streams</h4>
+        <h7>These streams have recieved more than 7 downvotes from users and have been marked inactive. If you believe this is an error, please <a href="mailto:pmd7211@gmail.com?cc=lenny@juniper.net&subject=[Multicast Menu]%20Invalid%20Stream%20Comment">contact the site administrators.</a></h7>
+    </div>
+    <hr>
+    <div class='left-div'>
+        <ul>
+            {% for stream in stream_list %}
+                <li><a href="#" onclick="openVLC(this.id)" id="{{ stream.0.source }}_{{ stream.0.group }}">{{ stream.1 }}</a> 
+                    from {{ stream.0.whois }} (Source: {{ stream.0.source }}, Group: {{ stream.0.group }}{% if stream.0.pps %}, PPS: {{ stream.0.pps }}{% endif %}{% if stream.0.udp_port %}, UDP: {{ stream.0.udp_port }}{% endif %})
+                </li>
+            {% endfor %}
+        </ul>        
+    </div>
+{% endblock %}
