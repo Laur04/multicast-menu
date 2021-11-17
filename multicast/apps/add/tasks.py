@@ -1,6 +1,4 @@
-import os
-import time
-
+import subprocess
 from celery import current_task, shared_task
 
 from .models import ManualReport, StreamSubmission
@@ -14,11 +12,7 @@ def submit_file_to_translator(submission_id):
     submission.active = True
     submission.save()
 
-    cmd = "/usr/bin/sudo -u web /usr/bin/vlc {} --sout=udp://162.250.138.11:9001 --loop --sout-keep".format(submission.path_to_uploaded_file)
-    os.system(cmd)
-
-    while True:
-        time.sleep(100)
+    subprocess.Popen(["/usr/bin/sudo -u web /usr/bin/vlc {} --sout=udp://162.250.138.11:9001 --loop --sout-keep".format(submission.path_to_uploaded_file)], shell=True)
 
 
 # Recieves the live content from the URL and streams it out to the translator
@@ -29,11 +23,7 @@ def submit_link_to_translator(submission_id):
     submission.active = True
     submission.save()
 
-    cmd = "/usr/bin/sudo -u web /usr/bin/vlc {} --sout=udp://162.250.138.11:9001 --loop --sout-keep".format(submission.path_to_uploaded_file)
-    os.system(cmd)
-
-    while True:
-        time.sleep(100)
+    subprocess.Popen(["/usr/bin/sudo -u web /usr/bin/vlc {} --sout=udp://162.250.138.11:9001 --loop --sout-keep".format(submission.path_to_uploaded_file)], shell=True)
 
 
 # Verifies the stream being reported before adding it
