@@ -1,4 +1,8 @@
+elerybeat*
+
 db.sqlite3
+
+dump.rdb
 
 media/
 
@@ -6,3 +10,5 @@ __pycache__/
 *.pyc
 
 secret.py
+
+serve/
