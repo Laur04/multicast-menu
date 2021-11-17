@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+    {% for s in streams %}
+        <a href="{% url 'manage:stop_stream' s.id %}">{{ s.id }}</a>
+    {% endfor %}
+    {% for r in reports %}
+        <a href="{% url 'manage:retry_verification' r.id %}">{{ r.id }}</a>
+    {% endfor %}
+{% endblock %}

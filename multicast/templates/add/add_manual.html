@@ -3,40 +3,24 @@
 {% load static %}
 
 {% block main %}
-    <form action='' method='post' class='add-form'>
+    <form action="" method="post" class="add-form">
         {% csrf_token %}
         {{ form.non_field_errors }}
-
         <p>
             <label for="{{ form.source.id_for_label }}">{{ form.source.label }}:</label>
             {{ form.source }}
             {{ form.source.errors }}
         </p>
-
         <p>
             <label for="{{ form.group.id_for_label }}">{{ form.group.label }}:</label>
             {{ form.group }}
             {{ form.group.errors }}
         </p>
-        
         <p>
             <label for="{{ form.udp_port.id_for_label }}">{{ form.udp_port.label }}:</label>
             {{ form.udp_port }}
             {{ form.udp_port.errors }}
         </p>
-        
-        <p>
-            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label>
-            {{ form.email }}
-            {{ form.email.errors }}
-        </p>
-
-        <p>
-            <label for="{{ form.description.id_for_label }}">{{ form.description.label }}:</label>
-            {{ form.description }}
-            {{ form.description.errors }}
-        </p>
-
-        <input class='button' type='submit' name='Add' value='Add'/>
+        <input class="button" type="submit" name="Report" value="Report"/>
     </form>    
 {% endblock %}

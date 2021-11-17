@@ -4,108 +4,81 @@
 
 {% block head %}
     <script>
-        window.onload = function () {
-            var para = document.getElementById('manual')
-            var link = 'amt://{{ source }}@{{ group }}{% if udp %}:{{ udp }}{% endif %}'
-            para.innerHTML = "You can also view this video manually in VLC by entering " + link + " as the network url or via the command line with ";
-            os = find_os()
-            if (os == 'windows') {
-                para.innerHTML += '"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe" ' + link;
-            } else if (os == 'linux') {
-                para.innerHTML += 'vlc ' + link;
-            } else if (os == 'mac') {
-                para.innerHTML += '/Applications/VLC.app/Contents/MacOS/VLC -vvv ' + link;
-            } else {
-                para.innerHTML = "You can also view this video manually in VLC by entering " + link + " as the network url or via the command line.";
-            }
-        }
-
-        function open_vlc(id) {
-            var os = find_os();
-            var to_open = "{% url 'view:vlc' 1234 5678 %}".replace(/1234/, id.toString());
-            to_open = to_open.replace(/5678/, os);
-            window.open(to_open);
-        }
-
-        function find_os() {
-            var OSName = "Unknown OS";
-            if (navigator.appVersion.indexOf("Win") != -1) OSName = "windows";
-            if (navigator.appVersion.indexOf("Mac") != -1) OSName = "mac";
-            if (navigator.appVersion.indexOf("X11") != -1) OSName = "linux";
-            if (navigator.appVersion.indexOf("Linux") != -1) OSName = "linux";
-            return OSName
-        }
-
-        function upvote(id, descript) {
+        function upvote(description_id) {
             $.ajax({
                 type: "GET",
-                url: "{% url 'view:show_video' 1234 %}".replace(/1234/, id),
-                data: {
-                    'description': descript
-                },
-                success: function () {
-                    document.getElementById(descript).innerHTML = parseInt(document.getElementById(descript).innerHTML) + 1;
-                },
+                url: "{% url 'view:upvote_description' 1234 %}".replace(/1234/, id),
+            });
+        }
+
+        function downvote(description_id) {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'view:downvote_description' 1234 %}".replace(/1234/, id),
+            });
+        }
+
+        function report(stream_id) {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'view:report_stream' 1234 %}".replace(/1234/, id),
             });
         }
     </script>
 {% endblock %}
 
 {% block main %}
-    <h3>{{ stream.whois }}</h3>
-    <hr>
-    <div class='contain'>
-        <a onclick="open_vlc('{{ source }}' + '_' + '{{ group }}')"><button class='button'>Open in VLC</button></a>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+            <h3>{{ stream.whois }}</h3>
+            <h6>Owner: {{ stream.owner.username }}</h6>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+            <a onclick="report('{{ stream.id }}'); alert('Thank you for reporting this; your input has been recorded.')">Report Broken Stream</a>
+        </div>
     </div>
-    <br>
+    <hr>
     <div>
-        <p id='manual'>
-
-        </p>
+        <a href="{% url 'view:open' stream.id %}"><button class="button">Open in VLC</button></a>
+        <br>
+        <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}" as the network url or via the command line.</p>
     </div>
     <hr>
-    <div class="contain">
-        {% if stream.email %}
-            <a href="mailto:{{ stream.email }}"><p class="link inline-ele">Contact Stream Owner</p></a>
-        {% endif %}
-        <a onclick="alert('Thank you for reporting this. Your input has been tallied.')" href="{% url 'view:downvote' target %}"><p class="link inline-ele">Stream Doesn't Work?</p></a>
-    </div>
-    <hr>
-    <div class='row'>
-        <div class='contain col-lg-6 col-md-6 col-sm-6 col-xs-12 left-div'>
-            <p>What kind of content is this stream?</p>
-            <form action='' method='post'>
-                {% csrf_token %}
-                <p class="inline-ele descript-form-field">{{ form.ans }}</p>
-                <input class='inline-ele button descript-form-btn' type='submit' value='Go' />
-            </form>
-        </div>
-        <div class='contain col-lg-6 col-md-6 col-sm-6 col-xs-12'>
-            <div class='content'>
-                {% if descriptions|length == 0 %}
-                    <div class='row'>
-                        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                            <p>No descriptions submitted yet.</p>
-                        </div>
-                    </div>
-                {% else %}
-                    {% for d in descriptions %}
-                    <div class='row'>
-                        <div class='col-lg-9 col-md-9 col-sm-9 col-xs-12'>
-                            <p>{{ d.1 }}</p>
-                        </div>
-                        <div class='col-lg-3 col-md-3 col-sm-3 col-xs-12'>
-                            <a onclick="upvote('{{ source }}_{{ group }}', '{{ d.1 }}')"><i class="icon fa fas fa-thumbs-up"></i></a>
-                            <p id='{{ d.1 }}'>{{ d.0 }}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% endif %}
+    <div class="row">
+        {% if user.is_authenticated %}
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-div">
+                <p>What kind of content is this stream?</p>
+                <form action="{% url 'view:submit_description' %}" method="post">
+                    {% csrf_token %}
+                    <p class="inline-ele descript-form-field">{{ form.text }}</p>
+                    <input class="inline-ele button descript-form-btn" type="submit" value="Go" />
+                </form>
             </div>
+        {% endif %}
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 content">
+            {% if descriptions|length == 0 %}
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p>No descriptions submitted yet.</p>
+                    </div>
+                </div>
+            {% else %}
+                {% for d in descriptions %}
+                    <div class="row">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                            <p>{{ d.description }}</p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <i onclick="upvote('{{ d.id }}')" class="icon fa fas fa-thumbs-up"></i>
+                            <i onclick="downvote('{{ d.id }}')" class="icon fa fas fa-thumbs-down"></i>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
     <hr>
-    <div class='contain left-div'>
+    <div class="left-div">
         <p>Possible errors you might encounter:</p>
         <ul>
             <li>You don't <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed (this is a dev

@@ -1,0 +1,5 @@
+multicast/apps/view/stream_collection/
+multicast/apps/view/management/
+scripts/
+styling
+multicast/apps/add/tasks.py

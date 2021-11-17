@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+    {% if form.errors %}
+        <p class="error">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <div style="text-align: left;">
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" name="Submit" value="Login"/>
+        </form>    
+    </div>
+{% endblock %}
