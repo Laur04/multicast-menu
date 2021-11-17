@@ -32,6 +32,6 @@ def stop_stream(request, submission_id):
 @login_required
 def retry_verification(request, report_id):
     report = get_object_or_404(ManualReport, id=report_id)
-    verify_manual_report.delay(report)
+    verify_manual_report.delay(report.id)
 
     return redirect(reverse("manage:manage_index"))

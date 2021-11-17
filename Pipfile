@@ -11,6 +11,7 @@ gunicorn = "~=20.1.0"
 ipwhois = "~=1.2.0"
 Pillow = "~=8.4.0"
 psycopg2-binary = "~=2.9.1"
+redis = "~=4.0.1"
 requests = "~=2.26.0"
 
 [pipenv]
