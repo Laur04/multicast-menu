@@ -1,5 +1,5 @@
 import subprocess
-from celery import current_task, shared_task
+from celery import shared_task
 
 from .models import ManualReport, StreamSubmission
 
@@ -8,7 +8,6 @@ from .models import ManualReport, StreamSubmission
 @shared_task
 def submit_file_to_translator(submission_id):
     submission = StreamSubmission.objects.get(id=submission_id)
-    submission.celery_task_id = "id"
     submission.active = True
     submission.save()
 
@@ -19,7 +18,6 @@ def submit_file_to_translator(submission_id):
 @shared_task
 def submit_link_to_translator(submission_id):
     submission = StreamSubmission.objects.get(id=submission_id)
-    submission.celery_task_id = current_task.task_id
     submission.active = True
     submission.save()
 
@@ -30,6 +28,5 @@ def submit_link_to_translator(submission_id):
 @shared_task
 def verify_manual_report(report_id):
     report = ManualReport.objects.get(id=report_id)
-    report.celery_task_id = current_task.task_id
     report.active = True
     report.save()

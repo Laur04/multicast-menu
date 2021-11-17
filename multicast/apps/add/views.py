@@ -31,7 +31,9 @@ def add_stream_file(request):
                 owner = request.user,
                 path_to_uploaded_file = random_path,
             )
-            submit_file_to_translator.delay(ss.id)
+            result = submit_file_to_translator.delay(ss.id)
+            ss.celery_task_id = result.id
+            ss.save()
             return redirect(reverse("manage:manage_index"))
 
     return render(request, "add/add_file.html", context={"form": form})
@@ -50,7 +52,9 @@ def add_stream_link(request):
                 path_to_uploaded_file = random_path,
                 url_to_streamed_video = form.cleaned_data["link_to_stream"],
             )
-            submit_link_to_translator.delay(ss.id)
+            result = submit_link_to_translator.delay(ss.id)
+            ss.celery_task_id = result.id
+            ss.save()
             return redirect(reverse("manage:manage_index"))
 
     return render(request, "add/add_file.html", context={"form": form})
@@ -66,7 +70,9 @@ def add_stream_manual(request):
             report = form.save()
             report.owner = request.user
             report.save()
-            verify_manual_report.delay(report.id)
+            result = verify_manual_report.delay(report.id)
+            report.celery_task_id = result.id
+            report.save()
             return redirect(reverse("manage:manage_index"))
     
     return render(request, "add/add_manual.html", context={"form": form})
