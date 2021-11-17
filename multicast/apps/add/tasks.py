@@ -8,7 +8,7 @@ from .models import ManualReport, StreamSubmission
 @shared_task
 def submit_file_to_translator(submission_id):
     submission = StreamSubmission.objects.get(id=submission_id)
-    submission.celery_task_id = current_task.task_id
+    submission.celery_task_id = "id"
     submission.active = True
     submission.save()
 
