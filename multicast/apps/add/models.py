@@ -17,6 +17,7 @@ class StreamSubmission(models.Model):
     # Celery information - required
     celery_task_id = models.CharField(max_length=50)
     active = models.BooleanField(default=False)
+    task_pid = models.CharField(max_length=50)
 
     # Pretty string output of a StreamSubmission
     def __str__(self):

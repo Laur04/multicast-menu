@@ -1,4 +1,7 @@
 import celery
+import os
+import psutil
+import signal
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
@@ -23,6 +26,14 @@ def manage_index(request):
 @login_required
 def stop_stream(request, submission_id):
     submission = get_object_or_404(StreamSubmission, id=submission_id)
+
+    children = psutil.Process(submission.task_pid).children(recursive=True)
+    os.killpg(submission.task_pid, signal.SIGKILL)
+    for child in children:
+        try:
+            child.kill()
+        except psutil.NoSuchProcess:
+            pass
     celery.task.control.revoke(submission.celery_task_id, terminate=True)
 
     return redirect(reverse("manage:manage_index"))
