@@ -28,7 +28,7 @@ def stop_stream(request, submission_id):
     submission = get_object_or_404(StreamSubmission, id=submission_id)
 
     children = psutil.Process(int(submission.task_pid)).children(recursive=True)
-    os.killpg(submission.task_pid, signal.SIGKILL)
+    os.killpg(int(submission.task_pid), signal.SIGKILL)
     for child in children:
         try:
             child.kill()
