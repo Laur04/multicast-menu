@@ -39,6 +39,9 @@ def stop_stream(request, submission_id):
             pass
     celery.task.control.revoke(submission.celery_task_id, terminate=True)
 
+    submission.active = False
+    submission.save()
+
     return redirect(reverse("manage:manage_index"))
 
 
