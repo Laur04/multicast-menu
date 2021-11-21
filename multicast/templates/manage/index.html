@@ -6,7 +6,7 @@
     <h4>Streams Actively Being Sent to Translation Server</h4>
     <ul>
         {% for s in streams %}
-            <li>Stream Submitted at {{ stream.time_submitted}} - <a href="{% url 'manage:stop_stream' s.id %}">Cancel Stream</a></li>
+            <li>Stream Submitted at {{ stream.time_submitted }} - <a href="{% url 'manage:stop_stream' s.id %}">Cancel Stream</a></li>
         {% endfor %}
     </ul>
     <br>
