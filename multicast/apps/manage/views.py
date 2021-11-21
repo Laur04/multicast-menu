@@ -15,7 +15,7 @@ from ..add.tasks import verify_manual_report
 @login_required
 def manage_index(request):
     context = {
-        "streams": StreamSubmission.objects.filter(owner=request.user),
+        "streams": StreamSubmission.objects.filter(owner=request.user, active=True),
         "reports": ManualReport.objects.filter(owner=request.user),
     }
 
