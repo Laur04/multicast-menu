@@ -3,28 +3,30 @@
 {% load static %}
 
 {% block main %}
-    <h4>Streams Actively Being Sent to Translation Server</h4>
-    <ul>
-        {% for s in streams %}
-            <li>Stream Submitted at {{ s.time_submitted }} - <a href="{% url 'manage:stop_stream' s.id %}">Cancel Stream</a></li>
-        {% endfor %}
-    </ul>
-    <br>
-    <h4>Streams Reported Manually</h4>
-    <ul>
-        {% for r in reports %}
-            <li>
-                {{ r }} - 
-                {% if not r.active %}
-                    {% if not r.verified %}
-                        <a href="{% url 'manage:retry_verification' r.id %}">Retry Verification</a>
+    <div style="text-align:left;">
+        <h4>Streams Actively Being Sent to Translation Server</h4>
+        <ul>
+            {% for s in streams %}
+                <li>Stream Submitted at {{ s.time_submitted }} - <a href="{% url 'manage:stop_stream' s.id %}">Cancel Stream</a></li>
+            {% endfor %}
+        </ul>
+        <br>
+        <h4>Streams Reported Manually</h4>
+        <ul>
+            {% for r in reports %}
+                <li>
+                    {{ r }} - 
+                    {% if not r.active %}
+                        {% if not r.verified %}
+                            <a href="{% url 'manage:retry_verification' r.id %}">Retry Verification</a>
+                        {% else %}
+                            Verified
+                        {% endif %}
                     {% else %}
-                        Verified
+                        Verifying
                     {% endif %}
-                {% else %}
-                    Verifying
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+                </li>
+            {% endfor %}
+        </ul>    
+    </div>
 {% endblock %}
