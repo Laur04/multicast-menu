@@ -9,7 +9,7 @@ Clone this repository.
 ```bash
 git clone https://github.com/Laur04/multicast-menu.git ~/multicast-menu
 ```
-Run the managing script with parameters to specify the looking glass(es) that you want to scrape. Output will be placed in ~/multicast-menu/scripts/output.txt.
+Run the managing script with parameters to specify the looking glass(es) that you want to scrape. Output will be placed in ~/multicast-menu/stream_collection_scripts/output.txt.
 
 ```bash
 python ~/multicast-menu/scripts scrape_streams.py all  # scrapes all available looking glasses
@@ -18,6 +18,6 @@ python ~/multicast-menu/scripts scrape_streams.py GEANT  # scrapes only the GEAN
 ```
 
 ## Please Note
-The `output.txt` file will be overwritten every time, so you should move it somewhere else before rerunning the script if you want to preserve it. In addition, the sample `output.txt` file provided in GitHub is by no means a complete copy of what this script produces.
+The `output.txt` file will be overwritten every time, so you should move it somewhere else before rerunning the script if you want to preserve it.
 
-The script's runtime is very long because each stream requires 3 seperate requests to a looking glass, which have to be spaced out to not hit ratelimits. If you don't care about the description of upstream/downstream interfaces, you can comment those sections out in `run_geant.py` and `run_i2.py` and the entire thing will run much more quickly.
+The script's runtime is very long because each stream requires 3 seperate requests to a looking glass, which have to be spaced out to not hit ratelimits. If you don't care about the description of upstream/downstream interfaces, you can comment those sections out in `GEANT/run.py` and `Internet2/run.py` and the entire thing will run much more quickly.

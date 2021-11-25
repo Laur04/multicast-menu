@@ -7,7 +7,7 @@
         <p class="error">Your username and password didn't match. Please try again.</p>
     {% endif %}
 
-    <div style="text-align: left;">
+    <div class="left-div">
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}

@@ -21,23 +21,34 @@
     <body>
         {% block root %}
             <div id="root" style="background: #FFFFFF;">
-                <div class="row header">
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <h1 class="header_title">Multicast Menu</h1>
+                <nav class="navbar navbar-expand-sm bg-light header">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{% url 'view:index' %}">Multicast Menu</a>
                     </div>
-                    <div class="col-lg-3 col-md-3"></div>
-                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                        <a href="{% url 'view:index' %}"><h3 class="header_nav">View Streams</h3></a>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'view:index' %}">View Streams</a>
+                        </li>
                         {% if user.is_authenticated %}
-                            <a href="{% url 'add:add_index' %}"><h3 class="header_nav">Add Stream</h3></a>
-                            <a href="{% url 'manage:manage_index' %}"><h3 class="header_nav">Manage Stream</h3></a>
-                            <a href="{% url 'logout' %}"><h3 class="header_nav">Logout</h3></a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'add:add_index' %}">Add Stream</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'manage:manage_index' %}">Manage Stream</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            </li>
                         {% else %}
-                            <a href="{% url 'login' %}"><h3 class="header_nav">Login</h3></a>
-                            <a href="{% url 'view:register' %}"><h3 class="header_nav">Register</h3></a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'view:register' %}">Register</a>
+                            </li>
                         {% endif %}
-                    </div>
-                </div>
+                    </ul>
+                </nav>
 
                 <div class="row">
                     <div class="col-lg-1 col-md-1 col-sm-1"></div>

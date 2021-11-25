@@ -11,10 +11,6 @@ html {
     padding-top: 10px;
 }
 
-.centered-div {
-    text-align: center;
-}
-
 .left-div {
     text-align: left;
 }
@@ -23,39 +19,15 @@ html {
     display: inline-block;
 }
 
+.option-btn {
+    text-align: center;
+    min-width: 100%;
+    min-height: 5em;
+}
+
 .header {
-    position: fixed;
-    z-index: 1;
-    height: 65px;
-    top: 0;
-    left: 0;
-    right: 0;
     background-color: #01785e;
-    text-align: center;
-}
-
-.header_title {
-    color: white;
-    text-align: center;
-    font-size: 25px;
-    padding-top: 15px;
-    padding-bottom: 10px;
-    display: inline-block;
-}
-
-.header_nav {
-    padding: 20px 10px;
-    padding-bottom: 15px;
-    color: white;
-    font-size: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.header_nav:hover {
-    text-decoration: none;
-    color: grey;
+    color: #ffffff;
 }
 
 #footer {
@@ -76,28 +48,6 @@ html {
     font-size: 120%;
     text-decoration: none;
     background-color: #8fc9a8;
-}
-
-.link {
-    padding: 7px 30px 7px 30px;
-    margin: 0px;
-}
-
-.link:hover {
-    text-decoration: underline;
-}
-
-.errorlist {
-    color: #d62912;
-    list-style-type: none;
-}
-
-#id_description {
-    height: 75px;
-}
-
-#load {
-    text-align: center;
 }
 
 .source {
@@ -123,12 +73,6 @@ html {
     font-weight: bold;
     margin-bottom: 1px;
     font-size: 20px;
-}
-
-#id_ans {
-    height: 40px;
-    width: 95%;
-    font-size: 15px;
 }
 
 .content {

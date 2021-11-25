@@ -1,6 +1,10 @@
 import subprocess
 
 from celery import shared_task
+from celery.decorators import periodic_task
+from celery.task.schedules import crontab
+
+from django.core import management
 
 from .models import ManualReport, StreamSubmission
 
@@ -35,3 +39,13 @@ def verify_manual_report(report_id):
     report = ManualReport.objects.get(id=report_id)
     report.active = True
     report.save()
+
+
+# Scrapes Internet2 and GEANT for active streams
+@periodic_task(
+    run_every=crontab(hour="*/24"), 
+    name="scrape_for_streams",
+    ignore_result=True
+)
+def scrape_for_streams():
+    management.call_command("scrape_for_streams")
