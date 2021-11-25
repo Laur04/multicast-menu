@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand
 
 from .....stream_collection_scripts.GEANT.run import run as run_geant
 from .....stream_collection_scripts.Internet2.run import run as run_i2
-from ...models import Stream
+from ....view.models import Stream
 
 
 class Command(BaseCommand):
