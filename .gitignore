@@ -9,6 +9,8 @@ media/
 __pycache__/
 *.pyc
 
+output.txt
+
 secret.py
 
 serve/

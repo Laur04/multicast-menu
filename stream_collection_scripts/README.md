@@ -9,7 +9,7 @@ Clone this repository.
 ```bash
 git clone https://github.com/Laur04/multicast-menu.git ~/multicast-menu
 ```
-Run the managing script with parameters to specify the looking glass(es) that you want to scrape. Output will be placed in ~/multicast-menu/stream_collection_scripts/output.txt.
+Run the managing script with parameters to specify the looking glass(es) that you want to scrape. Output will be placed in ~/multicast-menu/output.txt.
 
 ```bash
 python ~/multicast-menu/scripts scrape_streams.py all  # scrapes all available looking glasses

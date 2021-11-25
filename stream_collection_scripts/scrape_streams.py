@@ -29,5 +29,5 @@ for results in results_dictionary_list:
         for field in entry_dict.keys():
             outfile.write("{}: {}\n".format(field, entry_dict[field]))
 
-print("Success! Your results are available at ~/multicat-menu/stream_collection_scripts/output.txt.")
+print("Success! Your results are available at ~/multicat-menu/output.txt.")
 outfile.close()
