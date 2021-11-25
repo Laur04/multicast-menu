@@ -38,6 +38,10 @@ html {
     color: #949492;
 }
 
+.header-toggle {
+    color: #949492;
+}
+
 #footer {
     position: sticky;
     bottom: 0;
