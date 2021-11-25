@@ -14,7 +14,7 @@ class Command(BaseCommand):
     help = "Scrape the looking glasses and import streams onto the site."
 
     def handle(self, *args, **kwargs):
-        devices_path = str(Path(__file__).resolve().parent.parent.parent.parent.parent + "/stream_collection_scripts")
+        devices_path = str(Path(__file__).resolve().parent.parent.parent.parent.parent) + "/stream_collection_scripts"
 
         results_dictionary_list = []
         results_dictionary_list.append(run_geant(devices_path + "/GEANT/devices.txt"))
