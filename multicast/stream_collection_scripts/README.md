@@ -12,9 +12,9 @@ git clone https://github.com/Laur04/multicast-menu.git ~/multicast-menu
 Run the managing script with parameters to specify the looking glass(es) that you want to scrape. Output will be placed in ~/multicast-menu/output.txt.
 
 ```bash
-python ~/multicast-menu/scripts scrape_streams.py all  # scrapes all available looking glasses
-python ~/multicast-menu/scripts scrape_streams.py I2  # scrapes only the Internet2 looking glass
-python ~/multicast-menu/scripts scrape_streams.py GEANT  # scrapes only the GEANT looking glass
+python ~/multicast-menu/multicast/stream_collection_scripts/scrape_streams.py all  # scrapes all available looking glasses
+python ~/multicast-menu/multicast/stream_collection_scripts/scrape_streams.py I2  # scrapes only the Internet2 looking glass
+python ~/multicast-menu/multicast/stream_collection_scripts/scrape_streams.py GEANT  # scrapes only the GEANT looking glass
 ```
 
 ## Please Note

@@ -5,8 +5,8 @@ import re
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
-from ......stream_collection_scripts.GEANT.run import run as run_geant
-from ......stream_collection_scripts.Internet2.run import run as run_i2
+from .....stream_collection_scripts.GEANT.run import run as run_geant
+from .....stream_collection_scripts.Internet2.run import run as run_i2
 from ...models import Stream
 
 
@@ -14,7 +14,7 @@ class Command(BaseCommand):
     help = "Scrape the looking glasses and import streams onto the site."
 
     def handle(self, *args, **kwargs):
-        devices_path = str(Path(__file__).resolve().parent.parent.parent.parent.parent.parent + "/stream_collection")
+        devices_path = str(Path(__file__).resolve().parent.parent.parent.parent.parent + "/stream_collection_scripts")
 
         results_dictionary_list = []
         results_dictionary_list.append(run_geant(devices_path + "/GEANT/devices.txt"))
