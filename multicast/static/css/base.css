@@ -30,6 +30,14 @@ html {
     color: #ffffff;
 }
 
+.header-link {
+    color: #ffffff;
+}
+
+.header-link:hover {
+    color: #949492;
+}
+
 #footer {
     position: sticky;
     bottom: 0;
