@@ -23,31 +23,36 @@
             <div id="root" style="background: #FFFFFF;">
                 <nav class="navbar navbar-expand-sm header">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="{% url 'view:index' %}">Multicast Menu</a>
+                        <a class="navbar-brand header-link" href="{% url 'view:index' %}">Multicast Menu</a>
                     </div>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link header-link" href="{% url 'view:index' %}">View Streams</a>
-                        </li>
-                        {% if user.is_authenticated %}
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div  class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link header-link" href="{% url 'add:add_index' %}">Add Stream</a>
+                                <a class="nav-link header-link" href="{% url 'view:index' %}">View Streams</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link header-link" href="{% url 'manage:manage_index' %}">Manage Stream</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link header-link" href="{% url 'logout' %}">Logout</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link header-link" href="{% url 'login' %}">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link header-link" href="{% url 'view:register' %}">Register</a>
-                            </li>
-                        {% endif %}
-                    </ul>
+                            {% if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link header-link" href="{% url 'add:add_index' %}">Add Stream</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link header-link" href="{% url 'manage:manage_index' %}">Manage Stream</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link header-link" href="{% url 'logout' %}">Logout</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link header-link" href="{% url 'login' %}">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link header-link" href="{% url 'view:register' %}">Register</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </nav>
 
                 <div class="row">
