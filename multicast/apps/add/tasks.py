@@ -1,8 +1,7 @@
 import subprocess
 
 from celery import shared_task
-from celery.decorators import periodic_task
-from celery.task.schedules import crontab
+from celery.schedules import crontab
 
 from django.core import management
 
@@ -42,10 +41,6 @@ def verify_manual_report(report_id):
 
 
 # Scrapes Internet2 and GEANT for active streams
-@periodic_task(
-    run_every=crontab(hour="*/24"), 
-    name="scrape_for_streams",
-    ignore_result=True
-)
+@shared_task
 def scrape_for_streams():
     management.call_command("scrape_for_streams")

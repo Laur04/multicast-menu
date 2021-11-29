@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+import celery.schedules
 from pathlib import Path
 
 from ..celery import app as celery_app
@@ -123,6 +124,14 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    "scrape_for_streams": {
+        "task": "multicast.apps.add.tasks.scrape_for_streams",
+        "schedule": celery.schedules.crontab(hour="*/24"),
+        "args": (),
+    },
+}
 
 
 # Import secret.py

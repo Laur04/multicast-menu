@@ -8,6 +8,7 @@ from django.core.management.base import BaseCommand
 from .....stream_collection_scripts.GEANT.run import run as run_geant
 from .....stream_collection_scripts.Internet2.run import run as run_i2
 from ....view.models import Stream
+from ...models import FailedQuery
 
 
 class Command(BaseCommand):
@@ -17,8 +18,10 @@ class Command(BaseCommand):
         devices_path = str(Path(__file__).resolve().parent.parent.parent.parent.parent) + "/stream_collection_scripts"
 
         results_dictionary_list = []
-        results_dictionary_list.append(run_geant(devices_path + "/GEANT/devices.txt"))
-        results_dictionary_list.append(run_i2(devices_path + "/Internet2/devices.txt"))
+        failed_list = []
+        for results in [run_geant(devices_path + "/GEANT/devices.txt"), run_i2(devices_path + "/Internet2/devices.txt")]:
+            results_dictionary_list.append(results[0])
+            failed_list.append(results[1])
 
         scrape_user = get_user_model().objects.get_or_create(
             username="DEFAULT_SCRAPING_USER"
@@ -39,3 +42,6 @@ class Command(BaseCommand):
                                 "whois": results["who_is"],
                             }
                         )
+        for failure_lists in failed_list:
+            for failure_ip in failure_lists:
+                FailedQuery.objects.create(ip=failure_ip)

@@ -47,3 +47,14 @@ class ManualReport(models.Model):
     # Pretty string output of a ManualReport
     def __str__(self):
         return "Report {} ({})".format(self.id, self.celery_task_id)
+
+
+# Record of queries that fail in the automated scraping process
+class FailedQuery(models.Model):
+    id = models.AutoField(primary_key=True)
+
+    # The time the failed query was executed
+    time_failed = models.DateTimeField(auto_now_add=True)
+
+    # The IP that the failed query was attempting to reach
+    ip = models.CharField(max_length=100, blank=False, null=False)
