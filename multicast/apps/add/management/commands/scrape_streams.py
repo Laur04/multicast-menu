@@ -27,21 +27,22 @@ class Command(BaseCommand):
             username="DEFAULT_SCRAPING_USER"
         )[0]
 
-        for results in results_dictionary_list:
-            if results["source"] not in ["193.17.9.3", "193.17.9.7"]:  # filter out Eumsat
-                if re.match("^[0-9.]+$", results["source"]):  # filter out IPv6
-                    if results["pps"] > 100:  # filter out low pps
-                        Stream.objects.update_or_create(
-                            source=results["source"], 
-                            group=results["group"],
-                            owner=scrape_user,
-                            defaults={
-                                "pps": results["pps"],
-                                "active": True,
-                                "last_seen": datetime.datetime.now(),
-                                "whois": results["who_is"],
-                            }
-                        )
+        for results_dicts in results_dictionary_list:
+            for results in results_dicts:
+                if results["source"] not in ["193.17.9.3", "193.17.9.7"]:  # filter out Eumsat
+                    if re.match("^[0-9.]+$", results["source"]):  # filter out IPv6
+                        if results["pps"] > 100:  # filter out low pps
+                            Stream.objects.update_or_create(
+                                source=results["source"], 
+                                group=results["group"],
+                                owner=scrape_user,
+                                defaults={
+                                    "pps": results["pps"],
+                                    "active": True,
+                                    "last_seen": datetime.datetime.now(),
+                                    "whois": results["who_is"],
+                                }
+                            )
         for failure_lists in failed_list:
             for failure_ip in failure_lists:
                 FailedQuery.objects.create(ip=failure_ip)
