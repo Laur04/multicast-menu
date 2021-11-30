@@ -29,7 +29,9 @@ class Command(BaseCommand):
 
         for results_dicts in results_dictionary_list:
             for results in results_dicts:
-                if results["source"] not in ["193.17.9.3", "193.17.9.7"]:  # filter out Eumsat
+                print(results)
+                print(results["source"])
+                if str(results["source"]) not in ["193.17.9.3", "193.17.9.7"]:  # filter out Eumsat
                     if re.match("^[0-9.]+$", results["source"]):  # filter out IPv6
                         if results["pps"] > 100:  # filter out low pps
                             Stream.objects.update_or_create(
