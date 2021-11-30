@@ -3,8 +3,8 @@
 {% load static %}
 
 {% block main %}
-    <h5>Upload the video file you wish to stream.</h5>
-    <form method="post" enctype="multipart/form-data">
+    <h5>Specify the URI of the live video you wish to stream.</h5>
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input class="btn mm-btn" type="submit" value="Submit">

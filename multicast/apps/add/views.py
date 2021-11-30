@@ -57,7 +57,7 @@ def add_stream_link(request):
             ss.save()
             return redirect(reverse("manage:manage_index"))
 
-    return render(request, "add/add_file.html", context={"form": form})
+    return render(request, "add/add_link.html", context={"form": form})
 
 
 # Allows an authenticated user to manually report a stream

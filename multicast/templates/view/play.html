@@ -3,25 +3,29 @@
 {% load static %}
 
 {% block head %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
     <script>
         function upvote(description_id) {
             $.ajax({
                 type: "GET",
-                url: "{% url 'view:upvote_description' 1234 %}".replace(/1234/, id),
+                url: "{% url 'view:upvote_description' 1234 %}".replace(/1234/, description_id),
             });
         }
 
         function downvote(description_id) {
             $.ajax({
                 type: "GET",
-                url: "{% url 'view:downvote_description' 1234 %}".replace(/1234/, id),
+                url: "{% url 'view:downvote_description' 1234 %}".replace(/1234/, description_id),
             });
         }
 
         function report(stream_id) {
             $.ajax({
                 type: "GET",
-                url: "{% url 'view:report_stream' 1234 %}".replace(/1234/, id),
+                url: "{% url 'view:report_stream' 1234 %}".replace(/1234/, stream_id),
+                success: function () {
+                    alert("Thank you for reporting this; your input has been recorded.");
+                },
             });
         }
     </script>
@@ -29,33 +33,34 @@
 
 {% block main %}
     <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
-            <h3>{{ stream.whois }}</h3>
-            <h6>Owner: {{ stream.owner.username }}</h6>
+        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 left-div">
+            <h2>{{ stream.whois }}</h2>
+            <h5>Owner: {{ stream.owner.username }}</h5>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-            <a onclick="report('{{ stream.id }}'); alert('Thank you for reporting this; your input has been recorded.')">Report Broken Stream</a>
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 center-div">
+            <a href="{% url 'view:open' stream.id %}"><button class="btn mm-btn open-btn">Open in VLC</button></a>
         </div>
+        <br>
     </div>
     <hr>
-    <div>
-        <a href="{% url 'view:open' stream.id %}"><button class="button">Open in VLC</button></a>
-        <br>
+    <div class="center-div">
         <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}" as the network url or via the command line.</p>
     </div>
     <hr>
     <div class="row">
         {% if user.is_authenticated %}
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-div">
+            <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 left-div">
                 <p>What kind of content is this stream?</p>
-                <form action="{% url 'view:submit_description' %}" method="post">
+                <form action="{% url 'view:submit_description' stream.id %}" method="post">
                     {% csrf_token %}
-                    <p class="inline-ele descript-form-field">{{ form.text }}</p>
-                    <input class="inline-ele button descript-form-btn" type="submit" value="Go" />
+                    <p class="inline">{{ description_form.text }}</p>
+                    <input class="btn mm-btn inline" type="submit" value="Submit" />
                 </form>
             </div>
+            <div class="col-lg-8 col-md-6 col-sm-4 col-xs-12">
+        {% else %}
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         {% endif %}
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 content">
             {% if descriptions|length == 0 %}
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -65,26 +70,29 @@
             {% else %}
                 {% for d in descriptions %}
                     <div class="row">
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                             <p>{{ d.description }}</p>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <i onclick="upvote('{{ d.id }}')" class="icon fa fas fa-thumbs-up"></i>
-                            <i onclick="downvote('{{ d.id }}')" class="icon fa fas fa-thumbs-down"></i>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <a class="vote" href="#"><i onclick="upvote('{{ d.id }}')" class="inline fa fas fa-thumbs-up"></i></a>
+                            <a class="vote" href="#"><i onclick="downvote('{{ d.id }}')" class="inline fa fas fa-thumbs-down"></i></a>
                         </div>
                     </div>
                 {% endfor %}
             {% endif %}
         </div>
     </div>
+    <br>
+    <div class="center-div">
+        <a><button type="button" class="btn mm-btn broken-btn" onclick="report('{{ stream.id }}')">Report Broken Stream</button></a>
+    </div>
     <hr>
     <div class="left-div">
         <p>Possible errors you might encounter:</p>
         <ul>
-            <li>You don't <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed (this is a dev
-                version).</li>
+            <li>You don't <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed (this is a dev version).</li>
             <li>The video stream you've chosen isn't actually video, so VLC is unable to play it. Try another stream; we are working on filtering.</li>
-            <li>The file that is downloaded isn't opening in VLC. Make sure that VLC is the default app for opening .m3u files in your settings.</li>
+            <li>If the file that was downloaded isn't opening in VLC, make sure that VLC is the default app for opening .m3u files in your settings.</li>
         </ul>
     </div>
 {% endblock %}

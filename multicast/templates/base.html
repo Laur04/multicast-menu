@@ -15,57 +15,52 @@
         <script src="https://use.fontawesome.com/5af5efc5b7.js"></script>
 
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
 
         {% block head %}{% endblock %}
     </head>
     <body>
-        {% block root %}
-            <div id="root" style="background: #FFFFFF;">
-                <nav class="navbar navbar-expand-md header">
-                    <div class="navbar-header">
-                        <a class="navbar-brand header-link" href="{% url 'view:index' %}">Multicast Menu</a>
-                    </div>
-                    <button class="navbar-toggler header-toggle" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div  class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link header-link" href="{% url 'view:index' %}">View Streams</a>
-                            </li>
-                            {% if user.is_authenticated %}
-                                <li class="nav-item">
-                                    <a class="nav-link header-link" href="{% url 'add:add_index' %}">Add Stream</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link header-link" href="{% url 'manage:manage_index' %}">Manage Stream</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link header-link" href="{% url 'logout' %}">Logout</a>
-                                </li>
-                            {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link header-link" href="{% url 'login' %}">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link header-link" href="{% url 'view:register' %}">Register</a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </nav>
-
-                <div class="row">
-                    <div class="col-lg-1 col-md-1 col-sm-1"></div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 main">{% block main %}{% endblock %}</div>
-                    <div class="col-lg-1 col-md-1 col-sm-1"></div>
-                </div>
-
-                <div id="footer"></div>
+        <nav class="navbar navbar-expand-md navbar-dark header">
+            <a class="navbar-brand header-link" href="{% url 'view:index' %}">Multicast Menu</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div  class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link header-link" href="{% url 'view:index' %}">View Streams</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link header-link" href="{% url 'add:add_index' %}">Add Stream</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link header-link" href="{% url 'manage:manage_index' %}">Manage Streams</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link header-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link header-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link header-link" href="{% url 'view:register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
-        {% endblock %}
+        </nav>
+
+        <div class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 main">{% block main %}{% endblock %}</div>
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+        </div>
+
+        <div id="footer"></div>
     
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

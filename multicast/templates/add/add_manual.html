@@ -3,9 +3,8 @@
 {% load static %}
 
 {% block main %}
-    <form action="" method="post" class="add-form">
+    <form method="post">
         {% csrf_token %}
-        {{ form.non_field_errors }}
         <p>
             <label for="{{ form.source.id_for_label }}">{{ form.source.label }}:</label>
             {{ form.source }}
@@ -17,10 +16,11 @@
             {{ form.group.errors }}
         </p>
         <p>
-            <label for="{{ form.udp_port.id_for_label }}">{{ form.udp_port.label }}:</label>
+            <label for="{{ form.udp_port.id_for_label }}">UDP Port:</label>
             {{ form.udp_port }}
             {{ form.udp_port.errors }}
         </p>
-        <input class="button" type="submit" name="Report" value="Report"/>
+        {{ form.non_field_errors }}
+        <input class="btn mm-btn" type="submit" value="Submit">
     </form>    
 {% endblock %}

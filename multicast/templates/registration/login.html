@@ -3,15 +3,21 @@
 {% load static %}
 
 {% block main %}
-    {% if form.errors %}
-        <p class="error">Your username and password didn't match. Please try again.</p>
-    {% endif %}
-
     <div class="left-div">
         <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" name="Submit" value="Login"/>
+            <p>
+                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}:</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </p>
+            <p>
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}:</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </p>
+            {{ form.non_field_errors }}
+            <input class="btn mm-btn" type="submit" value="Login"/>
         </form>    
     </div>
 {% endblock %}

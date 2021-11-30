@@ -46,7 +46,7 @@ class ManualReport(models.Model):
 
     # Pretty string output of a ManualReport
     def __str__(self):
-        return "Report {} ({})".format(self.id, self.celery_task_id)
+        return "Report of {}@{}".format(self.source, self.group)
 
 
 # Record of queries that fail in the automated scraping process

@@ -2,21 +2,27 @@
 
 {% load static %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+{% endblock %}
+
 {% block main %}
-    <div class="intro">
+    <div class="center-div">
         <h4>Available content is listed below.</h4>
-        <h7>Make sure you have <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed.</h7>
+        <h6>Make sure you have <a target="_blank" href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed.</h6>
     </div>
     <hr>
-    <div id="stream_list" class="row">
+    <div class="row">
         {% for stream in stream_list %}
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 source">
-                <a href="{% url 'view:detail' stream.0.id %}">
-                    <p class="whois">{{ stream.1 }}</p>
-                    <p class="info">
-                        Source: {{ stream.0.source }},      Group: {{ stream.0.group }}{% if stream.0.pps %},      PPS: {{ stream.0.pps }}{% endif %}{% if stream.0.udp_port %},      UDP: {{ stream.0.udp_port }}{% endif %}
-                    </p>
-                    <p class="descript">{{ stream.0.whois }}</p>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 center-div stream-box">
+                <a class="invisible-a" href="{% url 'view:detail' stream.0.id %}">
+                    <h5><strong>{{ stream.1 }}</strong></h5>
+                    <p class="stream-whois">{{ stream.0.whois }}</p>
+                    <br>
+                    <p class="stream-info">Source: {{ stream.0.source }}</p>
+                    <p class="stream-info">Group: {{ stream.0.group }}</p>
+                    <p class="stream-info">PPS: {% if stream.0.pps %}{{ stream.0.pps }}{% else %}Unknown{% endif %}</p>
+                    <p class="stream-info">UDP Port: {% if stream.0.udp_port %}{{ stream.0.udp_port }}{% else %}Unknown{% endif %}</p>
                 </a>
             </div>
         {% endfor %}

@@ -2,23 +2,27 @@
 
 {% load static %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/add.css' %}">
+{% endblock %}
+
 {% block main %}
     <h5>In what form do you wish to provide your stream?</h5>
     <br>
-    <div class="row">
+    <div class="row center-div">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <a href="{% url 'add:add_stream_file' %}">
-                <button type="button" class="option-btn btn btn-dark">An uploaded file</button>
+                <button type="button" class="btn mm-btn add-btn">An uploaded file</button>
             </a>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <a href="{% url 'add:add_stream_link' %}">
-                <button type="button" class="option-btn btn btn-dark">A link to a live video stream</button>
+                <button type="button" class="btn mm-btn add-btn">A link to a live video stream</button>
             </a>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <a href="{% url 'add:add_stream_manual' %}">
-                <button type="button" class="option-btn btn btn-dark">Manually report an existing stream</button>
+                <button type="button" class="btn mm-btn add-btn">Manually report an existing stream</button>
             </a>
         </div>
     </div>
