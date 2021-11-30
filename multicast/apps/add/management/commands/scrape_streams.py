@@ -28,9 +28,8 @@ class Command(BaseCommand):
         )[0]
 
         for results_dicts in results_dictionary_list:
-            for results in results_dicts:
-                print(results)
-                print(results["source"])
+            for results_key in results_dicts:
+                results = results_dicts[results_key]
                 if str(results["source"]) not in ["193.17.9.3", "193.17.9.7"]:  # filter out Eumsat
                     if re.match("^[0-9.]+$", results["source"]):  # filter out IPv6
                         if results["pps"] > 100:  # filter out low pps
