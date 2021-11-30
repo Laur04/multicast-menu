@@ -43,4 +43,4 @@ def verify_manual_report(report_id):
 # Scrapes Internet2 and GEANT for active streams
 @shared_task
 def scrape_for_streams():
-    management.call_command("scrape_for_streams")
+    management.call_command("scrape_streams")
