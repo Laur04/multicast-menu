@@ -12,7 +12,7 @@ class AddByFileForm(forms.Form):
 
 
 # Allows authenticated users to specify a link to get a video file from
-class AddByLinkForm(forms.Form):
+class AddByLiveForm(forms.Form):
     link_to_stream = forms.URLField(required=True)
 
 

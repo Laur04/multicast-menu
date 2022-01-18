@@ -22,7 +22,7 @@ def submit_file_to_translator(submission_id):
 
 # Recieves the live content from the URL and streams it out to the translator
 @shared_task
-def submit_link_to_translator(submission_id):
+def submit_live_to_translator(submission_id):
     submission = StreamSubmission.objects.get(id=submission_id)
     submission.active = True
     submission.save()
