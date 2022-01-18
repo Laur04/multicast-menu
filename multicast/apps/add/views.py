@@ -233,7 +233,7 @@ async def offer(request):
 
 
 @async_to_sync
-async def on_shutdown(app):
+async def on_shutdown(request):
     # close peer connections
     coros = [pc.close() for pc in pcs]
     await asyncio.gather(*coros)
