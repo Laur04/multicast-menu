@@ -1,5 +1,6 @@
 from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
 from aiortc.contrib.media import MediaBlackhole, MediaPlayer, MediaRecorder, MediaRelay
+from asgiref.sync import async_to_sync
 import asyncio
 import json
 import logging
@@ -81,6 +82,7 @@ def add_stream_live(request):
 
 
 # Callback for WebRTC server
+@async_to_sync
 @csrf_exempt
 async def offer(request):
     params = await request.json()
