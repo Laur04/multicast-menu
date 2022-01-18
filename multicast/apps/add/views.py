@@ -103,10 +103,10 @@ async def offer(request):
     await pc.setLocalDescription(answer)
 
     return HttpResponse(
-        content_type="application/json",
-        text=json.dumps(
+        json.dumps(
             {"sdp": pc.localDescription.sdp, "type": pc.localDescription.type}
         ),
+        content_type="application/json",
     )
 
 
