@@ -85,7 +85,7 @@ def add_stream_live(request):
 @csrf_exempt
 @async_to_sync
 async def offer(request):
-    params = await request.body
+    params = request.body
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
 
     pc = RTCPeerConnection()
