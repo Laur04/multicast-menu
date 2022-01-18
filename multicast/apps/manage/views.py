@@ -27,6 +27,7 @@ def manage_index(request):
 def stop_stream(request, submission_id):
     submission = get_object_or_404(StreamSubmission, id=submission_id)
 
+    children = ""
     try:
         children = psutil.Process(int(submission.task_pid)).children(recursive=True)
     except:
