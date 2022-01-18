@@ -86,6 +86,8 @@ def add_stream_live(request):
 @async_to_sync
 async def offer(request):
     params = request.body
+    print(params)
+    print(type(params))
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
 
     pc = RTCPeerConnection()
