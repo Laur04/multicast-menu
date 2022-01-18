@@ -21,27 +21,8 @@ from .tasks import submit_file_to_translator, submit_live_to_translator, verify_
 
 
 # Set up for WebRTC server
-ROOT = os.path.dirname(__file__)
-
 pcs = set()
 relay = MediaRelay()
-
-class VideoTransformTrack(MediaStreamTrack):
-    """
-    A video stream track that transforms frames from an another track.
-    """
-
-    kind = "video"
-
-    def __init__(self, track, transform):
-        super().__init__()  # don't forget this!
-        self.track = track
-        self.transform = transform
-
-    async def recv(self):
-        frame = await self.track.recv()
-        return frame
-
 
 # Index page for add where an authenticated user can select how they would like to add a stream
 @login_required
@@ -88,12 +69,7 @@ async def offer(request):
     pc = RTCPeerConnection()
     pcs.add(pc)
 
-    # prepare local media
-    player = MediaPlayer(os.path.join(ROOT, "demo-instruct.wav"))
-    if args.record_to:
-        recorder = MediaRecorder(args.record_to)
-    else:
-        recorder = MediaBlackhole()
+    recorder = MediaBlackhole()
 
     @pc.on("datachannel")
     def on_datachannel(channel):
@@ -112,15 +88,7 @@ async def offer(request):
     def on_track(track):
         if track.kind == "audio":
             pc.addTrack(player.audio)
-            recorder.addTrack(track)
-        elif track.kind == "video":
-            pc.addTrack(
-                VideoTransformTrack(
-                    relay.subscribe(track), transform=params["video_transform"]
-                )
-            )
-            if args.record_to:
-                recorder.addTrack(relay.subscribe(track))
+            recorder.addTrack(track)\
 
         @track.on("ended")
         async def on_ended():
