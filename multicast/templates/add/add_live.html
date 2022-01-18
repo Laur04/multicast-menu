@@ -2,10 +2,6 @@
 
 {% load static %}
 
-{% block head %}
-    <script src="{% static 'js/webcam.js' %}"></script>
-{% endblock %}
-
 {% block main %}
     <h2>Options</h2>
     <div class="option">
@@ -85,4 +81,6 @@
 
     <h3>Answer</h3>
     <pre id="answer-sdp"></pre>
+
+    <script src="{% static 'js/webcam.js' %}"></script>
 {% endblock %}
