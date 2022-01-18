@@ -1,4 +1,3 @@
-from aiohttp import web
 from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
 from aiortc.contrib.media import MediaBlackhole, MediaPlayer, MediaRecorder, MediaRelay
 import argparse
@@ -14,6 +13,7 @@ import uuid
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
@@ -201,7 +201,7 @@ async def offer(request):
     answer = await pc.createAnswer()
     await pc.setLocalDescription(answer)
 
-    return web.Response(
+    return HTTPResponse(
         content_type="application/json",
         text=json.dumps(
             {"sdp": pc.localDescription.sdp, "type": pc.localDescription.type}
