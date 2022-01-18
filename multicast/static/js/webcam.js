@@ -11,11 +11,6 @@ var pc = null;
 var dc = null, dcInterval = null;
 
 function createPeerConnection() {
-    var dataChannelLog = document.getElementById('data-channel'),
-    iceConnectionLog = document.getElementById('ice-connection-state'),
-    iceGatheringLog = document.getElementById('ice-gathering-state'),
-    signalingLog = document.getElementById('signaling-state');
-
     var config = {
         sdpSemantics: 'unified-plan'
     };
