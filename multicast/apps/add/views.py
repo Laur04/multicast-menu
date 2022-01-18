@@ -3,9 +3,7 @@ from aiortc.contrib.media import MediaBlackhole, MediaPlayer, MediaRecorder, Med
 from asgiref.sync import async_to_sync
 import asyncio
 import json
-import logging
 import os
-import uuid
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -25,7 +23,6 @@ from .tasks import submit_file_to_translator, submit_live_to_translator, verify_
 # Set up for WebRTC server
 ROOT = os.path.dirname(__file__)
 
-logger = logging.getLogger("pc")
 pcs = set()
 relay = MediaRelay()
 
@@ -89,13 +86,7 @@ async def offer(request):
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
 
     pc = RTCPeerConnection()
-    pc_id = "PeerConnection(%s)" % uuid.uuid4()
     pcs.add(pc)
-
-    def log_info(msg, *args):
-        logger.info(pc_id + " " + msg, *args)
-
-    log_info("Created for %s", request.remote)
 
     # prepare local media
     player = MediaPlayer(os.path.join(ROOT, "demo-instruct.wav"))
@@ -113,15 +104,12 @@ async def offer(request):
 
     @pc.on("connectionstatechange")
     async def on_connectionstatechange():
-        log_info("Connection state is %s", pc.connectionState)
         if pc.connectionState == "failed":
             await pc.close()
             pcs.discard(pc)
 
     @pc.on("track")
     def on_track(track):
-        log_info("Track %s received", track.kind)
-
         if track.kind == "audio":
             pc.addTrack(player.audio)
             recorder.addTrack(track)
@@ -136,7 +124,6 @@ async def offer(request):
 
         @track.on("ended")
         async def on_ended():
-            log_info("Track %s ended", track.kind)
             await recorder.stop()
 
     # handle offer
