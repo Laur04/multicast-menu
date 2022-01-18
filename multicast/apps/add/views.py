@@ -82,7 +82,6 @@ def add_stream_live(request):
 
 # Callback for WebRTC server
 @csrf_exempt
-@login_required
 async def offer(request):
     params = await request.json()
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
