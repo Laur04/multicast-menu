@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
+aiortc = "~=1.2.1"
 celery = "~=4.4.7"
 cryptography = "~=35.0.0"
 django = "~=3.2.8"
