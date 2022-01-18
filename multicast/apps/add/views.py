@@ -12,6 +12,7 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 from ...utils import create_random_file_path
 from ..view.models import Stream
@@ -80,6 +81,7 @@ def add_stream_live(request):
 
 
 # Callback for WebRTC server
+@csrf_exempt
 @login_required
 async def offer(request):
     params = await request.json()
