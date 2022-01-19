@@ -18,6 +18,7 @@
                     {{ r }} - 
                     {% if not r.active %}
                         {% if not r.verified %}
+                            ({{ r.error_message }})
                             <a href="{% url 'manage:retry_verification' r.id %}">Retry Verification</a>
                         {% else %}
                             Verified

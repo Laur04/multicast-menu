@@ -38,8 +38,9 @@ class ManualReport(models.Model):
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="manual_report_set", null=True)
     time_submitted = models.DateTimeField(auto_now_add=True, blank=False, null=False)
 
-    # Status information - required
+    # Status information - verified required
     verified = models.BooleanField(default=False, blank=False, null=False)
+    error_message = models.CharField(max_length=100, blank=True, null=True)
 
     # Source information - required except amt_gateway
     source = models.CharField(max_length=50, blank=False, null=False)

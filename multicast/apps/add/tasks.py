@@ -28,23 +28,28 @@ def verify_manual_report(report_id):
 
     if Stream.objects.filter(source=report.source, group=report.group).exists():
         report.verified = False
+        report.error_message = "That stream already exists."
     else:
-        stream = Stream.objects.create(
-            owner = report.owner,
-            submission_method = "2",
-            source = report.source,
-            group = report.group,
-            udp_port = report.udp_port,
-            owner_whois = report.owner_whois,
-            owner_description = report.owner_description,
-        )
-        if report.amt_gateway:
-            stream.amt_gateway = report.amt_gateway
-            stream.save()
-        stream.set_whois()
+        try:
+            stream = Stream.objects.create(
+                owner = report.owner,
+                submission_method = "2",
+                source = report.source,
+                group = report.group,
+                udp_port = report.udp_port,
+                owner_whois = report.owner_whois,
+                owner_description = report.owner_description,
+            )
+            if report.amt_gateway:
+                stream.amt_gateway = report.amt_gateway
+                stream.save()
+            stream.set_whois()
 
-        report.verified = True
-        report.stream = stream
+            report.verified = True
+            report.stream = stream
+        except:
+            report.verified = False
+            report.error_message = "Unexpected error in verifying report."
 
     report.active = False
     report.save()
