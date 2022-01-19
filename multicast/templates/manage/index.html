@@ -15,7 +15,7 @@
         <ul>
             {% for r in reports %}
                 <li>
-                    {{ r }} - 
+                    {{ r.verified }} - 
                     {% if not r.active %}
                         {% if not r.verified %}
                             <a href="{% url 'manage:retry_verification' r.id %}">Retry Verification</a>

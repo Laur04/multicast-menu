@@ -34,7 +34,7 @@
 {% block main %}
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 left-div">
-            <h2>if {% stream.owner_whois %}{{ stream.owner_whois }}{% else %}{{ stream.whois }}{% endif %}</h2>
+            <h2>{% if stream.owner_whois %}{{ stream.owner_whois }}{% else %}{{ stream.whois }}{% endif %}</h2>
             <h5>{% if stream.owner.username != "DEFAULT_SCRAPING_USER" %}Owner: {{ stream.owner.username }}{% endif %}</h5>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 center-div">
