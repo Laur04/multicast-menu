@@ -6,9 +6,9 @@ from django.urls import reverse
 
 from ...utils import create_random_file_path
 from ..view.models import Stream
-from .forms import AddByFileForm, AddByLiveForm, AddByManualForm
+from .forms import AddByFileForm, AddByManualForm
 from .models import StreamSubmission
-from .tasks import submit_file_to_translator, submit_live_to_translator, verify_manual_report
+from .tasks import submit_file_to_translator, verify_manual_report
 
 
 # Index page for add where an authenticated user can select how they would like to add a stream
@@ -39,13 +39,6 @@ def add_stream_file(request):
     return render(request, "add/add_file.html", context={"form": form})
 
 
-# Allows an authenticated user to stream a live video
-@login_required
-def add_stream_live(request):
-    form = AddByLiveForm()
-    return render(request, "add/add_live.html", context={"form": form})
-
-
 # Allows an authenticated user to manually report a stream
 @login_required
 def add_stream_manual(request):
@@ -55,7 +48,6 @@ def add_stream_manual(request):
         if form.is_valid():
             report = form.save()
             report.owner = request.user
-            report.save()
             result = verify_manual_report.delay(report.id)
             report.celery_task_id = result.id
             report.save()

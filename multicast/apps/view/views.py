@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, JsonResponse
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -26,11 +27,14 @@ def register(request):
 def index(request):
     active_streams = list()
     for s in Stream.objects.filter(active=True).order_by("report_count"):
-        descriptions = Description.objects.filter(stream=s)
-        if descriptions.exists():
-            active_streams.append((s, descriptions.order_by("-votes")[0].description))
+        if s.owner_description:
+            active_streams.append((s. s.owner_description))
         else:
-            active_streams.append((s, "No title available"))
+            descriptions = Description.objects.filter(stream=s)
+            if descriptions.exists():
+                active_streams.append((s, descriptions.order_by("-votes")[0].description))
+            else:
+                active_streams.append((s, "No title available"))
     
     return render(request, "view/index.html", context={"stream_list": active_streams})
 
@@ -85,6 +89,51 @@ def submit_description(request, stream_id):
         raise Http404
 
 
+# Allow admins to review reported streams
+@login_required
+def review_reported_streams(request):
+    if request.user.is_superuser:
+        context = {
+            "stream_list": Stream.objects.filter(report_count__gte=10)
+        }
+        return render(request, "view/manage_reported.html", context=context)
+    raise PermissionDenied
+
+
+# Allow admins to take action on reported streams
+@login_required
+def detail_reported(request, stream_id):
+    if request.user.is_superuser:
+        stream = get_object_or_404(Stream, id=stream_id)
+
+        if request.method == "POST":
+            stream.delete()
+            return redirect(reverse("view:review_reported_streams"))
+        else:
+            context = {
+                "stream": stream,
+                "descriptions": Description.objects.filter(stream=stream).order_by("-votes")[:3],
+            }
+
+            return render(request, "view/play_reported.html", context=context)
+    raise PermissionDenied
+
+
+# Clear the reports associated with a stream
+@login_required
+def clear_reports(request, stream_id):
+    if request.user.is_superuser:
+        stream = get_object_or_404(Stream, id=stream_id)
+        if request.is_ajax():
+            stream.report_count = 0
+            stream.save()
+            return JsonResponse(dict())
+        else:
+            return Http404
+
+    raise PermissionDenied
+
+
 # Download a .m3u file for the user to open in VLC
 def open(request, stream_id):
     stream = get_object_or_404(Stream, id=stream_id)
@@ -94,6 +143,8 @@ def open(request, stream_id):
     response.write("amt://{}@{}".format(stream.source, stream.group))
     if stream.udp_port:
         response.write(":{}".format(stream.udp_port))
+    if stream.amt_gateway:
+        response.write(" --amt-gateway {}".format(stream.amt_gateway))
 
     return response
 

@@ -1,3 +1,4 @@
+from cProfile import label
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_ipv4_address
@@ -11,11 +12,6 @@ class AddByFileForm(forms.Form):
     file_to_stream = forms.FileField(allow_empty_file=False, required=True)
 
 
-# Allows authenticated users to specify a link to get a video file from
-class AddByLiveForm(forms.Form):
-    link_to_stream = forms.URLField(required=True)
-
-
 # Allows authenticated users to manually report a stream
 class AddByManualForm(forms.ModelForm):
     class Meta:
@@ -23,7 +19,10 @@ class AddByManualForm(forms.ModelForm):
         fields = [
             "source",
             "group",
-            "udp_port"
+            "udp_port",
+            "owner_whois",
+            "owner_description",
+            "amt_gateway"
         ]
 
     def is_valid(self):

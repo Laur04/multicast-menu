@@ -8,14 +8,14 @@
 
 {% block main %}
     <div class="center-div">
-        <h4>Available content is listed below.</h4>
-        <h6>Make sure you have <a target="_blank" href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed.</h6>
+        <h2>Broken Streams</h2>
+        <h6>The following streams have been reported over 10 times for not working and are no longer shown to users. You can click each one to view its details and take appropriate action.</h6>
     </div>
     <hr>
     <div class="row">
         {% for stream in stream_list %}
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 center-div stream-box">
-                <a class="invisible-a" href="{% url 'view:detail' stream.0.id %}">
+                <a class="invisible-a" href="{% url 'view:detail_reported' stream.0.id %}">
                     <h5><strong>{{ stream.1 }}</strong></h5>
                     <p class="stream-whois">{% if stream.0.owner_whois %}{{ stream.0.owner_whois }}{% else %}{{ stream.0.whois }}{% endif %}</p>
                     <br>

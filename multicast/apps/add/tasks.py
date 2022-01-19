@@ -1,10 +1,9 @@
-import subprocess
-
 from celery import shared_task
-from celery.schedules import crontab
+import subprocess
 
 from django.core import management
 
+from ..view.models import Stream
 from .models import ManualReport, StreamSubmission
 
 
@@ -20,23 +19,34 @@ def submit_file_to_translator(submission_id):
     submission.save()
 
 
-# Recieves the live content from the URL and streams it out to the translator
-@shared_task
-def submit_live_to_translator(submission_id):
-    submission = StreamSubmission.objects.get(id=submission_id)
-    submission.active = True
-    submission.save()
-
-    proc = subprocess.Popen(["/usr/bin/sudo", "-u", "web", "/usr/bin/vlc", submission.path_to_uploaded_file, "--sout=udp://162.250.138.11:9001", "--loop", "--sout-keep"])
-    submission.task_pid = proc.pid
-    submission.save()
-
-
 # Verifies the stream being reported before adding it
 @shared_task
 def verify_manual_report(report_id):
     report = ManualReport.objects.get(id=report_id)
     report.active = True
+    report.save()
+
+    try:
+        stream = Stream.objects.create(
+            owner = report.owner,
+            submission_method = "2",
+            source = report.source,
+            group = report.group,
+            udp_port = report.udp_port,
+            owner_whois = report.owner_whois,
+            owner_description = report.owner_description,
+        )
+        if report.amt_gateway:
+            stream.amt_gateway = report.amt_gateway
+            stream.save()
+        stream.set_whois()
+
+        report.verified = True
+        report.active = False
+        report.stream = stream
+    except:
+        report.active = False
+
     report.save()
 
 

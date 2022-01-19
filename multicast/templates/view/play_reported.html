@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+    <script>
+        function clear_reports(stream_id) {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'view:clear_reports' 1234 %}".replace(/1234/, stream_id),
+                success: function () {
+                    alert("The reports have been cleared and this stream will again appear to users.");
+                },
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 left-div">
+            <h2>if {% stream.owner_whois %}{{ stream.owner_whois }}{% else %}{{ stream.whois }}{% endif %}</h2>
+            <h5>Owner: {{ stream.owner.username }}</h5>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 center-div">
+            <a href="{% url 'view:open' stream.id %}"><button class="btn mm-btn open-btn">Open in VLC</button></a>
+        </div>
+        <br>
+    </div>
+    <hr>
+    <div class="center-div">
+        <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}{% if stream.amt_gateway %} --amt-gateway {{ stream.amt_gateway }}{% endif %}" as the network url or via the command line.</p>
+    </div>
+    <hr>
+    {% if stream.owner_description %}
+        <p>Owner Provided Description:</p>
+        <p>{{ stream.owner_description }}</p>
+    {% else %}
+        {% if descriptions|length == 0 %}
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <p>No descriptions submitted yet.</p>
+                </div>
+            </div>
+        {% else %}
+            {% for d in descriptions %}
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <p>{{ d.description }}</p>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <a class="vote" href="#"><i onclick="upvote('{{ d.id }}')" class="inline fa fas fa-thumbs-up"></i></a>
+                        <a class="vote" href="#"><i onclick="downvote('{{ d.id }}')" class="inline fa fas fa-thumbs-down"></i></a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+    <br>
+    <div class="center-div">
+        <a><button type="button" class="btn mm-btn broken-btn" onclick="clear_reports('{{ stream.id }}')">Clear Reports</button></a>
+        <form>
+            {% csrf_token %}
+            <a><button type="submit" class="btn mm-btn broken-btn">Delete Stream</button></a>
+        </form>
+    </div>
+{% endblock %}

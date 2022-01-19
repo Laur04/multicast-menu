@@ -34,8 +34,8 @@
 {% block main %}
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 left-div">
-            <h2>{{ stream.whois }}</h2>
-            <h5>Owner: {{ stream.owner.username }}</h5>
+            <h2>if {% stream.owner_whois %}{{ stream.owner_whois }}{% else %}{{ stream.whois }}{% endif %}</h2>
+            <h5>{% if stream.owner.username != "DEFAULT_SCRAPING_USER" %}Owner: {{ stream.owner.username }}{% endif %}</h5>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 center-div">
             <a href="{% url 'view:open' stream.id %}"><button class="btn mm-btn open-btn">Open in VLC</button></a>
@@ -44,43 +44,48 @@
     </div>
     <hr>
     <div class="center-div">
-        <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}" as the network url or via the command line.</p>
+        <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}{% if stream.amt_gateway %} --amt-gateway {{ stream.amt_gateway }}{% endif %}" as the network url or via the command line.</p>
     </div>
     <hr>
     <div class="row">
-        {% if user.is_authenticated %}
-            <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 left-div">
-                <p>What kind of content is this stream?</p>
-                <form action="{% url 'view:submit_description' stream.id %}" method="post">
-                    {% csrf_token %}
-                    <p class="inline">{{ description_form.text }}</p>
-                    <input class="btn mm-btn inline" type="submit" value="Submit" />
-                </form>
-            </div>
-            <div class="col-lg-8 col-md-6 col-sm-4 col-xs-12">
+        {% if stream.owner_description %}
+            <p>Owner Provided Description:</p>
+            <p>{{ stream.owner_description }}</p>
         {% else %}
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        {% endif %}
-            {% if descriptions|length == 0 %}
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <p>No descriptions submitted yet.</p>
-                    </div>
+            {% if user.is_authenticated %}
+                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 left-div">
+                    <p>What kind of content is this stream?</p>
+                    <form action="{% url 'view:submit_description' stream.id %}" method="post">
+                        {% csrf_token %}
+                        <p class="inline">{{ description_form.text }}</p>
+                        <input class="btn mm-btn inline" type="submit" value="Submit" />
+                    </form>
                 </div>
+                <div class="col-lg-8 col-md-6 col-sm-4 col-xs-12">
             {% else %}
-                {% for d in descriptions %}
-                    <div class="row">
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                            <p>{{ d.description }}</p>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <a class="vote" href="#"><i onclick="upvote('{{ d.id }}')" class="inline fa fas fa-thumbs-up"></i></a>
-                            <a class="vote" href="#"><i onclick="downvote('{{ d.id }}')" class="inline fa fas fa-thumbs-down"></i></a>
-                        </div>
-                    </div>
-                {% endfor %}
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             {% endif %}
-        </div>
+                    {% if descriptions|length == 0 %}
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <p>No descriptions submitted yet.</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        {% for d in descriptions %}
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                    <p>{{ d.description }}</p>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <a class="vote" href="#"><i onclick="upvote('{{ d.id }}')" class="inline fa fas fa-thumbs-up"></i></a>
+                                    <a class="vote" href="#"><i onclick="downvote('{{ d.id }}')" class="inline fa fas fa-thumbs-down"></i></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+        {% endif %}
     </div>
     <br>
     <div class="center-div">
