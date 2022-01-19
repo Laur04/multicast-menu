@@ -35,7 +35,7 @@ class ManualReport(models.Model):
     stream = models.OneToOneField(Stream, on_delete=models.SET_NULL, null=True)
 
     # Ownership information - required
-    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="manual_report_set")
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="manual_report_set", null=True)
     time_submitted = models.DateTimeField(auto_now_add=True, blank=False, null=False)
 
     # Status information - required
