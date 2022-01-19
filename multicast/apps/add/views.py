@@ -162,7 +162,7 @@ class VideoTransformTrack(MediaStreamTrack):
 @csrf_exempt
 @async_to_sync
 async def offer(request):
-    params = await json.loads(request.body.decode())
+    params = json.loads(request.body.decode())
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
 
     pc = RTCPeerConnection()
