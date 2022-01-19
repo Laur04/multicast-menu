@@ -26,7 +26,9 @@ def verify_manual_report(report_id):
     report.active = True
     report.save()
 
-    try:
+    if Stream.objects.filter(source=report.source, group=report.group).exists():
+        report.verified = False
+    else:
         stream = Stream.objects.create(
             owner = report.owner,
             submission_method = "2",
@@ -39,13 +41,12 @@ def verify_manual_report(report_id):
         if report.amt_gateway:
             stream.amt_gateway = report.amt_gateway
             stream.save()
+        stream.set_whois()
 
         report.verified = True
-        report.active = False
         report.stream = stream
-    except:
-        report.active = False
 
+    report.active = False
     report.save()
 
 
