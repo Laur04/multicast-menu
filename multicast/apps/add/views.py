@@ -172,7 +172,7 @@ async def offer(request):
     def log_info(msg, *args):
         logger.info(pc_id + " " + msg, *args)
 
-    log_info("Created for %s", request.remote)
+    log_info("Created for %s", "remote")
 
     # prepare local media
     player = MediaPlayer(os.path.join(ROOT, "demo-instruct.wav"))
