@@ -176,10 +176,7 @@ async def offer(request):
 
     # prepare local media
     player = MediaPlayer(os.path.join(ROOT, "demo-instruct.wav"))
-    if args.record_to:
-        recorder = MediaRecorder(args.record_to)
-    else:
-        recorder = MediaBlackhole()
+    recorder = MediaBlackhole()
 
     @pc.on("datachannel")
     def on_datachannel(channel):
@@ -208,8 +205,6 @@ async def offer(request):
                     relay.subscribe(track), transform=params["video_transform"]
                 )
             )
-            if args.record_to:
-                recorder.addTrack(relay.subscribe(track))
 
         @track.on("ended")
         async def on_ended():
