@@ -39,7 +39,6 @@ def verify_manual_report(report_id):
         if report.amt_gateway:
             stream.amt_gateway = report.amt_gateway
             stream.save()
-        stream.set_whois()
 
         report.verified = True
         report.active = False
