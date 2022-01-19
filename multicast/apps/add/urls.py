@@ -9,6 +9,4 @@ urlpatterns = [
     path("file", views.add_stream_file, name="add_stream_file"),
     path("live", views.add_stream_live, name="add_stream_live"),
     path("manual", views.add_stream_manual, name="add_stream_manual"),
-    path("offer", views.offer, name="offer"),
-    path("shutdown", views.on_shutdown, name="shutdown"),
 ]
