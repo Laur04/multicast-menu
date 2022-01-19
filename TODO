@@ -1,6 +1,8 @@
-Stream collection engine
-API
-Stream input options
-Stream metadata
-Alternate AMT gateways
+(1) Stream collection engine
+(2) Stream collection celery
+(3) Alternate AMT gateways
+(4) Stream metadata
+(5) Deployment
+(6) API
+(7) Stream input options
 Automatic start up
