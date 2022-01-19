@@ -28,7 +28,7 @@ def index(request):
     active_streams = list()
     for s in Stream.objects.filter(active=True).order_by("report_count"):
         if s.owner_description:
-            active_streams.append((s. s.owner_description))
+            active_streams.append((s, s.owner_description))
         else:
             descriptions = Description.objects.filter(stream=s)
             if descriptions.exists():
