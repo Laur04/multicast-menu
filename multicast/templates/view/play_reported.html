@@ -30,7 +30,7 @@
     </div>
     <hr>
     <div class="center-div">
-        <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}{% if stream.amt_gateway %} --amt-gateway {{ stream.amt_gateway }}{% endif %}" as the network url or via the command line.</p>
+        <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}" as the network url or via the command line{% if stream.amt_gateway %}, passing the option "--amt-gateway {{ stream.amt_gateway }}"{% endif %}.</p>
     </div>
     <hr>
     {% if stream.owner_description %}
