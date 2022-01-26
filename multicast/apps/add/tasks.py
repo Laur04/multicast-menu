@@ -46,6 +46,7 @@ def verify_manual_report(report_id):
             stream.set_whois()
 
             report.verified = True
+            report.error_message = "No errors"
             report.stream = stream
         except:
             report.verified = False

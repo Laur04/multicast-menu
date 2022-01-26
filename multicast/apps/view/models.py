@@ -21,7 +21,7 @@ class Stream(models.Model):
     source = models.CharField(max_length=50, blank=False, null=False)
     group = models.CharField(max_length=50, blank=False, null=False)
     udp_port = models.CharField(max_length=50, blank=True, null=True)
-    amt_gateway = models.CharField(max_length=100, blank=True, null=True)
+    amt_gateway = models.CharField(max_length=100, default="amt-relay.m2icast.net")
 
     # Activity information - required
     active = models.BooleanField(default=True, blank=False, null=False)

@@ -9,14 +9,27 @@ from django.urls import reverse
 
 from ..add.models import ManualReport, StreamSubmission
 from ..add.tasks import verify_manual_report
+from ..view.models import Stream
 
 
 # Allows an authenticated user to view all of the streams that they have submitted through the platform
 @login_required
 def manage_index(request):
+    streams = Stream.objects.filter(owner=request.user)
+
+    reports = []
+    submissions = []
+
+    for s in streams:
+        if s.submission_method == "2":  # manual report
+            reports.append((s, ManualReport.objects.get(stream=s)))
+        elif s.submission_method == "3":  # stream submission
+            submissions.append((s, StreamSubmission.objects.get(stream=s)))
+    
     context = {
-        "streams": StreamSubmission.objects.filter(owner=request.user, active=True),
-        "reports": ManualReport.objects.filter(owner=request.user),
+        "reports": reports,
+        
+        "submissions": submissions,
     }
 
     return render(request, "manage/index.html", context=context)
