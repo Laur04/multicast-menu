@@ -7,7 +7,7 @@ from django.db import models
 class Stream(models.Model):
     id = models.AutoField(primary_key=True)
 
-    METHODS = (("1", "Scraping"), ("2", "Manual Report"), ("3", "File Submission"))
+    METHODS = (("1", "Scraping"), ("2", "Manual Report"), ("3", "Translation Server"))
 
     # Ownership information - required
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="stream_set")

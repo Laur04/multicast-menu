@@ -128,7 +128,7 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_BEAT_SCHEDULE = {
     "scrape_for_streams": {
         "task": "multicast.apps.add.tasks.scrape_for_streams",
-        "schedule": celery.schedules.crontab(hour=1),
+        "schedule": celery.schedules.crontab(minute=0, hour=0),
         "args": (),
     },
 }

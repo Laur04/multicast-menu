@@ -15,21 +15,10 @@ from ..view.models import Stream
 # Allows an authenticated user to view all of the streams that they have submitted through the platform
 @login_required
 def manage_index(request):
-    streams = Stream.objects.filter(owner=request.user)
-
-    reports = []
-    submissions = []
-
-    for s in streams:
-        if s.submission_method == "2":  # manual report
-            reports.append((s, ManualReport.objects.get(stream=s)))
-        elif s.submission_method == "3":  # stream submission
-            submissions.append((s, StreamSubmission.objects.get(stream=s)))
     
     context = {
-        "reports": reports,
-        
-        "submissions": submissions,
+        "reports": ManualReport.objects.filter(owner=request.user),
+        "submissions": StreamSubmission.objects.filter(owner=request.user),
     }
 
     return render(request, "manage/index.html", context=context)
@@ -38,7 +27,7 @@ def manage_index(request):
 # Allows an authenticated user to stop a stream
 @login_required
 def stop_stream(request, submission_id):
-    submission = get_object_or_404(StreamSubmission, id=submission_id)
+    submission = get_object_or_404(StreamSubmission.objects.filter(owner=request.user), id=submission_id)
 
     children = ""
     try:
@@ -62,10 +51,32 @@ def stop_stream(request, submission_id):
     return redirect(reverse("manage:manage_index"))
 
 
+# Allows an authenticated user to remove a manually reported stream entry
+@login_required
+def remove_stream(request, stream_id):
+    stream = get_object_or_404(Stream.objects.filter(owner=request.user), stream_id)
+
+    stream.delete()
+
+    return redirect(reverse("manage:manage_index"))
+
+
+# Allows an authenticated user to edit the information about their stream
+@login_required
+def edit_stream(request, stream_id):
+    stream = get_object_or_404(Stream.objects.filter(owner=request.user), stream_id)
+
+    if request.method == "POST":
+        pass
+        # need to update stream submission/manual report too
+
+    return render(request, "manage/edit.html", context={"stream": stream})
+
+
 # Allows an authenticated user to retry verifying a manual report
 @login_required
 def retry_verification(request, report_id):
-    report = get_object_or_404(ManualReport, id=report_id)
+    report = get_object_or_404(ManualReport.objects.filter(owner=request.user), id=report_id)
     verify_manual_report.delay(report.id)
 
     return redirect(reverse("manage:manage_index"))

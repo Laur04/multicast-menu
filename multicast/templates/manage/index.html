@@ -7,30 +7,39 @@
         <h2>My Streams</h2>
         <hr>
         <h4>Streams Actively Being Sent to Translation Server</h4>
-        <ul>
-            {% for stream, submission in submissions %}
-                <li>Stream {{ stream }} (Submitted at {{ submission.time_submitted }} - <a href="{% url 'manage:stop_stream' submission.id %}">Cancel Stream</a>)</li>
+        <div class="row">
+            {% for submission in submissions %}
+                <div class="col-lg-8 col-md-9 col-sm-12">
+                    {% if submission.stream %}
+                        Stream {{ submission.stream }} (Submitted at {{ submission.time_submitted }})
+                    {% else %}
+                        Unverified stream (Submitted at {{ submission.time_submitted }})
+                    {% endif %}
+                </div>
+                <div class="col-lg-4 col-md-3 col-sm-12">
+                    {% if submission.stream %}
+                        <a href="{% url 'manage:edit_stream' submission.stream.id %}"><button type="button" class="btn mm-btn broken-btn">Edit Stream Info</button></a>
+                    {% endif %}
+                    <a href="{% url 'manage:stop_stream' submission.id %}"><button type="button" class="btn mm-btn broken-btn">Cancel Stream</button></a>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
         <br>
         <h4>Streams Reported Manually</h4>
-        <ul>
-            {% for stream, report in reports %}
-                <li>
-                    {{ r }} - 
-                    {% if r.error_message %}
-                        {% if not r.verified %}
-                            ({{ r.error_message }})
-                            <a href="{% url 'manage:retry_verification' r.id %}">Retry Verification</a>
-                        {% else %}
-                            Verified
-                        {% endif %}
-                    {% else %}
-                        Verifying
+        <div class="row">
+            {% for report in reports %}
+                <div class="col-lg-8 col-md-9 col-sm-12">
+                    {{ report }}{% if not report.verified and report.error_message %} - Failed Verification ({{ r.error_message }}){% endif %}
+                </div>
+                <div class="col-lg-4 col-md-3 col-sm-12">
+                    {% if not report.verified and report.error_message and not report.active %}
+                        <a href="{% url 'manage:retry_verification' r.id %}">Retry Verification</a>
                     {% endif %}
-                </li>
+                    <a href="{% url 'manage:edit_stream' submission.id %}"><button type="button" class="btn mm-btn broken-btn">Edit Stream Info</button></a>
+                    <a href="{% url 'manage:remove_stream' submission.id %}"><button type="button" class="btn mm-btn broken-btn">Remove Stream</button></a>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
         <br>
     </div>
 {% endblock %}

@@ -14,9 +14,8 @@ class StreamSubmission(models.Model):
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="stream_submission_set")
     time_submitted = models.DateTimeField(auto_now_add=True, blank=False, null=False)
 
-    # Source information - one is required
+    # Source information - required
     path_to_uploaded_file = models.CharField(max_length=100, blank=True, null=False)
-    url_to_streamed_video = models.URLField(blank=True, null=True)
 
     # Celery information - required
     celery_task_id = models.CharField(max_length=50)
