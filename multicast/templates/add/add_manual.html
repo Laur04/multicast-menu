@@ -16,7 +16,7 @@
             {{ form.group.errors }}
         </p>
         <p>
-            <label for="{{ form.udp_port.id_for_label }}">UDP Port:</label>
+            <label for="{{ form.udp_port.id_for_label }}">UDP Port (optional):</label>
             {{ form.udp_port }}
             {{ form.udp_port.errors }}
         </p>
@@ -31,7 +31,7 @@
             {{ form.owner_description.errors }}
         </p>
         <p>
-            <label for="{{ form.amt_gateway.id_for_label }}">AMT Gateway (optional):</label>
+            <label for="{{ form.amt_gateway.id_for_label }}">AMT Relay (optional):</label>
             {{ form.amt_gateway }}
             {{ form.amt_gateway.errors }}
         </p>

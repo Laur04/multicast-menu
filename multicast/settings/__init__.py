@@ -16,9 +16,11 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 # Applications
 INSTALLED_APPS = [
-    "multicast.apps.view",
     "multicast.apps.add",
+    "multicast.apps.api",
     "multicast.apps.manage",
+    "multicast.apps.view",
+    "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

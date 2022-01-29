@@ -15,6 +15,9 @@ class Stream(models.Model):
     # Submission information - required
     submission_method = models.CharField(max_length=5, choices=METHODS)
 
+    # Access code to claim stream submitted by TS
+    access_code = models.CharField(max_length=50, blank=True, null=True)
+
     # Stream specific information - source and group required
     whois = models.CharField(max_length=100, blank=True, null=True)
     pps = models.IntegerField(blank=True, null=True)

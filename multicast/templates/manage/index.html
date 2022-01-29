@@ -5,7 +5,21 @@
 {% block main %}
     <div class="left-div">
         <h2>My Streams</h2>
+        <a href="{% url 'manage:claim_stream' %}"><button type="button" class="btn mm-btn broken-btn">Claim Stream with Access Code</button></a>
         <hr>
+        <h4>Claimed Streams</h4>
+        <div class="row">
+            {% for stream in streams %}
+                <div class="col-lg-8 col-md-9 col-sm-12">
+                    {{ stream }}
+                </div>
+                <div class="col-lg-4 col-md-3 col-sm-12">
+                    <a href="{% url 'manage:edit_stream' stream.id %}"><button type="button" class="btn mm-btn broken-btn">Edit Stream Info</button></a>
+                    <a href="{% url 'manage:remove_stream' stream.id %}"><button type="button" class="btn mm-btn broken-btn">Remove Stream</button></a>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
         <h4>Streams Actively Being Sent to Translation Server</h4>
         <div class="row">
             {% for submission in submissions %}
@@ -35,8 +49,10 @@
                     {% if not report.verified and report.error_message and not report.active %}
                         <a href="{% url 'manage:retry_verification' r.id %}">Retry Verification</a>
                     {% endif %}
-                    <a href="{% url 'manage:edit_stream' submission.id %}"><button type="button" class="btn mm-btn broken-btn">Edit Stream Info</button></a>
-                    <a href="{% url 'manage:remove_stream' submission.id %}"><button type="button" class="btn mm-btn broken-btn">Remove Stream</button></a>
+                    {% if report.verified %}
+                        <a href="{% url 'manage:edit_stream' report.stream.id %}"><button type="button" class="btn mm-btn broken-btn">Edit Stream Info</button></a>
+                        <a href="{% url 'manage:remove_stream' report.stream.id %}"><button type="button" class="btn mm-btn broken-btn">Remove Stream</button></a>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

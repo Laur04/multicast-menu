@@ -41,10 +41,10 @@ class ManualReport(models.Model):
     verified = models.BooleanField(default=False, blank=False, null=False)
     error_message = models.CharField(max_length=100, blank=True, null=True)
 
-    # Source information - required except amt_gateway
+    # Source information - required except udp_port
     source = models.CharField(max_length=50, blank=False, null=False)
     group = models.CharField(max_length=50, blank=False, null=False)
-    udp_port = models.CharField(max_length=50, blank=False, null=False)
+    udp_port = models.CharField(max_length=50, blank=True, null=True)
     amt_gateway = models.CharField(max_length=100, blank=True, null=True)
 
     # Metadata - required

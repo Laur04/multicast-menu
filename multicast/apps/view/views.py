@@ -144,7 +144,7 @@ def open(request, stream_id):
     if stream.udp_port:
         response.write(":{}".format(stream.udp_port))
     if stream.amt_gateway:
-        response.write(" --amt-gateway {}".format(stream.amt_gateway))
+        response.write(" --amt-relay {}".format(stream.amt_gateway))
 
     return response
 
