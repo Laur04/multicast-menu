@@ -7,6 +7,6 @@ app_name = "add"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("manual", views.add_manual, name="add_manual"),
-    path("file", views.add_upload, name="add_upload"),
+    path("manual/", views.add_manual, name="add_manual"),
+    path("upload/", views.add_upload, name="add_upload"),
 ]

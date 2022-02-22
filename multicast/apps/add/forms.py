@@ -20,6 +20,7 @@ class ManualSubmissionForm(forms.ModelForm):
         labels = {
             "source": "Source IP",
             "group": "Group IP",
+            "udp_port": "UDP Port",
             "amt_relay": "AMT Relay",
             "source_name": "Name of Originating Organization",
             "description": "Description of Stream",
@@ -72,7 +73,7 @@ class ManualSubmissionForm(forms.ModelForm):
 
 
 # Allows authenticated users to upload a file to be streamed
-class UploadSubmissionForm(forms.Form):
+class UploadSubmissionForm(forms.ModelForm):
     file_to_stream = forms.FileField(allow_empty_file=False, required=True)
 
     class Meta:
