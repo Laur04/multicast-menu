@@ -1,62 +1,59 @@
 from celery import shared_task
+from datetime import timedelta
 import subprocess
 
 from django.core import management
+from django.utils import timezone
 
 from ..view.models import Stream
-from .models import ManualReport, StreamSubmission
-
-
-# Streams the file out to the translator
-@shared_task
-def submit_file_to_translator(submission_id):
-    submission = StreamSubmission.objects.get(id=submission_id)
-    submission.active = True
-    submission.save()
-
-    proc = subprocess.Popen(["/usr/bin/sudo", "-u", "web", "/snap/bin/vlc", submission.path_to_uploaded_file, "--sout=udp://162.250.138.11:9001", "--loop", "--sout-keep"])
-    submission.task_pid = proc.pid
-    submission.save()
+from .models import ScrapingSubmission
 
 
 # Verifies the stream being reported before adding it
 @shared_task
-def verify_manual_report(report_id):
-    report = ManualReport.objects.get(id=report_id)
+def verify_manual_report(stream_id):
+    stream = Stream.objects.get(id=stream_id)
+    report = stream.manual
+
     report.active = True
     report.save()
 
-    if Stream.objects.filter(source=report.source, group=report.group).exists():
+    if Stream.objects.filter(source=stream.source, group=stream.group).exists():
         report.verified = False
         report.error_message = "That stream already exists."
+    # TODO: Add more verification conditions
     else:
-        try:
-            stream = Stream.objects.create(
-                owner = report.owner,
-                submission_method = "2",
-                source = report.source,
-                group = report.group,
-                udp_port = report.udp_port,
-                owner_whois = report.owner_whois,
-                owner_description = report.owner_description,
-            )
-            if report.amt_gateway:
-                stream.amt_gateway = report.amt_gateway
-                stream.save()
-            stream.set_whois()
-
-            report.verified = True
-            report.error_message = "No errors"
-            report.stream = stream
-        except:
-            report.verified = False
-            report.error_message = "Unexpected error in verifying report."
+        report.verified = True
+        stream.active = True
+        stream.save()
 
     report.active = False
     report.save()
+
+
+# Streams the file out to the translator
+@shared_task
+def submit_file_to_translator(stream_id):
+    stream = Stream.objects.get(id=stream_id)
+    upload = stream.upload
+
+    upload.active = True
+    upload.save()
+
+    proc = subprocess.Popen(["/usr/bin/sudo", "-u", "web", "/snap/bin/vlc", upload.path_to_uploaded_file, "--sout=udp://162.250.138.11:9001", "--loop", "--sout-keep"])
+    upload.task_pid = proc.pid
+    upload.save()
 
 
 # Scrapes Internet2 and GEANT for active streams
 @shared_task
 def scrape_for_streams():
     management.call_command("scrape_streams")
+
+
+# Cleans up inactive scraped streams
+@shared_task
+def clean_inactive_streams():
+    for stream in [sub.stream for sub in ScrapingSubmission.objects.filter(time__lte=timezone.now() - timedelta(days=10))]:
+        stream.active = False
+        stream.save()

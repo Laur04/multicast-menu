@@ -17,7 +17,6 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 # Applications
 INSTALLED_APPS = [
     "multicast.apps.add",
-    "multicast.apps.api",
     "multicast.apps.manage",
     "multicast.apps.view",
     "rest_framework",
@@ -131,6 +130,11 @@ CELERY_BEAT_SCHEDULE = {
     "scrape_for_streams": {
         "task": "multicast.apps.add.tasks.scrape_for_streams",
         "schedule": celery.schedules.crontab(minute=0, hour=0),
+        "args": (),
+    },
+    "clean_inactive_streams": {
+        "task": "multicast.apps.add.tasks.clean_inactive_streams",
+        "schedule": celery.schedules.crontab(minute=0, hour=1),
         "args": (),
     },
 }

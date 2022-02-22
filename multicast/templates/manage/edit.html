@@ -5,37 +5,7 @@
 {% block main %}
     <form method="post">
         {% csrf_token %}
-        <p>
-            <label for="{{ form.source.id_for_label }}">{{ form.source.label }}:</label>
-            {{ form.source }}
-            {{ form.source.errors }}
-        </p>
-        <p>
-            <label for="{{ form.group.id_for_label }}">{{ form.group.label }}:</label>
-            {{ form.group }}
-            {{ form.group.errors }}
-        </p>
-        <p>
-            <label for="{{ form.udp_port.id_for_label }}">UDP Port (optional):</label>
-            {{ form.udp_port }}
-            {{ form.udp_port.errors }}
-        </p>
-        <p>
-            <label for="{{ form.owner_whois.id_for_label }}">Owner Display Name:</label>
-            {{ form.owner_whois }}
-            {{ form.owner_whois.errors }}
-        </p>
-        <p>
-            <label for="{{ form.owner_description.id_for_label }}">Stream Description:</label>
-            {{ form.owner_description }}
-            {{ form.owner_description.errors }}
-        </p>
-        <p>
-            <label for="{{ form.amt_gateway.id_for_label }}">AMT Relay (optional):</label>
-            {{ form.amt_gateway }}
-            {{ form.amt_gateway.errors }}
-        </p>
-        {{ form.non_field_errors }}
+        {{ form.as_p }}
         <input class="btn mm-btn" type="submit" value="Update">
     </form>    
 {% endblock %}

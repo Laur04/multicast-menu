@@ -33,11 +33,14 @@
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link header-link" href="{% url 'add:add_index' %}">Add Stream</a>
+                            <a class="nav-link header-link" href="{% url 'add:index' %}">Add Stream</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link header-link" href="{% url 'manage:manage_index' %}">Manage Streams</a>
+                            <a class="nav-link header-link" href="{% url 'manage:index' %}">Manage Streams</a>
                         </li>
+                        {% if user.is_superuser %}
+                            <a class="nav-link header-link" href="{% url 'view:broken_index' %}">Broken Streams</a>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link header-link" href="{% url 'logout' %}">Logout</a>
                         </li>

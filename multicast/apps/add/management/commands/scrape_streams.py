@@ -1,4 +1,3 @@
-import datetime
 from pathlib import Path
 import re
 
@@ -8,7 +7,7 @@ from django.core.management.base import BaseCommand
 from .....stream_collection_scripts.GEANT.run import run as run_geant
 from .....stream_collection_scripts.Internet2.run import run as run_i2
 from ....view.models import Stream
-from ...models import FailedQuery
+from ...models import FailedQuery, ScrapingSubmission
 
 
 class Command(BaseCommand):
@@ -24,7 +23,7 @@ class Command(BaseCommand):
             failed_list.append(results[1])
 
         scrape_user = get_user_model().objects.get_or_create(
-            username="DEFAULT_SCRAPING_USER"
+            username="SCRAPER"
         )[0]
 
         for results_dicts in results_dictionary_list:
@@ -33,20 +32,26 @@ class Command(BaseCommand):
                 if str(results["source"]) not in ["193.17.9.3", "193.17.9.7"]:  # filter out Eumsat
                     if re.match("^[0-9.]+$", results["source"]):  # filter out IPv6
                         if results["pps"] > 100:  # filter out low pps
-                            stream, created = Stream.objects.update_or_create(
-                                source=results["source"], 
-                                group=results["group"],
-                                defaults={
-                                    "pps": results["pps"],
-                                    "active": True,
-                                    "last_found": datetime.datetime.now(),
-                                    "whois": results["who_is"],
-                                }
-                            )
-                            if created:
-                                stream.owner = scrape_user
-                                stream.submission_method = "1"
-                                stream.save()
+                            filtered_streams = Stream.objects.filter(results["source"], group=results["group"])
+                            if not filtered_streams.exists():
+                                stream = Stream.objects.create(
+                                    owner=scrape_user,
+                                    collection_method="01",
+                                    source=results["source"], 
+                                    group=results["group"],
+                                    source_name=results["who_is"],
+                                )
+                                ScrapingSubmission.objects.create(stream=stream)
+                            else:
+                                try:
+                                    stream = filtered_streams.get(collection_method="01")
+                                except:
+                                    pass
+                                else:
+                                    stream.active = True
+                                    stream.save()
+                                    submission = ScrapingSubmission.objects.get(stream=stream)
+                                    submission.save()
 
         for failure_lists in failed_list:
             for failure_ip in failure_lists:

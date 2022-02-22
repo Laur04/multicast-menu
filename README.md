@@ -9,6 +9,10 @@ This site can be found at [https://multicastmenu.m2icast.net](https://multicastm
 To manually run the stream collection scripts used by this site, see the [multicast/stream_collection_scripts](https://github.com/Laur04/multicast-menu/tree/master/multicast/stream_collection_scripts) folder.
 
 
+## API
+To use the API, you must register your sending server and recieve a unique ID to send with your requests. Contact an admin.
+
+
 ## Development
 Clone this repository.
 

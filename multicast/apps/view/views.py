@@ -23,20 +23,12 @@ def register(request):
     return render(request, "registration/register.html", context={"form": form})
 
 
-# Home page listing all active streams
+# Home page listing all active streamseported_index
 def index(request):
-    active_streams = list()
-    for s in Stream.objects.filter(active=True).order_by("report_count"):
-        if s.owner_description:
-            active_streams.append((s, s.owner_description))
-        else:
-            descriptions = Description.objects.filter(stream=s)
-            if descriptions.exists():
-                active_streams.append((s, descriptions.order_by("-votes")[0].description))
-            else:
-                active_streams.append((s, "No title available"))
-    
-    return render(request, "view/index.html", context={"stream_list": active_streams})
+    context = {
+        "stream_list": Stream.objects.filter(active=True).order_by("report_count")
+    }
+    return render(request, "view/index.html", context=context)
 
 
 # Detail page for a specific stream
@@ -48,7 +40,33 @@ def detail(request, stream_id):
         "description_form": DescriptionForm() if request.user.is_authenticated else None,
     }
 
-    return render(request, "view/play.html", context=context)
+    return render(request, "view/detail.html", context=context)
+
+
+# Download a .m3u file for the user to open in VLC
+def open(request, stream_id):
+    stream = get_object_or_404(Stream, id=stream_id)
+
+    response = HttpResponse()
+    response["Content-Disposition"] = 'attachment; filename="playlist.m3u"'
+    response.write("amt://{}@{}".format(stream.source, stream.group))
+    if stream.udp_port:
+        response.write(":{}".format(stream.udp_port))
+    if stream.amt_relay:
+        response.write(" --amt-relay {}".format(stream.amt_relay))
+
+    return response
+
+
+# Allow users to report broken streams
+def report(request, stream_id):
+    stream = get_object_or_404(Stream, id=stream_id)
+
+    if request.is_ajax():
+        stream.report()
+        return JsonResponse(dict())
+    else:
+        raise Http404
 
 
 # Allow users to upvote a description
@@ -78,83 +96,58 @@ def submit_description(request, stream_id):
         form = DescriptionForm(request.POST)
         if form.is_valid():
             description, created = Description.objects.get_or_create(
-                user_submitted=request.user,
                 stream=stream,
-                description=form.cleaned_data["text"]
+                text=form.cleaned_data["text"],
+                defaults={
+                    "user_submitted": request.user,
+                }
             )
             if not created:
                 description.upvote()    
         return redirect(reverse("view:detail", kwargs={"stream_id": stream.id}))
-    else:
-        raise Http404
+    raise Http404
 
 
-# Allow admins to review reported streams
+# Allow admins to review broken streams
 @login_required
-def review_reported_streams(request):
+def broken_index(request):
     if request.user.is_superuser:
         context = {
-            "stream_list": Stream.objects.filter(report_count__gte=10)
+            "stream_list": Stream.objects.filter(active=False)
         }
-        return render(request, "view/manage_reported.html", context=context)
+        return render(request, "view/broken_index.html", context=context)
     raise PermissionDenied
 
 
-# Allow admins to take action on reported streams
+# Allow admins to take action on broken streams
 @login_required
-def detail_reported(request, stream_id):
+def broken_detail(request, stream_id):
     if request.user.is_superuser:
         stream = get_object_or_404(Stream, id=stream_id)
 
         if request.method == "POST":
             stream.delete()
-            return redirect(reverse("view:review_reported_streams"))
+            return redirect(reverse("view:broken_index"))
         else:
             context = {
                 "stream": stream,
                 "descriptions": Description.objects.filter(stream=stream).order_by("-votes")[:3],
             }
 
-            return render(request, "view/play_reported.html", context=context)
+            return render(request, "view/broken_detail.html", context=context)
     raise PermissionDenied
 
 
-# Clear the reports associated with a stream
+# Clear the reports and/or inactivity associated with a stream
 @login_required
-def clear_reports(request, stream_id):
+def broken_clear(request, stream_id):
     if request.user.is_superuser:
         stream = get_object_or_404(Stream, id=stream_id)
         if request.is_ajax():
             stream.report_count = 0
+            stream.active = True
+            stream.update_last_found()
             stream.save()
             return JsonResponse(dict())
-        else:
-            return Http404
-
+        return Http404
     raise PermissionDenied
-
-
-# Download a .m3u file for the user to open in VLC
-def open(request, stream_id):
-    stream = get_object_or_404(Stream, id=stream_id)
-
-    response = HttpResponse()
-    response["Content-Disposition"] = 'attachment; filename="playlist.m3u"'
-    response.write("amt://{}@{}".format(stream.source, stream.group))
-    if stream.udp_port:
-        response.write(":{}".format(stream.udp_port))
-    if stream.amt_gateway:
-        response.write(" --amt-relay {}".format(stream.amt_gateway))
-
-    return response
-
-
-# Allow users to report broken streams
-def report_stream(request, stream_id):
-    stream = get_object_or_404(Stream, id=stream_id)
-
-    if request.is_ajax():
-        stream.report()
-        return JsonResponse(dict())
-    else:
-        raise Http404

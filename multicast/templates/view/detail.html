@@ -22,7 +22,7 @@
         function report(stream_id) {
             $.ajax({
                 type: "GET",
-                url: "{% url 'view:report_stream' 1234 %}".replace(/1234/, stream_id),
+                url: "{% url 'view:report' 1234 %}".replace(/1234/, stream_id),
                 success: function () {
                     alert("Thank you for reporting this; your input has been recorded.");
                 },
@@ -34,8 +34,8 @@
 {% block main %}
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 left-div">
-            <h2>{% if stream.owner_whois %}{{ stream.owner_whois }}{% else %}{{ stream.whois }}{% endif %}</h2>
-            <h5>{% if stream.owner.username != "DEFAULT_SCRAPING_USER" %}Owner: {{ stream.owner.username }}{% endif %}</h5>
+            <h2>{{ stream.source_name }}</h2>
+            <h5>Owner: {{ stream.owner.username }}</h5>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 center-div">
             <a href="{% url 'view:open' stream.id %}"><button class="btn mm-btn open-btn">Open in VLC</button></a>
@@ -44,13 +44,13 @@
     </div>
     <hr>
     <div class="center-div">
-        <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}" as the network url or via the command line{% if stream.amt_gateway %}, passing the option "--amt-relay {{ stream.amt_gateway }}"{% endif %}.</p>
+        <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}" as the network url or via the command line{% if stream.amt_relay %}, passing the option "--amt-relay {{ stream.amt_relay }}"{% endif %}.</p>
     </div>
     <hr>
     <div class="row">
-        {% if stream.owner_description %}
+        {% if stream.description %}
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p>Owner Provided Description: {{ stream.owner_description }}</p>
+                <p>{{ stream.description }}</p>
             </div>
         {% else %}
             {% if user.is_authenticated %}
@@ -76,7 +76,7 @@
                         {% for d in descriptions %}
                             <div class="row">
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                    <p>{{ d.description }}</p>
+                                    <p>{{ d.text }}</p>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                     <a class="vote" href="#"><i onclick="upvote('{{ d.id }}')" class="inline fa fas fa-thumbs-up"></i></a>

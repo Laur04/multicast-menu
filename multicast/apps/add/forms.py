@@ -1,40 +1,54 @@
-from cProfile import label
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_ipv4_address
 
 from ..view.models import Stream
-from .models import ManualReport
-
-
-# Allows authenticated users to upload a file to be streamed
-class AddByFileForm(forms.Form):
-    file_to_stream = forms.FileField(allow_empty_file=False, required=True)
 
 
 # Allows authenticated users to manually report a stream
-class AddByManualForm(forms.ModelForm):
+class ManualSubmissionForm(forms.ModelForm):
     class Meta:
-        model = ManualReport
+        model = Stream
         fields = [
             "source",
             "group",
             "udp_port",
-            "owner_whois",
-            "owner_description",
-            "amt_gateway"
+            "amt_relay",
+            "source_name",
+            "description",
         ]
+        labels = {
+            "source": "Source IP",
+            "group": "Group IP",
+            "amt_relay": "AMT Relay",
+            "source_name": "Name of Originating Organization",
+            "description": "Description of Stream",
+        }
+        required = (
+            "source",
+            "group",
+            "source_name",
+            "description",
+        )
+        not_required = (
+            "udp_port",
+            "amt_relay",
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.Meta.required:
+            self.fields[field].required = True
+
+        for field in self.Meta.not_required:
+            self.fields[field].required = False
+
 
     def is_valid(self):
-        valid = super(AddByManualForm, self).is_valid()
+        valid = super(ManualSubmissionForm, self).is_valid()
         source = self.cleaned_data["source"]
         group = self.cleaned_data["group"]
-
-        unique = not Stream.objects.filter(source=source, group=group).exists()
-        if not unique:
-            self.add_error("source", "This stream already exists.")
-            self.add_error("group", "This stream already exists.")
-            valid = False
 
         try:
             validate_ipv4_address(source)
@@ -48,8 +62,36 @@ class AddByManualForm(forms.ModelForm):
             self.add_error("group", "Please enter a valid IPv4 address.")
             valid = False
 
-        if not self.cleaned_data["udp_port"].isdigit():
-            self.add_error("udp_port", "Please enter an integer.")
+        unique = not Stream.objects.filter(source=source, group=group).exists()
+        if not unique:
+            self.add_error("source", "This stream already exists on the platform. Contact an admin if you wish to claim it.")
+            self.add_error("group", "This stream already exists on the platform. Contact an admin if you wish to claim it")
             valid = False
 
         return valid
+
+
+# Allows authenticated users to upload a file to be streamed
+class UploadSubmissionForm(forms.Form):
+    file_to_stream = forms.FileField(allow_empty_file=False, required=True)
+
+    class Meta:
+        model = Stream
+        fields = [
+            "source_name",
+            "description",
+        ]
+        labels = {
+            "source_name": "Name of Originating Organization",
+            "description": "Description of Stream",
+        }
+        required = (
+            "source_name",
+            "description",
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.Meta.required:
+            self.fields[field].required = True

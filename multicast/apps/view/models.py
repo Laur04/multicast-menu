@@ -1,52 +1,71 @@
-import ipwhois
-
 from django.contrib.auth import get_user_model
 from django.db import models
+from pytz import timezone
 
 
 class Stream(models.Model):
     id = models.AutoField(primary_key=True)
 
-    METHODS = (("1", "Scraping"), ("2", "Manual Report"), ("3", "Translation Server"))
 
-    # Ownership information - required
-    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="stream_set")
+    COLLECTION_METHODS = (("01", "Scraping"), ("02", "Manual"), ("03", "Upload"), ("04", "API"))
 
-    # Submission information - required
-    submission_method = models.CharField(max_length=5, choices=METHODS)
 
-    # Access code to claim stream submitted by TS
-    access_code = models.CharField(max_length=50, blank=True, null=True)
+    # Administrative
+    active = models.BooleanField(default=True)
+    collection_method = models.CharField(max_length=2, choices=COLLECTION_METHODS)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
-    # Stream specific information - source and group required
-    whois = models.CharField(max_length=100, blank=True, null=True)
-    pps = models.IntegerField(blank=True, null=True)
-    source = models.CharField(max_length=50, blank=False, null=False)
-    group = models.CharField(max_length=50, blank=False, null=False)
-    udp_port = models.CharField(max_length=50, blank=True, null=True)
-    amt_gateway = models.CharField(max_length=100, default="amt-relay.m2icast.net")
+    # Stream
+    amt_relay = models.CharField(max_length=100)
+    group = models.GenericIPAddressField()
+    source = models.GenericIPAddressField()
+    udp_port = models.IntegerField()
 
-    # Activity information - required
-    active = models.BooleanField(default=True, blank=False, null=False)
-    last_found = models.DateTimeField(auto_now_add=True, blank=False, null=False)
-    report_count = models.IntegerField(default=0, blank=False, null=False)
+    # Display
+    description = models.CharField(max_length=100)
+    report_count = models.IntegerField(default=0)
+    source_name = models.CharField(max_length=100)
 
-    # Metadata provided by owner - not required
-    owner_whois = models.CharField(max_length=100, blank=True, null=True)
-    owner_description = models.CharField(max_length=10000, blank=True, null=True)
 
-    # Pretty string version of stream information
     def __str__(self):
-        title = self.description_set.order_by("-votes")[0] if len(self.description_set.all()) > 0 else "No title available"
-        return "{} (Source: {}, Group: {})".format(title, self.source, self.group)
+        return "{} (Source: {}, Group: {})".format(self.get_description(), self.source, self.group)
 
-    # Query for WhoIs data based on source field
-    def set_whois(self):
-        info = ipwhois.IPWhois(self.source).lookup_rdap()
-        asn_desc = info["asn_description"]
-        desc = info["network"]["remarks"][0]["description"] if info["network"]["remarks"] is not None else None
-        self.whois = asn_desc if asn_desc is not None else desc
-        self.save()
+    # Returns the owner's description, if set, otherwise returns the most popular user description
+    def get_description(self):
+        if self.description:
+            return self.description
+        elif self.user_description_set.all():
+            return self.user_description_set.order_by("-votes")[0]
+        else:
+            return "No description available"
+
+    # Returns the last time this stream's collection object was updated
+    def get_time_last_found(self):
+        if self.collection_method == "01":
+            return self.scraping.time
+        elif self.collection_method == "02":
+            return self.manual.time
+        elif self.collection_method == "03":
+            return self.upload.time
+        elif self.collection_method == "04":
+            return self.api.time
+        return None
+
+    # Updates the "time" field on this stream's collection object
+    def update_last_found(self):
+        new_time = timezone.now()
+        if self.collection_method == "01":
+            self.scraping.time = new_time
+            self.scraping.save()
+        elif self.collection_method == "02":
+            self.manual.time = new_time
+            self.manual.save()
+        elif self.collection_method == "03":
+            self.upload.time = new_time
+            self.upload.save()
+        elif self.collection_method == "04":
+            self.api.time = new_time
+            self.api.save()
 
     # Allow users to report broken streams
     def report(self):
@@ -59,22 +78,18 @@ class Stream(models.Model):
 class Description(models.Model):
     id = models.AutoField(primary_key=True)
 
-    # Ownership information - required
-    user_submitted = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="description_set", blank=False, null=False)
 
-    # Stream affiated with - required
-    stream = models.ForeignKey(Stream, on_delete=models.CASCADE, blank=False, null=False)
+    # Administration
+    stream = models.ForeignKey(Stream, on_delete=models.CASCADE, related_name="user_description_set")
+    user_submitted = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
-    # Actual text of the description - required 
-    description = models.CharField(max_length=10000, blank=False, null=False)
+    # Display
+    text = models.CharField(max_length=100)
+    votes = models.IntegerField(default=0)
 
-    # Upvotes of the descrition - required
-    votes = models.IntegerField(default=0, blank=False, null=False)
 
-    # Pretty string version of the description
     def __str__(self):
-        short_description = self.description[10] + "..." if len(self.description) > 13 else self.description
-        return "{} - {}".format(short_description, self.stream)
+        return "{} ({})".format(self.text, self.stream)
 
     # Increase the count of votes
     def upvote(self):

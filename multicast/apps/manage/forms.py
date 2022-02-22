@@ -1,8 +1,13 @@
 from django import forms
 
-from ..view.models import Stream
 
-
-# Allows submission of access codes to claim streams
-class ClaimForm(forms.Form):
-    access_code = forms.CharField(max_length=50, required=True)
+class EditForm(forms.ModelForm):
+    class Meta:
+        fields = [
+            "source_name",
+            "description",
+        ]
+        labels = {
+            "source_name": "Name of Originating Organization",
+            "description": "Description of Stream",
+        }
