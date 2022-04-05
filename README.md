@@ -10,7 +10,7 @@ To manually run the stream collection scripts used by this site, see the [multic
 
 
 ## API
-To use the API, you must register your sending server and recieve a unique ID to send with your requests. Contact an admin.
+To use the API, you must register your sending server and recieve a unique ID to send with your requests. See API.md.
 
 
 ## Development

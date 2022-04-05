@@ -7,12 +7,6 @@ from ..celery import app as celery_app
 # Basic Settings
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = ""
-
-DEBUG = False
-
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
-
 
 # Applications
 INSTALLED_APPS = [
