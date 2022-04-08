@@ -12,19 +12,19 @@ class Stream(models.Model):
 
     # Administrative
     active = models.BooleanField(default=True)
-    collection_method = models.CharField(max_length=2, choices=COLLECTION_METHODS)
-    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    collection_method = models.CharField(max_length=2, choices=COLLECTION_METHODS, null=True, blank=True)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
 
     # Stream
-    amt_relay = models.CharField(max_length=100)
-    group = models.GenericIPAddressField()
-    source = models.GenericIPAddressField()
-    udp_port = models.IntegerField()
+    amt_relay = models.CharField(max_length=100, null=True, blank=True)
+    group = models.GenericIPAddressField(null=True, blank=True)
+    source = models.GenericIPAddressField(null=True, blank=True)
+    udp_port = models.IntegerField(null=True, blank=True)
 
     # Display
-    description = models.CharField(max_length=100)
+    description = models.CharField(max_length=100, null=True, blank=True)
     report_count = models.IntegerField(default=0)
-    source_name = models.CharField(max_length=100)
+    source_name = models.CharField(max_length=100, null=True, blank=True)
 
 
     def __str__(self):

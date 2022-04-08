@@ -29,7 +29,7 @@ def index(request):
 # Allows an authenticated user to edit the information about their stream
 @login_required
 def edit(request, stream_id):
-    stream = get_object_or_404(Stream.objects.filter(owner=request.user), stream_id)
+    stream = get_object_or_404(Stream.objects.filter(owner=request.user), id=stream_id)
     form = EditForm(instance=stream)
 
     if request.method == "POST":
@@ -45,7 +45,7 @@ def edit(request, stream_id):
 # Allows an authenticated user to remove a stream
 @login_required
 def remove(request, stream_id):
-    stream = get_object_or_404(Stream.objects.filter(owner=request.user), stream_id)
+    stream = get_object_or_404(Stream.objects.filter(owner=request.user), id=stream_id)
 
     if stream.collection_method == "03":
         submission = stream.upload
@@ -76,7 +76,7 @@ def remove(request, stream_id):
 # Allows an authenticated user to retry verifying a manual report
 @login_required
 def retry_verification(request, stream_id):
-    stream = get_object_or_404(Stream.objects.filter(owner=request.user), stream_id)
+    stream = get_object_or_404(Stream.objects.filter(owner=request.user), id=stream_id)
 
     verify_manual_report.delay(stream.manual)
 
