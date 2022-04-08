@@ -30,11 +30,12 @@ def add_manual(request):
             stream.collection_method = "02"
             stream.save()
 
-            ManualSubmission.objects.create(
+            report = ManualSubmission.objects.create(
                 stream=stream,
-                celery_id=verify_manual_report.delay(stream.id).id,
                 active=False,
             )
+            report.celery_id = verify_manual_report.delay(stream.id).id
+            report.save()
 
             return redirect(reverse("manage:index"))
     
@@ -59,13 +60,14 @@ def add_upload(request):
             fs = FileSystemStorage()
             fs.save(random_path, form.cleaned_data["file_to_stream"])
 
-            UploadSubmission.objects.create(
+            upload = UploadSubmission.objects.create(
                 stream=stream,
-                celery_id=submit_file_to_translator.delay(stream.id).id,
                 active=False,
                 uploaded_file=random_path,
                 access_code=create_random_string(40),
             )
+            upload.celery_id = submit_file_to_translator.delay(stream.id).id
+            upload.save()
 
             return redirect(reverse("manage:index"))
 
