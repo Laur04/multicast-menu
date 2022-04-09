@@ -41,7 +41,7 @@ def submit_file_to_translator(stream_id):
     upload.save()
 
     proc = subprocess.Popen(["/usr/bin/sudo", "-u", "web", "/usr/bin/cvlc", upload.uploaded_file, "--sout=udp://162.250.138.11:9001", "--loop", "--sout-keep"])
-    upload.task_pid = proc.pid
+    upload.stream_pid = proc.pid
     upload.save()
 
 
