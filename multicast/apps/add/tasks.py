@@ -51,7 +51,10 @@ def submit_file_to_translator(stream_id):
 
 # Kills active VLC processes
 @shared_task
-def kill_vlc_process(submission):
+def kill_vlc_process(stream_id):
+    stream = Stream.objects.get(id=stream_id)
+    submission = stream.upload
+
     children = ""
     try:
         children = psutil.Process(int(submission.stream_pid)).children(recursive=True)
@@ -70,6 +73,8 @@ def kill_vlc_process(submission):
 
     submission.active = False
     submission.save()
+
+    stream.delete()
 
 
 # Scrapes Internet2 and GEANT for active streams

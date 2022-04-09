@@ -43,9 +43,9 @@ def remove(request, stream_id):
     stream = get_object_or_404(Stream.objects.filter(owner=request.user), id=stream_id)
 
     if stream.collection_method == "03":
-        kill_vlc_process.delay(stream.upload)
-
-    stream.delete()
+        kill_vlc_process.delay(stream.id)
+    else:
+        stream.delete()
 
     return redirect(reverse("manage:index"))
 
