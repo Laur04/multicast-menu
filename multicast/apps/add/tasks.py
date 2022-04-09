@@ -40,7 +40,7 @@ def submit_file_to_translator(stream_id):
     upload.active = True
     upload.save()
 
-    proc = subprocess.Popen(["/usr/bin/sudo", "-u", "web", "/usr/bin/vlc", upload.path_to_uploaded_file, "--sout=udp://162.250.138.11:9001", "--loop", "--sout-keep"])
+    proc = subprocess.Popen(["/usr/bin/sudo", "-u", "web", "/usr/bin/vlc", upload.uploaded_file, "--sout=udp://162.250.138.11:9001", "--loop", "--sout-keep"])
     upload.task_pid = proc.pid
     upload.save()
 
