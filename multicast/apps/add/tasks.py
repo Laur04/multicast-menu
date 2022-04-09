@@ -18,9 +18,9 @@ def verify_manual_report(stream_id):
     report.active = True
     report.save()
 
-    if Stream.objects.filter(source=stream.source, group=stream.group).exists():
+    if False:
         report.verified = False
-        report.error_message = "That stream already exists."
+        report.error_message = "There was an error."
     # TODO: Add more verification conditions
     else:
         report.verified = True
