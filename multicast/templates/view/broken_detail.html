@@ -44,7 +44,7 @@
     <hr>
     <div class="center-div">
         <a><button type="button" class="btn mm-btn broken-btn" onclick="clear_reports('{{ stream.id }}')">Mark Active</button></a>
-        <form>
+        <form method="post">
             {% csrf_token %}
             <a><button type="submit" class="btn mm-btn broken-btn">Delete Stream</button></a>
         </form>
