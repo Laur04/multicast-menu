@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from pytz import timezone
+from django.utils import timezone
 
 
 class Stream(models.Model):
