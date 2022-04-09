@@ -52,6 +52,7 @@ class SubmissionAdd(generics.CreateAPIView):
                         stream.save()
                         submission.matched = True
                         submission.save()
+                        return Response({"data": "Your access code for claiming, editing or deleting the string is {}".format(submission.access_code)}, status=status.HTTP_201_CREATED)
                     else:
                         return Response({"error": "There are no streams pending matches."}, status=status.HTTP_400_BAD_REQUEST)
                 else:
@@ -91,6 +92,7 @@ class SubmissionRemove(generics.CreateAPIView):
             except:
                 return Response({"error": "Invalid translation server unique identifier"}, status=status.HTTP_400_BAD_REQUEST)
             else:
+                submission = None
                 try:
                     submission = APISubmission.objects.get(access_code=access_code)
                 except:
@@ -98,9 +100,9 @@ class SubmissionRemove(generics.CreateAPIView):
                         submission = UploadSubmission.objects.get(access_code=access_code)
                     except:
                         return Response({"error": "Invalid submission access code."}, status=status.HTTP_400_BAD_REQUEST)
-                else:
-                    stream = submission.stream
-                    submission.delete()
-                    stream.delete()
+                
+                stream = submission.stream
+                submission.delete()
+                stream.delete()
 
-                    return Response({"data": "Your stream has been deleted."}, status=status.HTTP_201_CREATED)    
+                return Response({"data": "Your stream has been deleted."}, status=status.HTTP_201_CREATED)    
