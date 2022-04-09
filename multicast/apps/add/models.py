@@ -76,7 +76,7 @@ class UploadSubmission(models.Model):
     stream_pid = models.IntegerField()
 
     # Management
-    access_code = models.CharField(max_length=40)
+    access_code = models.CharField(max_length=100)
     uploaded_file = models.CharField(max_length=40)
     matched = models.BooleanField(default=False)
 
