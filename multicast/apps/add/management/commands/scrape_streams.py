@@ -32,7 +32,7 @@ class Command(BaseCommand):
                 if str(results["source"]) not in ["193.17.9.3", "193.17.9.7"]:  # filter out Eumsat
                     if re.match("^[0-9.]+$", results["source"]):  # filter out IPv6
                         if results["pps"] > 100:  # filter out low pps
-                            filtered_streams = Stream.objects.filter(results["source"], group=results["group"])
+                            filtered_streams = Stream.objects.filter(source=results["source"], group=results["group"])
                             if not filtered_streams.exists():
                                 stream = Stream.objects.create(
                                     owner=scrape_user,
