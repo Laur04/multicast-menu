@@ -51,10 +51,7 @@ def submit_file_to_translator(stream_id):
 
 # Kills active VLC processes
 @shared_task
-def kill_vlc_process(stream_id):
-    stream = Stream.objects.get(id=stream_id)
-    submission = stream.upload
-
+def kill_vlc_process(submission):
     children = ""
     try:
         children = psutil.Process(int(submission.stream_pid)).children(recursive=True)
