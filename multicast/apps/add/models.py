@@ -73,7 +73,7 @@ class UploadSubmission(models.Model):
     # Celery
     active = models.BooleanField()
     celery_id = models.CharField(max_length=100, blank=True, null=True)
-    stream_pid = models.IntegerField()
+    stream_pid = models.IntegerField(blank=True, null=True)
 
     # Management
     access_code = models.CharField(max_length=100)
