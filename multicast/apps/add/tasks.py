@@ -1,5 +1,9 @@
+import celery
 from celery import shared_task
 from datetime import timedelta
+import os
+import psutil
+import signal
 import subprocess
 
 from django.core import management
@@ -43,6 +47,32 @@ def submit_file_to_translator(stream_id):
     proc = subprocess.Popen(["/usr/bin/sudo", "-u", "web", "/usr/bin/cvlc", upload.uploaded_file, "--sout=udp://162.250.138.11:9001", "--loop", "--sout-keep"])
     upload.stream_pid = proc.pid
     upload.save()
+
+
+# Kills active VLC processes
+@shared_task
+def kill_vlc_process(stream_id):
+    stream = Stream.objects.get(id=stream_id)
+    submission = stream.upload
+
+    children = ""
+    try:
+        children = psutil.Process(int(submission.stream_pid)).children(recursive=True)
+    except:
+        pass
+    try:
+        os.killpg(int(submission.stream_pid), signal.SIGKILL)
+    except:
+        pass
+    for child in children:
+        try:
+            child.kill()
+        except psutil.NoSuchProcess:
+            pass
+    celery.task.control.revoke(submission.celery_id, terminate=True)
+
+    submission.active = False
+    submission.save()
 
 
 # Scrapes Internet2 and GEANT for active streams

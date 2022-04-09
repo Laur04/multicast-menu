@@ -1,13 +1,8 @@
-import celery
-import os
-import psutil
-import signal
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from ..add.tasks import verify_manual_report
+from ..add.tasks import kill_vlc_process, verify_manual_report
 from ..view.models import Stream
 from .forms import EditForm
 
@@ -48,25 +43,7 @@ def remove(request, stream_id):
     stream = get_object_or_404(Stream.objects.filter(owner=request.user), id=stream_id)
 
     if stream.collection_method == "03":
-        submission = stream.upload
-        children = ""
-        try:
-            children = psutil.Process(int(submission.stream_pid)).children(recursive=True)
-        except:
-            pass
-        try:
-            os.killpg(int(submission.stream_pid), signal.SIGKILL)
-        except:
-            pass
-        for child in children:
-            try:
-                child.kill()
-            except psutil.NoSuchProcess:
-                pass
-        celery.task.control.revoke(submission.celery_id, terminate=True)
-
-        submission.active = False
-        submission.save()
+        kill_vlc_process.delay(stream.id)
 
     stream.delete()
 
