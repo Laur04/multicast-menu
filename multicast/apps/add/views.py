@@ -66,7 +66,7 @@ def add_upload(request):
                 uploaded_file=random_path,
                 access_code=create_random_string(40),
             )
-            upload.celery_task_id = submit_file_to_translator.delay(stream.id).id
+            upload.celery_id = submit_file_to_translator.delay(stream.id).id
             upload.save()
 
             return redirect(reverse("manage:index"))
