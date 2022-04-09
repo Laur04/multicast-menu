@@ -51,7 +51,7 @@ def kill_vlc_process(stream_id):
     stream = Stream.objects.get(id=stream_id)
     submission = stream.upload
 
-    subprocess.Popen(["kill", "-9", submission.stream_pid])
+    subprocess.Popen(["kill", "-9", str(submission.stream_pid)])
 
     submission.active = False
     submission.save()
