@@ -63,7 +63,7 @@ def remove(request, stream_id):
                 child.kill()
             except psutil.NoSuchProcess:
                 pass
-        celery.task.control.revoke(submission.celery_task_id, terminate=True)
+        celery.task.control.revoke(submission.celery_id, terminate=True)
 
         submission.active = False
         submission.save()
