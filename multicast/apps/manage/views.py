@@ -39,7 +39,7 @@ def edit(request, stream_id):
             return redirect(reverse("manage:index"))
 
 
-    return render(request, "manage/edit.html", context={"stream": stream})
+    return render(request, "manage/edit.html", context={"form": form})
 
 
 # Allows an authenticated user to remove a stream
