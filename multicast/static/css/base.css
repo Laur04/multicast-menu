@@ -28,6 +28,7 @@ body {
 
 .mm-btn {
     background-color: #01785e;
+    margin: 5px;
 }
 
 .mm-btn:hover {

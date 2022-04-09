@@ -1,8 +1,11 @@
 from django import forms
 
+from ..view.models import Stream
+
 
 class EditForm(forms.ModelForm):
     class Meta:
+        model = Stream
         fields = [
             "source_name",
             "description",

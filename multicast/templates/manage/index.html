@@ -10,7 +10,7 @@
         <div class="row">
             {% for stream in manual_streams %}
                 <div class="col-lg-8 col-md-9 col-sm-12">
-                    {{ stream }}{% if stream.manual.error_msg %}- {{ stream.manual.error_msg }}{% endif %}
+                    <p style="margin-top:10px;">{{ stream }}{% if stream.manual.error_msg %}- {{ stream.manual.error_msg }}{% endif %}</p>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-12">
                     {% if stream.manual.verified %}
@@ -27,7 +27,7 @@
         <div class="row">
             {% for stream in upload_streams %}
                 <div class="col-lg-8 col-md-9 col-sm-12">
-                    {{ stream }}{% if not stream.upload.matched %} - Inactive, waiting for response from translator{% endif %}
+                    <p style="margin-top:10px;">{{ stream }}{% if not stream.upload.matched %} - Inactive, waiting for response from translator{% endif %}</p>
                 </div>
                 <div class="col-lg-4 col-md-3 col-sm-12">
                     <a href="{% url 'manage:edit' stream.id %}"><button type="button" class="btn mm-btn broken-btn">Edit Stream Info</button></a>
