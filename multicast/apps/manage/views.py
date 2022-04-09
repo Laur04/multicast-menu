@@ -51,11 +51,11 @@ def remove(request, stream_id):
         submission = stream.upload
         children = ""
         try:
-            children = psutil.Process(int(submission.task_pid)).children(recursive=True)
+            children = psutil.Process(int(submission.stream_pid)).children(recursive=True)
         except:
             pass
         try:
-            os.killpg(int(submission.task_pid), signal.SIGKILL)
+            os.killpg(int(submission.stream_pid), signal.SIGKILL)
         except:
             pass
         for child in children:
