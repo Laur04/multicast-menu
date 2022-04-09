@@ -1,9 +1,5 @@
-import celery
 from celery import shared_task
 from datetime import timedelta
-import os
-import psutil
-import signal
 import subprocess
 
 from django.core import management
@@ -55,21 +51,7 @@ def kill_vlc_process(stream_id):
     stream = Stream.objects.get(id=stream_id)
     submission = stream.upload
 
-    children = ""
-    try:
-        children = psutil.Process(int(submission.stream_pid)).children(recursive=True)
-    except:
-        pass
-    try:
-        os.killpg(int(submission.stream_pid), signal.SIGKILL)
-    except:
-        pass
-    for child in children:
-        try:
-            child.kill()
-        except psutil.NoSuchProcess:
-            pass
-    celery.task.control.revoke(submission.celery_id, terminate=True)
+    subprocess.Popen(["kill", "-9", submission.stream_pid])
 
     submission.active = False
     submission.save()
