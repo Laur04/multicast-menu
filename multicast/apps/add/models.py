@@ -51,7 +51,7 @@ class ManualSubmission(models.Model):
 
     # Celery
     active = models.BooleanField()
-    celery_id = models.IntegerField(blank=True, null=True)
+    celery_id = models.CharField(max_length=100, blank=True, null=True)
 
     # Management
     error_msg = models.CharField(max_length=100)
@@ -72,7 +72,7 @@ class UploadSubmission(models.Model):
 
     # Celery
     active = models.BooleanField()
-    celery_id = models.IntegerField(blank=True, null=True)
+    celery_id = models.CharField(max_length=100, blank=True, null=True)
     stream_pid = models.IntegerField()
 
     # Management
