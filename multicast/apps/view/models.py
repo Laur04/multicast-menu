@@ -89,7 +89,7 @@ class Description(models.Model):
 
 
     def __str__(self):
-        return "{} ({})".format(self.text, self.stream)
+        return "{}".format(self.text)
 
     # Increase the count of votes
     def upvote(self):
