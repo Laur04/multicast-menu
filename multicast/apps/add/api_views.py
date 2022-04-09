@@ -15,16 +15,16 @@ class SubmissionAdd(generics.CreateAPIView):
     serializer_class = AddSerializer
 
     def create(self, request):
-        try:
-            source = request.data.get("source")
-            group = request.data.get("group")
-            unique_identifier = request.data.get("unique_identifier")
-            inside_request = bool(request.data.get("inside_request"))
-        except:
+        source = request.data.get("source")
+        group = request.data.get("group")
+        unique_identifier = request.data.get("unique_identifier")
+        inside_request = bool(request.data.get("inside_request"))
+
+        if not source or not group or not unique_identifier:
             return Response({"error": "Missing required fields"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             try:
-                translation_server = Translator.objects.get(unique_identifier=unique_identifier)
+                translation_server = Translator.objects.get(uid=unique_identifier)
             except:
                 return Response({"error": "Invalid translation server unique identifier"}, status=status.HTTP_400_BAD_REQUEST)
             else:
@@ -79,16 +79,15 @@ class SubmissionRemove(generics.CreateAPIView):
     serializer_class = RemoveSerializer
 
     def create(self, request):
-        try:
-            unique_identifier = request.data.get("unique_identifier")
-            access_code = request.data.get("access_code")
+        unique_identifier = request.data.get("unique_identifier")
+        access_code = request.data.get("access_code")
+        submission = None
 
-            submission = None
-        except:
+        if not unique_identifier or not access_code:
             return Response({"error": "Missing required fields"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             try:
-                Translator.objects.get(unique_identifier=unique_identifier)
+                Translator.objects.get(uid=unique_identifier)
             except:
                 return Response({"error": "Invalid translation server unique identifier"}, status=status.HTTP_400_BAD_REQUEST)
             else:
