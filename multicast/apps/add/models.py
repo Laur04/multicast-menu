@@ -77,7 +77,7 @@ class UploadSubmission(models.Model):
 
     # Management
     access_code = models.CharField(max_length=100)
-    uploaded_file = models.CharField(max_length=40)
+    uploaded_file = models.CharField(max_length=100)
     matched = models.BooleanField(default=False)
 
 
