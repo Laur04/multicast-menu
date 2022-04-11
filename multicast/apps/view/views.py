@@ -52,8 +52,6 @@ def open(request, stream_id):
     response.write("amt://{}@{}".format(stream.source, stream.group))
     if stream.udp_port:
         response.write(":{}".format(stream.udp_port))
-    if stream.amt_relay:
-        response.write(" --amt-relay {}".format(stream.amt_relay))
 
     return response
 

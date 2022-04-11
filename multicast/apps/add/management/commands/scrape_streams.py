@@ -41,6 +41,8 @@ class Command(BaseCommand):
                                     group=results["group"],
                                     source_name=results["who_is"],
                                 )
+                                if stream.source_name == "GEANT":
+                                    stream.amt_relay = "amt-relay.geant.org"
                                 ScrapingSubmission.objects.create(stream=stream)
                             else:
                                 try:
