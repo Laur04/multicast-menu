@@ -7,6 +7,8 @@ from ..view.models import Stream
 
 # Allows authenticated users to manually report a stream
 class ManualSubmissionForm(forms.ModelForm):
+    amt_relay_other = forms.CharField(max_length=100, required=False, label="Other")
+
     class Meta:
         model = Stream
         fields = [
@@ -28,15 +30,18 @@ class ManualSubmissionForm(forms.ModelForm):
         required = (
             "source",
             "group",
+            "amt_relay",
             "source_name",
             "description",
         )
         not_required = (
             "udp_port",
-            "amt_relay",
         )
+    
+    field_order = ["source", "group", "udp_port", "amt_relay", "amt_relay_other", "source_name", "description"]
 
     def __init__(self, *args, **kwargs):
+        _relay_list = kwargs.pop('data_list', None)
         super().__init__(*args, **kwargs)
 
         for field in self.Meta.required:
@@ -44,6 +49,8 @@ class ManualSubmissionForm(forms.ModelForm):
 
         for field in self.Meta.not_required:
             self.fields[field].required = False
+
+        self.fields["amt_relay"].widget = forms.Select(choices=_relay_list)
 
 
     def is_valid(self):
@@ -67,6 +74,10 @@ class ManualSubmissionForm(forms.ModelForm):
         if not unique:
             self.add_error("source", "This stream already exists on the platform. Contact an admin if you wish to claim it.")
             self.add_error("group", "This stream already exists on the platform. Contact an admin if you wish to claim it")
+            valid = False
+
+        if int(self.cleaned_data["amt_relay"]) == 2 and not self.cleaned_data["amt_relay_other"]:
+            self.add_error("amt_relay", "Please specify an AMT relay.")
             valid = False
 
         return valid

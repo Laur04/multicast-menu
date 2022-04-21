@@ -19,16 +19,23 @@ def index(request):
 # Allows an authenticated user to manually report a stream
 @login_required
 def add_manual(request):
-    form = ManualSubmissionForm()
+    RELAY_LIST = ((0, "amt-relay.m2icast.net"), (1, "amt-relay.geant.org"), (2, "Other (please specify)"))
+
+    form = ManualSubmissionForm(data_list=RELAY_LIST)
 
     if request.method == "POST":
-        form = ManualSubmissionForm(request.POST)
+        form = ManualSubmissionForm(request.POST, data_list=RELAY_LIST)
         if form.is_valid():
             stream = form.save()
             stream.owner = request.user
             stream.active = False
             stream.collection_method = "02"
+            stream.amt_relay = RELAY_LIST[int(form.cleaned_data["amt_relay"])][1]
             stream.save()
+
+            if int(form.cleaned_data["amt_relay"]) == 2:
+                stream.amt_relay = form.cleaned_data["amt_relay_other"]
+                stream.save()
 
             report = ManualSubmission.objects.create(
                 stream=stream,
