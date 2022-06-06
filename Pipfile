@@ -4,13 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-celery = "~=4.4.7"
+celery = "~=5.2.2"
 cryptography = "~=35.0.0"
-django = "~=3.2.8"
+django = "~=3.2.13"
 djangorestframework = "~=3.13.1"
 gunicorn = "~=20.1.0"
 ipwhois = "~=1.2.0"
-Pillow = "~=8.4.0"
+Pillow = "~=9.0.1"
 psutil = "~=5.8.0"
 psycopg2-binary = "~=2.9.1"
 redis = "~=4.0.1"
