@@ -4,7 +4,7 @@ Multicast Menu provides a collection of all the multicast video streams availabl
 
 
 ## Usage
-This site can be found at [https://multicastmenu.m2icast.net](https://multicastmenu.m2icast.net). In order for the streams that it links to to run properly on your machine, you will need [VLC 4.0 or later](https://nightlies.videolan.org/) installed.
+This site can be found at [https://menu.m2icast.net](https://menu.m2icast.net). In order for the streams that it links to to run properly on your machine, you will need [VLC 4.0 or later](https://nightlies.videolan.org/) installed.
 
 To manually run the stream collection scripts used by this site, see the [multicast/stream_collection_scripts](https://github.com/Laur04/multicast-menu/tree/master/multicast/stream_collection_scripts) folder.
 
