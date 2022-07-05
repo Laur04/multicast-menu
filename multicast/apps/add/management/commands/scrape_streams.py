@@ -16,8 +16,9 @@ class Command(BaseCommand):
             username="SCRAPER"
         )[0]
 
-        for results_key in results_dict:
-            results = results_dict[results_key]
+        print(results_dict)
+
+        for results in results_dict:
             filtered_streams = Stream.objects.filter(source=results["source"], group=results["group"])
             if not filtered_streams.exists():
                 stream = Stream.objects.create(
