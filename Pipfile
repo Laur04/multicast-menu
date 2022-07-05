@@ -6,7 +6,7 @@ verify_ssl = true
 [packages]
 celery = "~=5.2.2"
 cryptography = "~=35.0.0"
-django = "~=3.2.13"
+django = "~=3.2.14"
 djangorestframework = "~=3.13.1"
 gunicorn = "~=20.1.0"
 ipwhois = "~=1.2.0"
