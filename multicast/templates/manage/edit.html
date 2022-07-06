@@ -3,9 +3,16 @@
 {% load static %}
 
 {% block main %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input class="btn mm-btn" type="submit" value="Update">
-    </form>    
+    <div class="p-4 shadow left-div" style="max-width: 800px; margin: auto;">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label }}:</label> {{ field }}
+                </div>
+                {{ field.errors }}
+            {% endfor %}
+            <input class="btn mm-btn" type="submit" value="Update">
+        </form>
+    </div>
 {% endblock %}

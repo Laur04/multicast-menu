@@ -32,74 +32,67 @@
 {% endblock %}
 
 {% block main %}
-    <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 left-div">
-            <h2>{{ stream.source_name }}</h2>
-            <h5>Owner: {{ stream.owner.username }}</h5>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 center-div">
-            <a href="{% url 'view:open' stream.id %}"><button class="btn mm-btn open-btn">Open in VLC</button></a>
-        </div>
-        <br>
-    </div>
-    <hr>
-    <div class="center-div">
-        <p>You can also view this video manually in VLC by entering "amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}" as the network url or via the command line{% if stream.amt_relay %}, passing the option "--amt-relay {{ stream.amt_relay }}"{% endif %}.</p>
-    </div>
-    <hr>
-    <div class="row">
-        {% if stream.description %}
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p>{{ stream.description }}</p>
-            </div>
-        {% else %}
-            {% if user.is_authenticated %}
-                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 left-div">
-                    <p>What kind of content is this stream?</p>
-                    <form action="{% url 'view:submit_description' stream.id %}" method="post">
-                        {% csrf_token %}
-                        <p class="inline">{{ description_form.text }}</p>
-                        <input class="btn mm-btn inline" type="submit" value="Submit" />
-                    </form>
-                </div>
-                <div class="col-lg-8 col-md-6 col-sm-4 col-xs-12">
-            {% else %}
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div style="max-width: 880px; margin: auto;">
+        <!-- Preview image -->
+        <div>
+            {% if stream.preview %}
+                <img class="responsive-image detail-padding" src={{ stream.preview.url }}>
             {% endif %}
-                    {% if descriptions|length == 0 %}
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <p>No descriptions submitted yet.</p>
-                            </div>
-                        </div>
-                    {% else %}
-                        {% for d in descriptions %}
-                            <div class="row">
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                    <p>{{ d.text }}</p>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <a class="vote" href="#"><i onclick="upvote('{{ d.id }}')" class="inline fa fas fa-thumbs-up"></i></a>
-                                    <a class="vote" href="#"><i onclick="downvote('{{ d.id }}')" class="inline fa fas fa-thumbs-down"></i></a>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-        {% endif %}
+        </div>
+        <!-- Title, organization, owner...-->
+        <div class="detail-margin">
+            <h1 style="font-size: 22px; font-weight: bold;">{{ stream.get_description }}</h1>
+            <h2 style="font-size: 14px;">Organization: {{ stream.source_name }}</h2>
+            <h2 style="font-size: 14px;">Owner: {{ stream.owner.username }}</h2>
+        </div>
+        <!-- Categories -->
+        <div class="categories detail-margin">
+            Categories:&nbsp;
+            {% for category in stream.categories.all %}
+                <span class="category-tag">
+                    {{ category.name }}
+                </span>
+            {% endfor %}
+        </div>
+        <!-- Open in VLC -->
+        <div class="detail-margin">
+            <a href="{% url 'view:open' stream.id %}">
+                <button type="button" class="btn detail-button detail-padding">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 32px; height: 32px; padding-bottom: 2px;" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16">
+                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+                    </svg>
+                    Open in VLC
+                </button>
+            </a>
+        </div>
+        <!-- Open manually -->
+        <div class="text-box">
+            <p style="text-align: center;">
+                You can also view this video manually in VLC by entering
+                <code>amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}</code>
+                as the network url or via the command line
+                {% if stream.amt_relay %}, passing the option <code>--amt-relay {{ stream.amt_relay }}</code>{% endif %}.
+            </p>
+        </div>
+        <!-- Possible errors -->
+        <div class="text-box">
+            <p>Possible errors you might encounter:</p>
+            <ul>
+                <li>You don't have <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed (this is a dev version).</li>
+                <li>The video stream you've chosen isn't actually video, so VLC is unable to play it. Try another stream; we are working on filtering.</li>
+                <li>If the file that was downloaded isn't opening in VLC, make sure that VLC is the default app for opening .m3u files in your settings.</li>
+                <li>The default amt relay in your VLC application doesn't match the amt relay specified above. You can fix this in preferences.</li>
+            </ul>
+        </div>
+        <!-- Report broken stream -->
+        <div class="detail-margin">
+            <button type="button" class="btn detail-button detail-padding" onclick="report('{{ stream.id }}')">
+                <svg xmlns="http://www.w3.org/2000/svg" style="width: 32px; height: 32px; padding-bottom: 2px;" fill="currentColor" class="bi bi-flag-fill" viewBox="0 0 16 16">
+                  <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
+                </svg>
+                Report Broken Stream
+            </button>
+        </div>
     </div>
-    <br>
-    <div class="center-div">
-        <a><button type="button" class="btn mm-btn broken-btn" onclick="report('{{ stream.id }}')">Report Broken Stream</button></a>
-    </div>
-    <hr>
-    <div class="left-div">
-        <p>Possible errors you might encounter:</p>
-        <ul>
-            <li>You don't have <a href="https://nightlies.videolan.org/">VLC 4.0 or later</a> installed (this is a dev version).</li>
-            <li>The video stream you've chosen isn't actually video, so VLC is unable to play it. Try another stream; we are working on filtering.</li>
-            <li>If the file that was downloaded isn't opening in VLC, make sure that VLC is the default app for opening .m3u files in your settings.</li>
-            <li>The default amt relay in your VLC application doesn't match the amt relay specified above. You can fix this in preferences.</li>
-        </ul>
-    </div>
+
 {% endblock %}

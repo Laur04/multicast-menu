@@ -11,18 +11,26 @@
         <h2>Broken Streams</h2>
         <h6>The following streams have been marked inactive and are no longer shown to users. You can click each one to view its details and take appropriate action.</h6>
     </div>
-    <hr>
-    <div class="row">
+    <div class="stream-cards">
         {% for stream in stream_list %}
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 center-div stream-box">
-                <a class="invisible-a" href="{% url 'view:broken_detail' stream.id %}">
-                    <h5><strong>{{ stream.get_description }}</strong></h5>
-                    <p class="stream-whois">{{ stream.source_name }}</p>
-                    <br>
-                    <p class="stream-info">Source: {{ stream.source }}</p>
-                    <p class="stream-info">Group: {{ stream.group }}</p>
-                </a>
-            </div>
+            <article>
+                <figure class="stream-card-header">
+                    <a href="{% url 'view:broken_detail' stream.id %}"></a>
+                    {% if stream.thumbnail %}
+                        <img src={{ stream.thumbnail.url }} alt="" class="thumbnail">
+                    {% else %}
+                        <img src="{% static 'img/svg/image-fill.svg' %}" class="fallback-thumbnail">
+                    {% endif %}
+                </figure>
+                <div class="stream-card-body">
+                    <a href="{% url 'view:broken_detail' stream.id %}" class="invisible-a">
+                        <strong style="display: block">
+                            {{ stream.get_description }}
+                        </strong>
+                    </a>
+                    {{ stream.source_name }}
+                </div>
+            </article>
         {% endfor %}
     </div>
 {% endblock %}

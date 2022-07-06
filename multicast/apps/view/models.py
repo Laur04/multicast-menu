@@ -3,12 +3,21 @@ from django.db import models
 from django.utils import timezone
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField()
+
+    class Meta:
+        ordering = ("name",)
+
+    def __str__(self):
+        return self.name
+
+
 class Stream(models.Model):
     id = models.AutoField(primary_key=True)
 
-
     COLLECTION_METHODS = (("01", "Scraping"), ("02", "Manual"), ("03", "Upload"), ("04", "API"))
-
 
     # Administrative
     active = models.BooleanField(default=True)
@@ -22,10 +31,12 @@ class Stream(models.Model):
     udp_port = models.IntegerField(null=True, blank=True)
 
     # Display
+    categories = models.ManyToManyField(Category)
     description = models.CharField(max_length=100, null=True, blank=True)
     report_count = models.IntegerField(default=0)
     source_name = models.CharField(max_length=100, null=True, blank=True)
-
+    thumbnail = models.ImageField(null=True, blank=True, upload_to="stream_previews/%Y/%m/%d/%H")
+    preview = models.ImageField(null=True, blank=True, upload_to="stream_previews/%Y/%m/%d/%H")
 
     def __str__(self):
         return "{} (Source: {}, Group: {})".format(self.get_description(), self.source, self.group)
@@ -74,10 +85,16 @@ class Stream(models.Model):
             self.active = False
         self.save()
 
+    # Returns the URL address of the stream
+    def get_url(self):
+        url = "amt://" + self.source + "@" + self.group
+        if self.udp_port:
+            url = url + ":" + str(self.udp_port)
+        return url
+
 
 class Description(models.Model):
     id = models.AutoField(primary_key=True)
-
 
     # Administration
     stream = models.ForeignKey(Stream, on_delete=models.CASCADE, related_name="user_description_set")
@@ -86,7 +103,6 @@ class Description(models.Model):
     # Display
     text = models.CharField(max_length=100)
     votes = models.IntegerField(default=0)
-
 
     def __str__(self):
         return "{}".format(self.text)

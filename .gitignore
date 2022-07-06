@@ -4,7 +4,7 @@ db.sqlite3
 
 dump.rdb
 
-media/
+multicast/media/
 
 __pycache__/
 *.pyc

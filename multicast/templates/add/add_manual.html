@@ -2,31 +2,18 @@
 
 {% load static %}
 
-{% block head %}
-    <style>
-        #other {
-            margin-left: 45px;
-        }
-    </style>
-{% endblock %}
-
 {% block main %}
-    <h5>Enter the details of the stream that you want to report.</h5>
-    <form method="post">
-        {% csrf_token %}
-        {% for field in form %}
-            {% if field.label != "Other" %}
-                <p>
-                    <label>{{ field.label }}:</label>
-                    {{ field }}
-                </p>
-            {% else %}
-                <p id="other">
-                    <label>{{ field.label }}:</label>
-                    {{ field }}
-                </p>
-            {% endif %}
-        {% endfor %}
-        <input class="btn mm-btn" type="submit" value="Submit">
-    </form>    
+    <div class="p-4 shadow left-div" style="max-width: 800px; margin: auto;">
+        <h5 style="padding: 15px 0;">Enter the details of the stream that you want to report.</h5>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group" {% if field.label == "Other" %} style="margin-left: 45px;" {% endif %}>
+                    <label>{{ field.label }}:</label> {{ field }}
+                </div>
+                {{ field.errors }}
+            {% endfor %}
+            <input class="btn mm-btn" type="submit" value="Submit">
+        </form>
+    </div>
 {% endblock %}

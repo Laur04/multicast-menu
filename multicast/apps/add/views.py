@@ -8,7 +8,7 @@ from ...utils import create_random_string
 from .forms import ManualSubmissionForm, UploadSubmissionForm
 from .models import ManualSubmission, UploadSubmission
 from .tasks import submit_file_to_translator, verify_manual_report
-
+from multicast.apps.view.tasks import create_preview_for_stream
 
 # Index page for add where an authenticated user can select how they would like to add a stream
 @login_required
@@ -43,6 +43,9 @@ def add_manual(request):
             )
             report.celery_id = verify_manual_report.delay(stream.id).id
             report.save()
+
+            # Create the preview for the stream
+            create_preview_for_stream.delay(stream.id)
 
             return redirect(reverse("manage:index"))
     

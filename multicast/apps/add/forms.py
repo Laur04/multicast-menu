@@ -18,6 +18,7 @@ class ManualSubmissionForm(forms.ModelForm):
             "amt_relay",
             "source_name",
             "description",
+            "categories",
         ]
         labels = {
             "source": "Source IP",
@@ -26,6 +27,7 @@ class ManualSubmissionForm(forms.ModelForm):
             "amt_relay": "AMT Relay",
             "source_name": "Name of Originating Organization",
             "description": "Description of Stream",
+            "categories": "Categories"
         }
         required = (
             "source",
@@ -36,9 +38,17 @@ class ManualSubmissionForm(forms.ModelForm):
         )
         not_required = (
             "udp_port",
+            "categories",
         )
-    
-    field_order = ["source", "group", "udp_port", "amt_relay", "amt_relay_other", "source_name", "description"]
+
+    field_order = ["source",
+                   "group",
+                   "udp_port",
+                   "amt_relay",
+                   "amt_relay_other",
+                   "source_name",
+                   "description",
+                   "categories"]
 
     def __init__(self, *args, **kwargs):
         _relay_list = kwargs.pop('data_list', None)
@@ -52,6 +62,9 @@ class ManualSubmissionForm(forms.ModelForm):
 
         self.fields["amt_relay"].widget = forms.Select(choices=_relay_list)
 
+        # Add css classes to the elements
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({"class": "form-control"})
 
     def is_valid(self):
         valid = super(ManualSubmissionForm, self).is_valid()
@@ -72,8 +85,10 @@ class ManualSubmissionForm(forms.ModelForm):
 
         unique = not Stream.objects.filter(source=source, group=group).exists()
         if not unique:
-            self.add_error("source", "This stream already exists on the platform. Contact an admin if you wish to claim it.")
-            self.add_error("group", "This stream already exists on the platform. Contact an admin if you wish to claim it")
+            self.add_error("source",
+                           "This stream already exists on the platform. Contact an admin if you wish to claim it.")
+            self.add_error("group",
+                           "This stream already exists on the platform. Contact an admin if you wish to claim it")
             valid = False
 
         if int(self.cleaned_data["amt_relay"]) == 2 and not self.cleaned_data["amt_relay_other"]:
@@ -92,14 +107,19 @@ class UploadSubmissionForm(forms.ModelForm):
         fields = [
             "source_name",
             "description",
+            "categories"
         ]
         labels = {
             "source_name": "Name of Originating Organization",
             "description": "Description of Stream",
+            "categories": "Categories"
         }
         required = (
             "source_name",
             "description",
+        )
+        not_required = (
+            "categories",
         )
 
     def __init__(self, *args, **kwargs):
@@ -107,3 +127,13 @@ class UploadSubmissionForm(forms.ModelForm):
 
         for field in self.Meta.required:
             self.fields[field].required = True
+
+        for field in self.Meta.not_required:
+            self.fields[field].required = False
+
+        # Add css classes to the elements
+        for field in self.fields:
+            if field == "file_to_stream":
+                self.fields[field].widget.attrs.update({"class": "form-control-file"})
+            else:
+                self.fields[field].widget.attrs.update({"class": "form-control"})

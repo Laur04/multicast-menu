@@ -1,34 +1,62 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from .forms import DescriptionForm
-from .models import Description, Stream
+from .forms import DescriptionForm, CustomUserCreationForm
+from .models import Category, Description, Stream
 
 
 # Allow a user to create an account
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect(reverse("login"))
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
 
     return render(request, "registration/register.html", context={"form": form})
 
 
 # Home page listing all active streamseported_index
 def index(request):
+    # Get all categories from the database
+    categories = Category.objects.all()
+    # Get the active category from the request, defaulting to empty string if there is no category
+    str_active_category = request.GET.get("category", "")
+    # Get all active streams from the database
+    stream_list = Stream.objects.filter(active=True)
+
+    if str_active_category:
+        # Get a query set with the active category from the database
+        active_category_set = categories.filter(slug=str_active_category)
+        # Get the distinct streams with categories in the active category set
+        stream_list = stream_list.filter(categories__in=active_category_set).distinct()
+
+    # Get the search query from the request
+    str_query = request.GET.get("query", "")
+    if str_query:
+        stream_list = stream_list.filter(description__icontains=str_query)
+
+    # Show 24 streams per page
+    paginator = Paginator(stream_list, 24)
+    # Get the requested page number
+    page_number = request.GET.get("page")
+    # Get the page from the request
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "stream_list": Stream.objects.filter(active=True).order_by("report_count")
+        "categories": categories,
+        "active_category": str_active_category,
+        "page_obj": page_obj,
+        "query": str_query
     }
-    return render(request, "view/index.html", context=context)
+    return render(request, "view/index.html", context)
 
 
 # Detail page for a specific stream
