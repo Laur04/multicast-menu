@@ -19,11 +19,13 @@
                 <p>
                     <label>{{ field.label }}:</label>
                     {{ field }}
+                    {{ field.errors }}
                 </p>
             {% else %}
                 <p id="other">
                     <label>{{ field.label }}:</label>
                     {{ field }}
+                    {{ field.errors }}
                 </p>
             {% endif %}
         {% endfor %}

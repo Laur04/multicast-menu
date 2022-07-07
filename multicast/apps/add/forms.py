@@ -55,25 +55,17 @@ class ManualSubmissionForm(forms.ModelForm):
 
     def is_valid(self):
         valid = super(ManualSubmissionForm, self).is_valid()
-        source = self.cleaned_data["source"]
-        group = self.cleaned_data["group"]
-
-        try:
-            validate_ipv4_address(source)
-        except ValidationError:
-            self.add_error("source", "Please enter a valid IPv4 address.")
-            valid = False
-
-        try:
-            validate_ipv4_address(group)
-        except ValidationError:
-            self.add_error("group", "Please enter a valid IPv4 address.")
-            valid = False
+        source = self.cleaned_data.get("source")
+        group = self.cleaned_data.get("group")
 
         unique = not Stream.objects.filter(source=source, group=group).exists()
         if not unique:
             self.add_error("source", "This stream already exists on the platform. Contact an admin if you wish to claim it.")
             self.add_error("group", "This stream already exists on the platform. Contact an admin if you wish to claim it")
+            valid = False
+
+        if self.cleaned_data["udp_port"] is not None and self.cleaned_data["udp_port"] <= 0:
+            self.add_error("udp_port", "Please enter a positive number.")
             valid = False
 
         if int(self.cleaned_data["amt_relay"]) == 2 and not self.cleaned_data["amt_relay_other"]:
