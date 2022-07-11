@@ -20,6 +20,7 @@
                     {% endif %}
                     <a href="{% url 'manage:remove' stream.id %}"><button type="button" class="btn mm-btn broken-btn">Remove Stream</button></a>
                 </div>
+                <div class="col-12" style="height:30px;"></div>
             {% endfor %}
         </div>
         <br>
@@ -33,6 +34,7 @@
                     <a href="{% url 'manage:edit' stream.id %}"><button type="button" class="btn mm-btn broken-btn">Edit Stream Info</button></a>
                     <a href="{% url 'manage:remove' stream.id %}"><button type="button" class="btn mm-btn broken-btn">Remove Stream</button></a>
                 </div>
+                <div class="col-12" style="height:30px;"></div>
             {% endfor %}
         </div>
         <br>
