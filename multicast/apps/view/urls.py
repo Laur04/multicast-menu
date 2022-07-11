@@ -16,4 +16,7 @@ urlpatterns = [
     path("broken/", views.broken_index, name="broken_index"),
     path("broken/detail/<int:stream_id>/", views.broken_detail, name="broken_detail"),
     path("broken/clear/<int:stream_id>/", views.broken_clear, name="broken_clear"),
+    path("detail/set_editors_choice/<int:stream_id>/", views.set_editors_choice, name="set_editors_choice"),
+    path("detail/like_stream/<int:stream_id>/", views.like_stream, name="like_stream"),
+    path("detail/remove_like_from_stream/<int:stream_id>/", views.remove_like_from_stream, name="remove_like_from_stream"),
 ]

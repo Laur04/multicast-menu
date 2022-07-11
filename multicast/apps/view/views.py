@@ -10,6 +10,22 @@ from .forms import DescriptionForm, CustomUserCreationForm
 from .models import Category, Description, Stream
 
 
+def is_ajax(request):
+    """
+    Calling request.is_ajax() results in the following error:
+        AttributeError: 'WSGIRequest' object has no attribute 'is_ajax'
+    This function reproduces the functionality of request.is_ajax() without the error.
+
+    References:
+        AttributeError: 'WSGIRequest' object has no attribute 'is_ajax',
+        https://stackoverflow.com/questions/70419441/attributeerror-wsgirequest-object-has-no-attribute-is-ajax
+
+    :param request:
+    :return:
+    """
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+
 # Allow a user to create an account
 def register(request):
     if request.method == "POST":
@@ -30,7 +46,7 @@ def index(request):
     # Get the active category from the request, defaulting to empty string if there is no category
     str_active_category = request.GET.get("category", "")
     # Get all active streams from the database
-    stream_list = Stream.objects.filter(active=True)
+    stream_list = Stream.objects.filter(active=True).order_by("-created_at")
 
     if str_active_category:
         # Get a query set with the active category from the database
@@ -62,10 +78,13 @@ def index(request):
 # Detail page for a specific stream
 def detail(request, stream_id):
     stream = get_object_or_404(Stream, id=stream_id)
+
     context = {
         "stream": stream,
         "descriptions": Description.objects.filter(stream=stream).order_by("-votes")[:3],
         "description_form": DescriptionForm() if request.user.is_authenticated else None,
+        "num_likes": stream.likes.count(),
+        "stream_is_liked_by_user": request.user.is_authenticated and stream.likes.contains(request.user),
     }
 
     return render(request, "view/detail.html", context=context)
@@ -88,7 +107,7 @@ def open(request, stream_id):
 def report(request, stream_id):
     stream = get_object_or_404(Stream, id=stream_id)
 
-    if request.is_ajax():
+    if is_ajax(request):
         stream.report()
         return JsonResponse(dict())
     else:
@@ -99,7 +118,7 @@ def report(request, stream_id):
 def upvote_description(request, description_id):
     description = get_object_or_404(Description, id=description_id)
 
-    if request.is_ajax():
+    if is_ajax(request):
         description.upvote()
         return JsonResponse(dict())
 
@@ -108,7 +127,7 @@ def upvote_description(request, description_id):
 def downvote_description(request, description_id):
     description = get_object_or_404(Description, id=description_id)
 
-    if request.is_ajax():
+    if is_ajax(request):
         description.downvote()
         return JsonResponse(dict())
 
@@ -169,11 +188,52 @@ def broken_detail(request, stream_id):
 def broken_clear(request, stream_id):
     if request.user.is_superuser:
         stream = get_object_or_404(Stream, id=stream_id)
-        if request.is_ajax():
+        if is_ajax(request):
             stream.report_count = 0
             stream.active = True
             stream.update_last_found()
             stream.save()
+            return JsonResponse(dict())
+        return Http404
+    raise PermissionDenied
+
+
+@login_required()
+def set_editors_choice(request, stream_id):
+    if request.user.is_superuser:
+        stream = get_object_or_404(Stream, id=stream_id)
+        if is_ajax(request):
+            value = request.GET.get("editors_choice", "false")
+            if value == "true":
+                stream.editors_choice = True
+                stream.save()
+            else:
+                stream.editors_choice = False
+                stream.save()
+            return JsonResponse(dict())
+        return Http404
+    raise PermissionDenied
+
+
+@login_required()
+def like_stream(request, stream_id):
+    if request.user.is_authenticated:
+        stream = get_object_or_404(Stream, id=stream_id)
+        if is_ajax(request):
+            if not stream.likes.contains(request.user):
+                stream.likes.add(request.user)
+            return JsonResponse(dict())
+        return Http404
+    raise PermissionDenied
+
+
+@login_required()
+def remove_like_from_stream(request, stream_id):
+    if request.user.is_authenticated:
+        stream = get_object_or_404(Stream, id=stream_id)
+        if is_ajax(request):
+            if stream.likes.contains(request.user):
+                stream.likes.remove(request.user)
             return JsonResponse(dict())
         return Http404
     raise PermissionDenied
