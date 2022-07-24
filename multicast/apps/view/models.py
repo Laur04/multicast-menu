@@ -1,7 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
-from django.db import models
+from django.db import models, transaction
+from django.db.models import F
 from django.utils import timezone
+
+from multicast.settings import TRENDING_STREAM_USAGE_WEIGHT, TRENDING_STREAM_MAX_SIZE, TRENDING_STREAM_INIT_SCORE
 
 
 class Category(models.Model):
@@ -40,6 +43,12 @@ class Stream(models.Model):
     preview = models.ImageField(null=True, blank=True, upload_to="stream_previews/%Y/%m/%d/%H")
     editors_choice = models.BooleanField(default=False)
     likes = models.ManyToManyField(User, related_name="liked_streams")
+    """
+    A relationship which indicates that a stream was once liked by a user and then the like was removed.
+    The relationship is used to check if this is the first time a stream is liked by a user.
+    Any further likes of the same stream from the same user will not increase its trending score again.
+    """
+    removed_likes = models.ManyToManyField(User, related_name="unliked_streams")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -121,3 +130,84 @@ class Description(models.Model):
     def downvote(self):
         self.votes -= 1
         self.save()
+
+
+class TrendingStreamManager(models.Manager):
+    """
+    Custom manager for the trending streams.
+    Provides a method through which Stream objects can be added to the trending stream table.
+    In order to have the trending streams working properly, it is important to NOT create
+    TrendingStream objects directly with the create() method, but to always add the Stream
+    objects to the trending streams table through the add() method, which ensures that the whole
+    trending streams table is correctly updated.
+    """
+
+    def add(self, stream):
+        """
+        Adds a Stream object to the trending stream table.
+
+        This is an implementation of the LRFU (Least Recently/Frequently Used) cache replacement policy.
+        The policy directly seeks to combine LRU (Least Recently Used) and LFU (Least Frequently Used)
+        to expire trending streams based on a formula that combines both recency and frequency of use.
+
+        References:
+
+        [1] frequently and most recently used items ranking algorithm,
+        https://stackoverflow.com/questions/41716033/frequently-and-most-recently-used-items-ranking-algorithm
+
+        [2]  Donghee Lee et al.,
+        "LRFU: a spectrum of policies that subsumes the least recently used and least frequently used policies,"
+        in IEEE Transactions on Computers, vol. 50, no. 12, pp. 1352-1361, Dec. 2001, doi: 10.1109/TC.2001.970573.
+
+        :param stream: Stream to be added to the trending stream table
+        :return: None
+        """
+        # Get all trending streams from the table
+        trending_streams = TrendingStream.objects.all()
+        # Start an atomic transaction
+        with transaction.atomic():
+            # Update the score of all existing trending streams
+            trending_streams.update(score=F("score") * TRENDING_STREAM_USAGE_WEIGHT)
+            # Search for the input stream in the trending table
+            found = trending_streams.filter(stream_id=stream.id).first()
+            if found is None:
+                # The stream was not found in the trending table
+                if trending_streams.count() < TRENDING_STREAM_MAX_SIZE:
+                    # We have room -> Add the stream to the trending table
+                    TrendingStream.objects.create(stream=stream, score=TRENDING_STREAM_INIT_SCORE)
+                else:
+                    # No more room -> Delete the last trending stream and add the input stream to the trending table
+                    last_trending_stream = trending_streams.last()
+                    if last_trending_stream:
+                        last_trending_stream.delete()
+                    TrendingStream.objects.create(stream=stream, score=TRENDING_STREAM_INIT_SCORE)
+            else:
+                # If the input stream already exists in the trending table -> Increment its score
+                found.score = found.score + TRENDING_STREAM_INIT_SCORE
+                found.save()
+
+
+class TrendingStream(models.Model):
+    stream = models.OneToOneField(Stream, on_delete=models.CASCADE, related_name="trending_stream")
+    score = models.FloatField()
+
+    objects = TrendingStreamManager()
+
+    class Meta:
+        ordering = ("-score",)
+
+    def __str__(self):
+        return "{:.3f}: {}".format(self.score, self.stream.get_description())
+
+    def ranking(self):
+        """
+        Returns the rank of the trending stream. The rank is computed dynamically!
+
+        References:
+        How do I get the position of a result in the list after an order_by?,
+        https://stackoverflow.com/questions/2659245/how-do-i-get-the-position-of-a-result-in-the-list-after-an-order-by/51317266#51317266
+
+        :return: Rank of the trending stream.
+        """
+        count = TrendingStream.objects.filter(score__gt=self.score).count()
+        return count + 1

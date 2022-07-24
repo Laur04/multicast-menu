@@ -134,6 +134,13 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 
+# Trending streams constants
+TRENDING_STREAM_USAGE_WEIGHT = 0.9
+TRENDING_STREAM_INIT_SCORE = 1.0
+TRENDING_STREAM_MAX_SIZE = 20
+TRENDING_STREAM_MAX_VISIBLE_SIZE = 10
+
+
 # Import secret.py
 try:
     from .secret import *

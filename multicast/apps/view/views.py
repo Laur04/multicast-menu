@@ -7,7 +7,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from .forms import DescriptionForm, CustomUserCreationForm
-from .models import Category, Description, Stream
+from .models import Category, Description, Stream, TrendingStream
+
+from multicast.settings import TRENDING_STREAM_MAX_VISIBLE_SIZE
 
 
 def is_ajax(request):
@@ -70,9 +72,44 @@ def index(request):
         "categories": categories,
         "active_category": str_active_category,
         "page_obj": page_obj,
-        "query": str_query
+        "query": str_query,
+        "TRENDING_STREAM_MAX_VISIBLE_SIZE": TRENDING_STREAM_MAX_VISIBLE_SIZE
     }
     return render(request, "view/index.html", context)
+
+
+def trending_index(request):
+    stream_list = []
+    for trending_stream in TrendingStream.objects.all():
+        if trending_stream.stream.active:
+            stream_list.append(trending_stream.stream)
+    context = {
+        "stream_list": stream_list[0:TRENDING_STREAM_MAX_VISIBLE_SIZE],
+        "TRENDING_STREAM_MAX_VISIBLE_SIZE": TRENDING_STREAM_MAX_VISIBLE_SIZE
+    }
+    return render(request, "view/trending_index.html", context=context)
+
+
+def editors_choice_index(request):
+    context = {
+        "stream_list": Stream.objects.filter(editors_choice=True, active=True),
+        "TRENDING_STREAM_MAX_VISIBLE_SIZE": TRENDING_STREAM_MAX_VISIBLE_SIZE
+    }
+    return render(request, "view/editors_choice_index.html", context=context)
+
+
+@login_required()
+def liked_index(request):
+    if request.user.is_authenticated:
+        # Get all active and liked streams
+        # Reversed in order to show the most recently liked streams first
+        liked_streams = reversed(request.user.liked_streams.filter(active=True))
+        context = {
+            "stream_list": liked_streams,
+            "TRENDING_STREAM_MAX_VISIBLE_SIZE": TRENDING_STREAM_MAX_VISIBLE_SIZE
+        }
+        return render(request, "view/liked_index.html", context=context)
+    raise PermissionDenied
 
 
 # Detail page for a specific stream
@@ -85,6 +122,7 @@ def detail(request, stream_id):
         "description_form": DescriptionForm() if request.user.is_authenticated else None,
         "num_likes": stream.likes.count(),
         "stream_is_liked_by_user": request.user.is_authenticated and stream.likes.contains(request.user),
+        "TRENDING_STREAM_MAX_VISIBLE_SIZE": TRENDING_STREAM_MAX_VISIBLE_SIZE
     }
 
     return render(request, "view/detail.html", context=context)
@@ -220,6 +258,14 @@ def like_stream(request, stream_id):
     if request.user.is_authenticated:
         stream = get_object_or_404(Stream, id=stream_id)
         if is_ajax(request):
+            # Check if the user has liked the stream once and then removed his like.
+            if stream.removed_likes.contains(request.user):
+                # Remove the relationship, because the user is now liking the stream again.
+                stream.removed_likes.remove(request.user)
+            else:
+                # This is the first time the user is liking this stream -> Increase the trending score of the stream.
+                TrendingStream.objects.add(stream)
+            # Add the user to the likes set of the stream
             if not stream.likes.contains(request.user):
                 stream.likes.add(request.user)
             return JsonResponse(dict())
@@ -233,7 +279,12 @@ def remove_like_from_stream(request, stream_id):
         stream = get_object_or_404(Stream, id=stream_id)
         if is_ajax(request):
             if stream.likes.contains(request.user):
+                # Remove the user from the likes set of the stream.
                 stream.likes.remove(request.user)
+                # Add the user to the removed_likes set of the stream.
+                # That way we can check later if the user likes the same stream again.
+                # Such like will not further increase the trending score of the stream.
+                stream.removed_likes.add(request.user)
             return JsonResponse(dict())
         return Http404
     raise PermissionDenied
