@@ -42,6 +42,13 @@ def edit(request, stream_id):
 def remove(request, stream_id):
     stream = get_object_or_404(Stream.objects.filter(owner=request.user), id=stream_id)
 
+    if stream.thumbnail:
+        # Delete the thumbnail without saving
+        stream.thumbnail.delete(save=False)
+    if stream.preview:
+        # Delete the preview without saving
+        stream.preview.delete(save=False)
+
     if stream.collection_method == "03":
         kill_vlc_process.delay(stream.id)
     else:
