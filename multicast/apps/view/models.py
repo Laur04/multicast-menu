@@ -35,20 +35,20 @@ class Stream(models.Model):
     udp_port = models.IntegerField(null=True, blank=True)
 
     # Display
-    categories = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category, blank=True)
     description = models.CharField(max_length=100, null=True, blank=True)
     report_count = models.IntegerField(default=0)
     source_name = models.CharField(max_length=100, null=True, blank=True)
     thumbnail = models.ImageField(null=True, blank=True, upload_to="stream_previews/%Y/%m/%d/%H")
     preview = models.ImageField(null=True, blank=True, upload_to="stream_previews/%Y/%m/%d/%H")
     editors_choice = models.BooleanField(default=False)
-    likes = models.ManyToManyField(User, related_name="liked_streams")
+    likes = models.ManyToManyField(User, related_name="liked_streams", blank=True)
     """
     A relationship which indicates that a stream was once liked by a user and then the like was removed.
     The relationship is used to check if this is the first time a stream is liked by a user.
     Any further likes of the same stream from the same user will not increase its trending score again.
     """
-    removed_likes = models.ManyToManyField(User, related_name="unliked_streams")
+    removed_likes = models.ManyToManyField(User, related_name="unliked_streams", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
