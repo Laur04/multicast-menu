@@ -121,7 +121,7 @@ def detail(request, stream_id):
         "descriptions": Description.objects.filter(stream=stream).order_by("-votes")[:3],
         "description_form": DescriptionForm() if request.user.is_authenticated else None,
         "num_likes": stream.likes.count(),
-        "stream_is_liked_by_user": request.user.is_authenticated and stream.likes.contains(request.user),
+        "stream_is_liked_by_user": request.user.is_authenticated and request.user in stream.likes.all(),
         "TRENDING_STREAM_MAX_VISIBLE_SIZE": TRENDING_STREAM_MAX_VISIBLE_SIZE
     }
 
