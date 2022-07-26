@@ -86,11 +86,11 @@
 
 .dropdown-item {
     padding: .5rem 1.5rem;
-    color: #34495e;
+    color: #01785e;
 }
 
 .dropdown-item:active {
-    background-color: #34495e;
+    background-color: #01785e;
     color: white;
 }
 
@@ -113,14 +113,14 @@
 
 .mm-btn {
     margin: 5px;
-    color: #34495e;
+    color: #01785e;
     background-color: white;
-    border: 2px solid #34495e;
+    border: 2px solid #01785e;
     transition: .4s ease-out;
 }
 
 .mm-btn:hover {
     color: white;
-    background-color: #34495e;
-    border: 2px solid #34495e;
+    background-color: #01785e;
+    border: 2px solid #01785e;
 }

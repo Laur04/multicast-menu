@@ -11,7 +11,7 @@
     width: 350px;
     height: 200px;
     overflow: hidden;
-    background: #34495e;
+    background: #01785e;
     box-shadow: 0 5px 10px rgba(0,0,0,0.8);
     transform-origin: center top;
     transform-style: preserve-3d;
@@ -105,16 +105,16 @@
 
 .page-link {
     height: 100%;
-    color: #34495e;
+    color: #01785e;
     background-color: white;
-    border: 2px solid #34495e;
+    border: 2px solid #01785e;
     transition: 0.3s;
 }
 
 .page-link:hover {
     color: white;
-    background-color: #34495e;
-    border: 2px solid #34495e;
+    background-color: #01785e;
+    border: 2px solid #01785e;
 }
 
 .page-link:focus {
@@ -123,8 +123,8 @@
 
 .page-item.active .page-link {
     color: white;
-    background-color: #34495e;
-    border: 2px solid #34495e;
+    background-color: #01785e;
+    border: 2px solid #01785e;
 }
 
 .responsive-image {
@@ -151,13 +151,13 @@
     width: 100%;
     font-size: 20px;
     font-weight: bold;
-    color: #34495e;
+    color: #01785e;
     background-color: white;
-    border: 2px solid #34495e;
+    border: 2px solid #01785e;
     transition: .4s ease-out;
     /* "to left" / "to right" - affects initial color */
     /*
-    background: linear-gradient(to left, white 50%, #34495e 50%) right;
+    background: linear-gradient(to left, white 50%, #01785e 50%) right;
     background-size: 200%;
     transition: .4s ease-out;
      */
@@ -165,8 +165,8 @@
 
 .detail-button:hover {
     color: white;
-    background-color: #34495e;
-    border: 2px solid #34495e;
+    background-color: #01785e;
+    border: 2px solid #01785e;
     /*
     background-position: left;
      */
