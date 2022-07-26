@@ -38,7 +38,7 @@ def snapshot_multicast_stream(str_url, str_amt_relay, str_snapshot_path):
     """
     vlc_process = subprocess.Popen([
         # Path to local VLC
-        "/Applications/VlC 2.app/Contents/MacOS/VLC",
+        "/usr/bin/cvlc",
         # Stream URL
         str_url,
         # AMT Relay
