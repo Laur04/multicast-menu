@@ -259,14 +259,14 @@ def like_stream(request, stream_id):
         stream = get_object_or_404(Stream, id=stream_id)
         if is_ajax(request):
             # Check if the user has liked the stream once and then removed his like.
-            if stream.removed_likes.contains(request.user):
+            if request.user in stream.removed_likes.all():
                 # Remove the relationship, because the user is now liking the stream again.
                 stream.removed_likes.remove(request.user)
             else:
                 # This is the first time the user is liking this stream -> Increase the trending score of the stream.
                 TrendingStream.objects.add(stream)
             # Add the user to the likes set of the stream
-            if not stream.likes.contains(request.user):
+            if not request.user in stream.likes.all():
                 stream.likes.add(request.user)
             return JsonResponse(dict())
         return Http404
@@ -278,7 +278,7 @@ def remove_like_from_stream(request, stream_id):
     if request.user.is_authenticated:
         stream = get_object_or_404(Stream, id=stream_id)
         if is_ajax(request):
-            if stream.likes.contains(request.user):
+            if request.user in stream.likes.all():
                 # Remove the user from the likes set of the stream.
                 stream.likes.remove(request.user)
                 # Add the user to the removed_likes set of the stream.
