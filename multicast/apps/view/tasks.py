@@ -31,7 +31,8 @@ def create_preview_for_stream(stream_id):
     # Create a temp directory
     temp_dir = tempfile.TemporaryDirectory()
     # Snapshot the stream and save the images in the temp directory
-    snapshot_multicast_stream(stream.get_url(), stream.amt_relay, temp_dir.name)
+    amt_relay = stream.amt_relay if stream.amt_relay is not None else "amt-relay.m2icast.net"
+    snapshot_multicast_stream(stream.get_url(), amt_relay, temp_dir.name)
     # List the snapshots
     snapshots = os.listdir(temp_dir.name)
     # Check if there are any snapshots
