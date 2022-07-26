@@ -37,6 +37,9 @@ def snapshot_multicast_stream(str_url, str_amt_relay, str_snapshot_path):
         Command-line interface, https://wiki.videolan.org/Command-line_interface/
     """
     vlc_process = subprocess.Popen([
+        "/usr/bin/sudo",
+        "-u",
+        "web",
         # Path to local VLC
         "/usr/bin/cvlc",
         # Stream URL
