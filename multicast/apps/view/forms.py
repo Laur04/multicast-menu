@@ -6,6 +6,10 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 class DescriptionForm(forms.Form):
     text = forms.CharField(widget=forms.TextInput, max_length=10000, required=True)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['text'].widget.attrs.update({"class": "form-control"})
+
 
 class CustomLoginForm(AuthenticationForm):
     """
