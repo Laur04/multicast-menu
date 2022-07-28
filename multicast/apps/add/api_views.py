@@ -52,6 +52,7 @@ class SubmissionAdd(generics.CreateAPIView):
                         stream.save()
                         submission.matched = True
                         submission.save()
+                        return Response({"data": "Your access code for claiming, editing or deleting the string is {}".format(submission.access_code)}, status=status.HTTP_201_CREATED)
                     else:
                         access_code = create_random_string(40)
                         api_user = get_user_model().objects.get_or_create(
@@ -69,7 +70,7 @@ class SubmissionAdd(generics.CreateAPIView):
                             translator=translation_server,
                             access_code=access_code,
                         )
-                    return Response({"data": "Your access code for claiming, editing or deleting the string is {}".format(submission.access_code)}, status=status.HTTP_201_CREATED)
+                        return Response({"data": "Your access code for claiming, editing or deleting the string is {}".format(access_code)}, status=status.HTTP_201_CREATED)
                 else:
                     access_code = create_random_string(40)
                     api_user = get_user_model().objects.get_or_create(
