@@ -52,9 +52,24 @@ class SubmissionAdd(generics.CreateAPIView):
                         stream.save()
                         submission.matched = True
                         submission.save()
-                        return Response({"data": "Your access code for claiming, editing or deleting the string is {}".format(submission.access_code)}, status=status.HTTP_201_CREATED)
                     else:
-                        return Response({"error": "There are no streams pending matches."}, status=status.HTTP_400_BAD_REQUEST)
+                        access_code = create_random_string(40)
+                        api_user = get_user_model().objects.get_or_create(
+                            username="API"
+                        )[0]
+                        stream = Stream.objects.create(
+                            owner=api_user,
+                            collection_method="04",
+                            source=source,
+                            group=group,
+                            source_name=translation_server.name,
+                        )
+                        APISubmission.objects.create(
+                            stream=stream,
+                            translator=translation_server,
+                            access_code=access_code,
+                        )
+                    return Response({"data": "Your access code for claiming, editing or deleting the string is {}".format(submission.access_code)}, status=status.HTTP_201_CREATED)
                 else:
                     access_code = create_random_string(40)
                     api_user = get_user_model().objects.get_or_create(
