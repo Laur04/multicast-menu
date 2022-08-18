@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+    <link href="{% static 'css/video-js.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block main %}
+    <video class="video-js" controls width="640" height="264" id="video-player" >
+
+    <script src="{% static 'js/video.min.js' %}"></script>
+
+    <script>
+        const player = videojs('video-player');
+        player.ready((p) => {
+            player.src({
+                type: "application/x-mpegURL",
+                src: "{% media watch_file %}"
+            });
+        });
+    </script>
+{% endblock %}

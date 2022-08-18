@@ -4,7 +4,7 @@ from django.db import models, transaction
 from django.db.models import F
 from django.utils import timezone
 
-from multicast.settings import TRENDING_STREAM_USAGE_WEIGHT, TRENDING_STREAM_MAX_SIZE, TRENDING_STREAM_INIT_SCORE
+from ...settings import TRENDING_STREAM_USAGE_WEIGHT, TRENDING_STREAM_MAX_SIZE, TRENDING_STREAM_INIT_SCORE
 
 
 class Category(models.Model):
@@ -211,3 +211,27 @@ class TrendingStream(models.Model):
         """
         count = TrendingStream.objects.filter(score__gt=self.score).count()
         return count + 1
+
+
+class Tunnel(models.Model):
+    stream = models.OneToOneField(Stream, on_delete=models.CASCADE, related_name="tunnel")
+    
+    active_viewer_count = models.IntegerField(default=1)
+    amt_gateway_up = models.BooleanField(default=False)
+    ffmpeg_up = models.BooleanField(default=False)
+    ffmpeg_pid = models.IntegerField(blank=True, null=True)
+    
+    def __str__(self):
+        return "Tunnel for {}".format(self.stream)
+
+    def get_amt_port_number(self):
+        return self.id + 2000
+
+    def get_udp_port_number(self):
+        return self.id + 4000
+
+    def get_filename(self):
+        return "index-{}.m3u8".format(self.id)
+
+    def ready_for_viewing(self):
+        return self.amt_gateway_up and self.ffmpeg_up

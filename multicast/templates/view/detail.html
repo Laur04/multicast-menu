@@ -156,14 +156,14 @@
                 </a>
             {% endif %}
         </div>
-        <!-- Open in VLC -->
+        <!-- Watch in Browser -->
         <div class="detail-margin">
-            <a href="{% url 'view:open' stream.id %}">
+            <a href="{% url 'view:watch' stream.id %}">
                 <button type="button" class="btn detail-button detail-padding">
                     <svg xmlns="http://www.w3.org/2000/svg" style="width: 32px; height: 32px; padding-bottom: 2px;" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16">
                       <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
                     </svg>
-                    Open in VLC
+                    Watch in Browser
                 </button>
             </a>
         </div>
@@ -216,8 +216,7 @@
             <p style="text-align: center;">
                 You can also view this video manually in VLC by entering
                 <code>amt://{{ stream.source }}@{{ stream.group }}{% if stream.udp_port %}:{{ stream.udp_port }}{% endif %}</code>
-                as the network url or via the command line
-                {% if stream.amt_relay %}, passing the option <code>--amt-relay {{ stream.amt_relay }}</code>{% endif %}.
+                as the network url or via the command line{% if stream.amt_relay %}, passing the option <code>--amt-relay {{ stream.amt_relay }}</code>{% endif %}.
             </p>
         </div>
         <!-- Possible errors -->

@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 
+
 app_name = "view"
 
 urlpatterns = [
@@ -11,7 +12,7 @@ urlpatterns = [
     path("editors_choice/", views.editors_choice_index, name="editors_choice_index"),
     path("liked/", views.liked_index, name="liked_index"),
     path("detail/<int:stream_id>/", views.detail, name="detail"),
-    path("detail/open/<int:stream_id>/", views.open, name="open"),
+    path("detail/watch/<int:stream_id>/", views.watch, name="watch"),
     path("detail/report/<int:stream_id>/", views.report, name="report"),
     path("description/upvote/<int:description_id>/", views.upvote_description, name="upvote_description"),
     path("description/downvote/<int:description_id>/", views.downvote_description, name="downvote_description"),

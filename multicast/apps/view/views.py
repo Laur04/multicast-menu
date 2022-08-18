@@ -1,15 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from .forms import DescriptionForm, CustomUserCreationForm
-from .models import Category, Description, Stream, TrendingStream
+from .models import Category, Description, Stream, TrendingStream, Tunnel
 
-from multicast.settings import TRENDING_STREAM_MAX_VISIBLE_SIZE
+from ...settings import TRENDING_STREAM_MAX_VISIBLE_SIZE
+from .tasks import open_tunnel, start_ffmpeg
 
 
 def is_ajax(request):
@@ -128,17 +129,23 @@ def detail(request, stream_id):
     return render(request, "view/detail.html", context=context)
 
 
-# Download a .m3u file for the user to open in VLC
-def open(request, stream_id):
+# Page to view video by opening gateway tunnel to relay
+def watch(request, stream_id):
     stream = get_object_or_404(Stream, id=stream_id)
 
-    response = HttpResponse()
-    response["Content-Disposition"] = 'attachment; filename="playlist.m3u"'
-    response.write("amt://{}@{}".format(stream.source, stream.group))
-    if stream.udp_port:
-        response.write(":{}".format(stream.udp_port))
+    tunnel, created = Tunnel.objects.get_or_create(stream=stream)
+    if created:
+        open_tunnel.delay(tunnel.id)  # open the AMT tunnel and put data onto LOCAL_LOOPBACK:{{ tunnel.get_udp_port_number() }}
+        start_ffmpeg.delay(tunnel.id)  # read data from LOCAL_LOOPBACK:{{ tunnel.get_udp_port_number() }} to {{ tunnel.get_filename() }}
+    else:
+        tunnel.active_viewer_count += 1
+        tunnel.save()
 
-    return response
+    context = {
+        "watch_file": tunnel.get_filename(),
+    }
+
+    return render(request, "view/watch.html", context=context)
 
 
 # Allow users to report broken streams
