@@ -81,8 +81,8 @@ def open_tunnel(tunnel_id):
     relay = tunnel.stream.amt_relay if tunnel.stream.amt_relay else "amt-relay.m2icast.net"
     source = tunnel.stream.source
     multicast = tunnel.stream.group
-    amt_port = tunnel.get_amt_port_number()
-    udp_port = tunnel.get_udp_port_number()
+    amt_port = str(tunnel.get_amt_port_number())
+    udp_port = str(tunnel.get_udp_port_number())
 
     proc = subprocess.Popen([
         "python3",
