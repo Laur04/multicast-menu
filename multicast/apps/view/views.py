@@ -133,13 +133,15 @@ def detail(request, stream_id):
 def watch(request, stream_id):
     stream = get_object_or_404(Stream, id=stream_id)
 
-    tunnel, created = Tunnel.objects.get_or_create(stream=stream)
-    if created:
+    tunnel = Tunnel.objects.get_or_create(stream=stream)[0]
+    
+    if not tunnel.amt_gateway_up:
         open_tunnel.delay(tunnel.id)  # open the AMT tunnel and put data onto LOCAL_LOOPBACK:{{ tunnel.get_udp_port_number() }}
+    if not tunnel.ffmpeg_up:
         start_ffmpeg.delay(tunnel.id)  # read data from LOCAL_LOOPBACK:{{ tunnel.get_udp_port_number() }} to {{ tunnel.get_filename() }}
-    else:
-        tunnel.active_viewer_count += 1
-        tunnel.save()
+    
+    tunnel.active_viewer_count += 1
+    tunnel.save()
 
     context = {
         "watch_file": tunnel.get_filename(),

@@ -218,6 +218,7 @@ class Tunnel(models.Model):
     
     active_viewer_count = models.IntegerField(default=1)
     amt_gateway_up = models.BooleanField(default=False)
+    amt_gateway_pid = models.IntegerField(blank=True, null=True)
     ffmpeg_up = models.BooleanField(default=False)
     ffmpeg_pid = models.IntegerField(blank=True, null=True)
     
