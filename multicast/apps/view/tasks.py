@@ -92,7 +92,7 @@ def open_tunnel(tunnel_id):
         multicast,
         amt_port,
         udp_port
-    ], shell=True, stdin=None, stout=None, stderr=None)
+    ], shell=True, stdin=None, stderr=None)
 
 
     tunnel.amt_gateway_pid = proc.pid
@@ -113,7 +113,7 @@ def start_ffmpeg(tunnel_id):
         "-f",
         "hls",
         f"{MEDIA_ROOT}/tunnel-files/{tunnel.get_filename()}"
-    ], shell=True, stdin=None, stout=None, stderr=None)
+    ], shell=True, stdin=None, stderr=None)
     
     tunnel.ffmpeg_pid = proc.pid
     tunnel.ffmpeg_up = True
