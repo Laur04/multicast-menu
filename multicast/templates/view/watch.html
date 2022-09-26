@@ -11,7 +11,8 @@
 
     <script src="{% static 'js/video.min.js' %}"></script>
 
-    <script>
+    {{ watch_file }}
+    <!-- <script>
         const player = videojs('video-player');
         player.ready((p) => {
             player.src({
@@ -19,5 +20,5 @@
                 src: "{% media watch_file %}"
             });
         });
-    </script>
+    </script> -->
 {% endblock %}
