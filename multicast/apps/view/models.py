@@ -226,10 +226,10 @@ class Tunnel(models.Model):
         return "Tunnel for {}".format(self.stream)
 
     def get_amt_port_number(self):
-        return self.id + 2000
+        return (self.id % 1000) + 2000
 
     def get_udp_port_number(self):
-        return self.id + 4000
+        return (self.id % 1000) + 4000
 
     def get_filename(self):
         return "index-{}.m3u8".format(self.id)

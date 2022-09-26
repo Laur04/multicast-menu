@@ -6,8 +6,8 @@ import socket
 import struct
 import sys
 
-from .constants import DEFAULT_MTU, LOCAL_LOOPBACK, MCAST_ALLHOSTS, MCAST_ANYCAST
-from .models import (
+from constants import DEFAULT_MTU, LOCAL_LOOPBACK, MCAST_ALLHOSTS, MCAST_ANYCAST
+from models import (
     AMT_Discovery,
     AMT_Relay_Request,
     AMT_Membership_Query,

@@ -10,7 +10,7 @@ from scapy.all import (
 from scapy.contrib.igmpv3 import IGMPv3
 from scapy.layers.inet import IP
 
-from .constants import (
+from constants import (
     AMT_MEM_QUERY,
     AMT_MEM_UPD,
     AMT_MULT_DATA,
