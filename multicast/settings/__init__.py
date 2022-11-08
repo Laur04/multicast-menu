@@ -13,6 +13,7 @@ INSTALLED_APPS = [
     "multicast.apps.add",
     "multicast.apps.manage",
     "multicast.apps.view",
+    "corsheaders",
     "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -132,6 +134,10 @@ CELERY_BEAT_SCHEDULE = {
         "args": (),
     },
 }
+
+
+# Headers
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Trending streams constants
