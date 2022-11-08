@@ -84,13 +84,14 @@ def open_tunnel(tunnel_id):
     amt_port = str(tunnel.get_amt_port_number())
     udp_port = str(tunnel.get_udp_port_number())
 
+    tunnel.amt_gateway_up = True
+    tunnel.save()
+
     proc = subprocess.Popen([
         f"pipenv run python3 /var/www/html/multicast/apps/view/amt/tunnel.py {relay} {source} {multicast} {amt_port} {udp_port}"
     ], shell=True, stdin=None, stderr=None)
 
-
     tunnel.amt_gateway_pid = proc.pid
-    tunnel.amt_gateway_up = True
     tunnel.save()
 
 
