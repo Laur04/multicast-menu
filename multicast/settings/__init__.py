@@ -135,11 +135,6 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-
-# Headers
-CORS_ALLOW_ALL_ORIGINS = True
-
-
 # Trending streams constants
 TRENDING_STREAM_USAGE_WEIGHT = 0.9
 TRENDING_STREAM_INIT_SCORE = 1.0
