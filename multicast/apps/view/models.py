@@ -232,7 +232,7 @@ class Tunnel(models.Model):
         return (self.id % 1000) + 4000
 
     def get_filename(self):
-        return "index-{}.m3u8".format(self.id)
+        return "index{}-.m3u8".format(self.id)
 
     def ready_for_viewing(self):
         return self.amt_gateway_up and self.ffmpeg_up
