@@ -7,17 +7,19 @@
 {% endblock %}
 
 {% block main %}
-    <video class="video-js" controls width="640" height="264" id="video-player" >
-
-    <script src="{% static 'js/video.min.js' %}"></script>
-
-    <script>
-        const player = videojs('video-player');
-        player.ready((p) => {
-            player.src({
-                type: "application/x-mpegURL",
-                src: "http://localhost/media/tunnel-files/{{ watch_file }}"
+    <div class="center-div">
+        <video class="video-js" controls width="640" height="264" id="video-player" >
+    
+        <script src="{% static 'js/video.min.js' %}"></script>
+    
+        <script>
+            const player = videojs('video-player');
+            player.ready((p) => {
+                player.src({
+                    type: "application/x-mpegURL",
+                    src: "http://localhost/media/tunnel-files/{{ watch_file }}"
+                });
             });
-        });
-    </script>
+        </script>
+    </div>
 {% endblock %}
