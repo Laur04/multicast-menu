@@ -1,3 +1,5 @@
+import time
+
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
@@ -137,6 +139,7 @@ def watch(request, stream_id):
     
     if not tunnel.amt_gateway_up:
         open_tunnel.delay(tunnel.id)  # open the AMT tunnel and put data onto LOCAL_LOOPBACK:{{ tunnel.get_udp_port_number() }}
+    time.sleep(5)
     if not tunnel.ffmpeg_up:
         start_ffmpeg.delay(tunnel.id)  # read data from LOCAL_LOOPBACK:{{ tunnel.get_udp_port_number() }} to {{ tunnel.get_filename() }}
     

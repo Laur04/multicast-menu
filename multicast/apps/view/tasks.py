@@ -99,14 +99,7 @@ def start_ffmpeg(tunnel_id):
     tunnel = get_object_or_404(Tunnel, id=tunnel_id)
 
     proc = subprocess.Popen([
-        "ffmpeg",
-        "-i",
-        f"udp://{LOCAL_LOOPBACK}:{tunnel.get_udp_port_number()}",
-        "-c",
-        "copy",
-        "-f",
-        "hls",
-        f"{MEDIA_ROOT}/tunnel-files/{tunnel.get_filename()}"
+        f"ffmpeg -i udp://{LOCAL_LOOPBACK}:{tunnel.get_udp_port_number()} -c copy -f hls {MEDIA_ROOT}/tunnel-files/{tunnel.get_filename()}"
     ], shell=True, stdin=None, stderr=None)
     
     tunnel.ffmpeg_pid = proc.pid

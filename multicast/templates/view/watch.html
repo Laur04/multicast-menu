@@ -11,14 +11,13 @@
 
     <script src="{% static 'js/video.min.js' %}"></script>
 
-    {{ watch_file }}
-    <!-- <script>
+    <script>
         const player = videojs('video-player');
         player.ready((p) => {
             player.src({
                 type: "application/x-mpegURL",
-                src: "{% media watch_file %}"
+                src: "{{ watch_file }}"
             });
         });
-    </script> -->
+    </script>
 {% endblock %}
