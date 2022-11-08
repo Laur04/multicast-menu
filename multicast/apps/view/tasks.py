@@ -85,6 +85,8 @@ def open_tunnel(tunnel_id):
     udp_port = str(tunnel.get_udp_port_number())
 
     proc = subprocess.Popen([
+        "pipenv",
+        "run",
         "python3",
         "/var/www/html/multicast/apps/view/amt/tunnel.py",
         relay,
