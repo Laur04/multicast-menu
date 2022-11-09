@@ -3,7 +3,7 @@ import time
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -154,6 +154,17 @@ def watch(request, stream_id):
 
     return render(request, "view/watch.html", context=context)
 
+# Download a .m3u file for the user to open in VLC
+def open(request, stream_id):
+    stream = get_object_or_404(Stream, id=stream_id)
+
+    response = HttpResponse()
+    response["Content-Disposition"] = 'attachment; filename="playlist.m3u"'
+    response.write("amt://{}@{}".format(stream.source, stream.group))
+    if stream.udp_port:
+        response.write(":{}".format(stream.udp_port))
+
+    return response
 
 # Allow users to report broken streams
 def report(request, stream_id):
