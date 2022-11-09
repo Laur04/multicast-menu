@@ -149,7 +149,7 @@ def watch(request, stream_id):
     tunnel.save()
 
     context = {
-        "watch_file": f"https://menu.m2icast.net/media/tunnel-files/{tunnel.get_filename()}",
+        "watch_file": f"https://menu.treedn.net/media/tunnel-files/{tunnel.get_filename()}",
     }
 
     return render(request, "view/watch.html", context=context)
