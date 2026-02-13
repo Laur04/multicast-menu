@@ -26,7 +26,7 @@ cd ~/multicast-menu
 docker compose -f dev-env/docker-compose.yml up -d
 ```
 
-Visit [localhost:80](localhost:80) to view the local copy of the site.
+Visit [localhost:80](http://localhost:80) to view the local copy of the site.
 
 The application will automatically update when code changes are made. When making changes to databases, static files or settings, run `docker restart application` to run migrations, collect the static files and/or restart the server.
 
