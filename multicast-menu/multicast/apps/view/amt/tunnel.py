@@ -6,6 +6,8 @@ import socket
 import struct
 import sys
 
+import time
+
 from constants import DEFAULT_MTU, LOCAL_LOOPBACK, MCAST_ALLHOSTS, MCAST_ANYCAST
 from models import (
     AMT_Discovery,
@@ -68,9 +70,37 @@ send(ip_top_layer / udp_top_layer / amt_layer / ip_layer2 / igmp_layer / igmp_la
 
 # Loop for data
 count = 0
+count2 = 0
 notified = False
+timer = time.perf_counter()
 while True:
     data, _ = s.recvfrom(DEFAULT_MTU)
+    # print(len(data))
+    count2 += 1
+
+    if time.perf_counter() - timer >= 60:
+        timer = time.perf_counter()
+
+        # Send AMT multicast membership query
+        amt_layer = AMT_Membership_Query(data)
+        response_mac = amt_layer.response_mac
+        # req = struct.pack("=4sl", socket.inet_aton(multicast), socket.INADDR_ANY)
+        # s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, req)
+        send(ip_top_layer / udp_top_layer / amt_layer)
+
+        amt_layer = AMT_Membership_Update()
+        amt_layer.setfieldval("nonce", nonce)
+        amt_layer.setfieldval("response_mac", response_mac)
+
+        options_pkt = Packet(b"\x00")
+        ip_layer2 = IP(src=MCAST_ANYCAST, dst=MCAST_ALLHOSTS, options=[options_pkt])
+
+        igmp_layer = IGMPv3()
+        igmp_layer.type = 34
+
+        igmp_layer2 = IGMPv3mr(records=[IGMPv3gr(maddr=multicast, srcaddrs=[source])])
+
+        send(ip_top_layer / udp_top_layer / amt_layer / ip_layer2 / igmp_layer / igmp_layer2)
 
     try: 
         amt_packet = AMT_Multicast_Data(data)

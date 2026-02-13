@@ -1,0 +1,99 @@
+services:
+  redis:
+    container_name: redis
+    hostname: redis
+    restart: always
+    image: "redis:6.2.4-alpine3.14"
+    networks:
+      - internal-net
+    command: redis-server
+
+  postgres:
+    container_name: postgres
+    hostname: postgres
+    restart: always
+    image: "postgres:latest"
+    networks:
+      - internal-net
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=user
+      - POSTGRES_DB=multicast-dev
+  
+  nginx:
+    container_name: nginx
+    hostname: nginx
+    restart: always
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    networks:
+      - external-net
+    ports:
+      - 80:80
+    volumes:
+      - ../multicast-menu:/opt/www/html
+
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    restart: always
+    image: "rabbitmq:3.8.19-management-alpine"
+    networks:
+      - internal-net
+    command: rabbitmq-server start
+
+  application:
+    container_name: application
+    hostname: application
+    restart: always
+    build:
+      context: application
+      dockerfile: Dockerfile
+    networks:
+      - external-net
+      - internal-net
+    command: bash -c "pipenv run python manage.py collectstatic --noinput && pipenv run python manage.py migrate && pipenv run python manage.py seed_data && pipenv run gunicorn multicast.wsgi:application --bind 0.0.0.0:8000"
+    expose:
+      - 8000
+    volumes:
+      - ../multicast-menu:/opt/www/html
+    depends_on:
+      - postgres
+
+  celery:
+    container_name: celery
+    hostname: celery
+    restart: always
+    build:
+      context: application
+      dockerfile: Dockerfile
+    networks:
+      - internal-net
+    ports:
+      - 2000-2005:2000-2005
+      - 4000-4005:4000-4005
+    command: pipenv run celery --app multicast worker -l info --without-gossip --without-mingle --without-heartbeat -Ofair
+    volumes:
+      - ../multicast-menu:/opt/www/html
+
+  celerybeat:
+    container_name: celerybeat
+    hostname: celerybeat
+    restart: always
+    build:
+      context: application
+      dockerfile: Dockerfile
+    networks:
+      - internal-net
+    command: pipenv run celery --app multicast beat -l info
+    volumes:
+      - ../multicast-menu:/opt/www/html
+
+networks:
+  external-net:
+    name: external-net
+    driver: bridge
+  internal-net:
+    name: internal-net
+    driver: bridge

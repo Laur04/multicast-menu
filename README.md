@@ -19,15 +19,18 @@ Clone this repository.
 ```bash
 git clone https://github.com/Laur04/multicast-menu.git ~/multicast-menu
 ```
-Migrate and run the development server.
+Migrate and run the development server using docker compose.
 
 ```bash
 cd ~/multicast-menu
-python manage.py migrate
-python manage.py makemigrations
+docker compose -f dev-env/docker-compose.yml up -d
 ```
 
-Visit [localhost:8000](localhost:8000) to view the local copy of the site.
+Visit [localhost:80](localhost:80) to view the local copy of the site.
+
+The application will automatically update when code changes are made. When making changes to databases, static files or settings, run `docker restart application` to run migrations, collect the static files and/or restart the server.
+
+Note that running `docker compose -f dev-env/docker-compose.yml down` will fully tear down and remove the containers. This will delete the postgres database. You can avoid this by removing lines 5-15 from `multicast-menu/multicast/settings/secret.py` *before* running the docker compose `up` command. This will move the database into a local file that will persist through tearing down and reestablishing the containers. Either database will be seeded with dummy data and an admin superuser `(admin/admin123)` when it is first set up. Whenever the application container is restarted, it will attempt to reseed the dummy data if the absense of a user with the username `admin` is detected.
 
 
 ## Contributing

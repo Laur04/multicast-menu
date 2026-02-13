@@ -4,15 +4,13 @@ db.sqlite3
 
 dump.rdb
 
-multicast/media/
+media/
+
+output.txt
 
 Pipfile.lock
 
 __pycache__/
 *.pyc
-
-output.txt
-
-secret.py
 
 serve/
