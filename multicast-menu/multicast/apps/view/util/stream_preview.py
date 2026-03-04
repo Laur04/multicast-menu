@@ -1,4 +1,4 @@
-import os.path
+import os
 import subprocess
 from pathlib import Path
 from PIL import Image
@@ -22,11 +22,8 @@ def snapshot_multicast_stream(str_url, str_amt_relay, str_snapshot_path):
     if str_snapshot_path is None:
         ValueError("Illegal argument: str_snapshot_path is null!")
 
-    snapshot_path = Path(str_snapshot_path)
-    # Check if the directory exists
-    if not os.path.isdir(snapshot_path):
-        # If the directory doesn't exist, create it
-        Path(snapshot_path).mkdir(parents=True, exist_ok=True)
+    Path(str_snapshot_path).mkdir(parents=True, mode=0o777, exist_ok=True)
+    os.chmod(str_snapshot_path, 0o777)
 
     """
     Start the VLC process with the specified stream and AMT Relay.
@@ -37,9 +34,6 @@ def snapshot_multicast_stream(str_url, str_amt_relay, str_snapshot_path):
         Command-line interface, https://wiki.videolan.org/Command-line_interface/
     """
     vlc_process = subprocess.Popen([
-        "/usr/bin/sudo",
-        "-u",
-        "web",
         # Path to local VLC
         "/usr/bin/cvlc",
         # Stream URL

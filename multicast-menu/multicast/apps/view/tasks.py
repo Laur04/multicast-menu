@@ -1,5 +1,6 @@
 from celery import shared_task
 import os
+import shutil
 import subprocess
 import tempfile
 
@@ -33,18 +34,18 @@ def create_preview_for_stream(stream_id):
     # Get the stream object
     stream = Stream.objects.get(id=stream_id)
     # Create a temp directory
-    temp_dir = tempfile.TemporaryDirectory()
+    temp_dir = str(MEDIA_ROOT) + "/title-cards/" + str(stream_id)
     # Snapshot the stream and save the images in the temp directory
     amt_relay = stream.amt_relay if stream.amt_relay is not None else "amt-relay.m2icast.net"
-    snapshot_multicast_stream(stream.get_url(), amt_relay, temp_dir.name)
+    snapshot_multicast_stream(stream.get_url(), amt_relay, temp_dir)
     # List the snapshots
-    snapshots = os.listdir(temp_dir.name)
+    snapshots = os.listdir(temp_dir)
     # Check if there are any snapshots
     if snapshots:
         # Get one of the snapshots
         first_snapshot = snapshots[0]
         # Build the path to the snapshot
-        str_snapshot_path = os.path.join(temp_dir.name, first_snapshot)
+        str_snapshot_path = os.path.join(temp_dir, first_snapshot)
 
         # Create a temp file for the thumbnail
         with tempfile.NamedTemporaryFile() as thumbnail:
@@ -71,7 +72,7 @@ def create_preview_for_stream(stream_id):
             stream.preview.save("stream_" + str(stream_id) + "_prw.jpg", File(preview), save=True)
 
     # Remove the temp directory
-    temp_dir.cleanup()
+    shutil.rmtree(temp_dir)
 
 
 @shared_task
@@ -88,7 +89,7 @@ def open_tunnel(tunnel_id):
     tunnel.save()
 
     proc = subprocess.Popen([
-        f"pipenv run python3 /var/www/html/multicast/apps/view/amt/tunnel.py {relay} {source} {multicast} {amt_port} {udp_port}"
+        f"pipenv run python3 /opt/www/html/multicast/apps/view/amt/tunnel.py {relay} {source} {multicast} {amt_port} {udp_port}"
     ], shell=True, stdin=None, stderr=None)
 
     tunnel.amt_gateway_pid = proc.pid
